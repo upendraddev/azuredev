@@ -7,8 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: generate secret
-        run : |
-        bash
+      shell: bash
+      run : |
         SECRET_HANDLE="Tfyscaf23"
         echo "handle=$SECRET_HANDLE" >> "$GITHUB_OUTPUT"
 
@@ -22,6 +22,6 @@ jobs:
     needs: secret-generator
     steps:
     - name: use secret
-        run: |
-        bash
+      shell: bash
+      run : |
         echo ${{ secret-generator.outputs.acmpcaquotalimit }}
