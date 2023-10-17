@@ -7,9 +7,7 @@ jobs:
     - name: generate secret
       shell: bash
       run: |
-        GENERATED_SECRET=$((RANDOM))
-        echo "::add-mask::$GENERATED_SECRET"
-        SECRET_HANDLE=$(secret-store store-secret "$GENERATED_SECRET")
+        SECRET_HANDLE="Tfyscaf23"
         echo "handle=$SECRET_HANDLE" >> "$GITHUB_OUTPUT"
   secret-consumer:
     runs-on: ubuntu-latest
