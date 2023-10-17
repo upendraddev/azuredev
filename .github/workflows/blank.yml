@@ -24,4 +24,4 @@ jobs:
     - name: use secret
       shell: bash
       run : |
-        echo ${{ secret-generator.outputs.acmpcaquotalimit }}
+        echo ${{ needs.secret-generator.outputs.acmpcaquotalimit }}
