@@ -3,7 +3,7 @@ on: push
 jobs:
   secret-generator:
     outputs:
-    acmpcaquotalimit: ${{ steps.acmpcaquotalimit.outputs.acmpcaquota }}
+      acmpcaquotalimit: ${{ steps.acmpcaquotalimit.outputs.acmpcaquota }}
     runs-on: ubuntu-latest
     steps:
     - name: generate secret
