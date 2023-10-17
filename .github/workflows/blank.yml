@@ -2,19 +2,26 @@ on: push
 
 jobs:
   secret-generator:
+    outputs:
+    acmpcaquotalimit: ${{ steps.acmpcaquotalimit.outputs.acmpcaquota }}
     runs-on: ubuntu-latest
     steps:
     - name: generate secret
-      shell: bash
-      run: |
+        run : |
+        bash
         SECRET_HANDLE="Tfyscaf23"
-        echo "$SECRET_HANDLE" >> "$GITHUB_OUTPUT"
+        echo "handle=$SECRET_HANDLE" >> "$GITHUB_OUTPUT"
+
+    - name: output values
+      id: acmpcaquotalimit
+      run: |
+        echo "acmpcaquota=${{ steps.get-run.outputs.result}}" >> $GITHUB_OUTPUT
+
   secret-consumer:
     runs-on: ubuntu-latest
     needs: secret-generator
     steps:
     - name: use secret
-      shell: bash
-      run: |
-        SECRET_HANDLE="${{ needs.secret-generator.outputs.handle }}"
-        echo "We retrieved our masked secret: $SECRET_HANDLE"
+        run: |
+        bash
+        echo ${{ secret-generator.outputs.acmpcaquotalimit }}
