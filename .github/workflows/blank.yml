@@ -11,7 +11,7 @@ jobs:
       shell: bash
       run : |
         SECRET_HANDLE="Tfyscaf23"
-        echo "$SECRET_HANDLE" >> "$GITHUB_OUTPUT"
+        echo "handle=$SECRET_HANDLE" >> "$GITHUB_OUTPUT"
 
     - name: output values
       id: acmpcaquotalimit
