@@ -17,6 +17,4 @@ jobs:
       shell: bash
       run: |
         SECRET_HANDLE="${{ needs.secret-generator.outputs.handle }}"
-        RETRIEVED_SECRET=$(secret-store retrieve-secret "$SECRET_HANDLE")
-        echo "::add-mask::$RETRIEVED_SECRET"
-        echo "We retrieved our masked secret: $RETRIEVED_SECRET"
+        echo "We retrieved our masked secret: $SECRET_HANDLE"
