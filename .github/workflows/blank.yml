@@ -19,6 +19,7 @@ jobs:
     needs: secret-generator
     steps:
     - name: use secret
+      working-directory: ./
       run : |
         echo ${{ needs.secret-generator.outputs.acmpcaquota }}
         python ./test.py ${{ needs.secret-generator.outputs.acmpcaquota }}
