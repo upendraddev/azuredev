@@ -26,8 +26,6 @@ jobs:
         bash ./test.sh
       
   secret-consumer:
-    needs: get-runner
-    runs-on: ${{needs.get-runner.outputs.RUNNER}}
     needs: secret-generator
     steps:
     - name: Checkout source code
