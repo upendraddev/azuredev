@@ -2,8 +2,6 @@ on: push
 
 jobs:
   get-runner:
-    name get a runner to use for this workflow
-    if: ${{ always() }}
     runs-on: custom-runner
     outputs:
      RUNNER: ${{ runner.name }}
