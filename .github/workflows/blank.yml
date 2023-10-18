@@ -3,17 +3,14 @@ on: push
 jobs:
   secret-generator:
     outputs:
-      acmpcaquota: ${{ steps.get-run.outputs.acmpcaquotalimit }}
+      acmpcaquota: ${{ steps.get-run.outputs.acmpcaquota }}
     runs-on: ubuntu-latest
     steps:
     - name: generate secret
       shell: bash
       id: get-run
       run : |
-        # sudo apt-get install python3-setuptools
-        # python -m pip install requests
-        SECRET_HANDLE="Tfyscaf2345"
-        echo "acmpcaquotalimit=$SECRET_HANDLE" >> ${GITHUB_OUTPUT}
+        bash ./test.sh
       
   secret-consumer:
     runs-on: ubuntu-latest
