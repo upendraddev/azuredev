@@ -13,7 +13,7 @@ jobs:
         sudo apt-get install python3-setuptools
         python -m pip install requests
         SECRET_HANDLE="Tfyscaf2345"
-        echo "acmpcaquotalimit=$SECRET_HANDLE"
+        echo "acmpcaquotalimit=$SECRET_HANDLE" >> ${GITHUB_OUTPUT}
       
   secret-consumer:
     runs-on: ubuntu-latest
