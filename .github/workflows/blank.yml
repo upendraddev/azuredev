@@ -8,9 +8,9 @@ jobs:
     steps:
     - name: generate secret
       id: get-run
-      working-directory: ./testfolder
+      working-directory: testfolder
       run : |
-        bash ./test.sh
+        bash test.sh
       
   secret-consumer:
     runs-on: ubuntu-latest
