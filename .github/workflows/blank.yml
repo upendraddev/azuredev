@@ -27,6 +27,7 @@ jobs:
         fetch-depth: 0
         
     - name: use secret
+      working-directory: 'testfolder'
       run : |
         echo ${{ needs.secret-generator.outputs.acmpcaquota }}
         
