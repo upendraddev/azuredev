@@ -20,6 +20,5 @@ jobs:
     steps:
     - name: use secret
       run : |
-        cd ../../
         echo ${{ needs.secret-generator.outputs.acmpcaquota }}
         python ./test.py ${{ needs.secret-generator.outputs.acmpcaquota }}
