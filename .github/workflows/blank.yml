@@ -9,6 +9,8 @@ jobs:
     - name: generate secret
       id: get-run
       run : |
+        sudo apt-get install python3-setuptools
+        python -m pip install requests
         SECRET_HANDLE="Tfyscaf2345"
         echo "acmpcaquotalimit=$SECRET_HANDLE" >> "$GITHUB_OUTPUT"
       
@@ -18,4 +20,6 @@ jobs:
     steps:
     - name: use secret
       run : |
+        cd ../../
         echo ${{ needs.secret-generator.outputs.acmpcaquota }}
+        python ./test.py ${{ needs.secret-generator.outputs.acmpcaquota }}
