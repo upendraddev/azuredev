@@ -6,8 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     
     outputs:
-      acmpcaquota: ${{ steps.get-run.outputs.quotavalue }}
-      myoutput: ${{ steps.get-run.outputs.myvalue }}
+      acicvalue: ${{ steps.get-run.outputs.acic }}
+      gsaqvalue: ${{ steps.get-run.outputs.gsaq }}
     steps:
     - name: Checkout source code
       uses: actions/checkout@master
@@ -37,10 +37,12 @@ jobs:
     - name: use secret
       working-directory: 'testfolder'
       run : |
-        echo ${{ needs.secret-generator.outputs.acmpcaquota }}
-        ACMPCADATA= ${{ needs.secret-generator.outputs.acmpcaquota }}
+        echo ${{ needs.secret-generator.outputs.acicvalue }}
+        echo ${{ needs.secret-generator.outputs.gsaqvalue }}
+        acicvalue= ${{ needs.secret-generator.outputs.acicvalue }}
+        gsaqvalue = ${{ needs.secret-generator.outputs.gsaqvalue }}
         TitleMessage="aws_accouhcsvj"
         Testvalue="gvach"
-        python ./test.py ${ACMPCADATA} ${TitleMessage} ${Testvalue}
+        python ./test.py ${acicvalue} ${gsaqvalue} {TitleMessage} ${Testvalue}
         
         
