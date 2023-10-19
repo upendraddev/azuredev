@@ -11,5 +11,5 @@ DDAPPKEY="svjgcjmd3564"
 ACIC="2345678"
 GSAQ="67896767"
 
-echo "acic =${ACIC} " >> $GITHUB_OUTPUT
-echo "gsaq =${GSAQ} " >> $GITHUB_OUTPUT
+echo "acic=${ACIC}" >> $GITHUB_OUTPUT
+echo "gsaq=${GSAQ}" >> $GITHUB_OUTPUT
