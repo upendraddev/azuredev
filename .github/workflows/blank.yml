@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     
     outputs:
-      acmpcaquota: ${{ steps.get-run.outputs.quotavalue }}
+      acmpcaquota: ${{ steps.get-run.outputs.myvalue }}
     steps:
     - uses: actions/checkout@v1 
     - name: generate secret
@@ -14,9 +14,6 @@ jobs:
       working-directory: 'testfolder'
       run : |
         bash ./test.sh
-    - name: Show value 
-      run: |
-        echo ${{ steps.get-run.outputs.quotavalue }}
       
   secret-consumer:
     runs-on: ubuntu-latest
