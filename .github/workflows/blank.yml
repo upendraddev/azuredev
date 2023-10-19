@@ -37,7 +37,8 @@ jobs:
     - name: use secret
       working-directory: 'testfolder'
       run : |
-        ACMPCADATA=${{ needs.interca_dev_check.outputs.acmpcaquota }}
+        echo ${{ needs.interca_dev_check.outputs.acmpcaquota }}
+        ACMPCADATA= ${{ needs.interca_dev_check.outputs.acmpcaquota }}
         TitleMessage="aws_accouhcsvj"
         Testvalue="gvach"
         python ./test.py ${ACMPCADATA} ${TitleMessage} ${Testvalue}
