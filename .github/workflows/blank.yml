@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     
     outputs:
-      acmpcaquota: ${{ steps.get-run.outputs.myvalue }}
+      acmpcaquota: ${{ steps.get-run.outputs.quotavalue }}
     steps:
     - uses: actions/checkout@v1 
     - name: generate secret
