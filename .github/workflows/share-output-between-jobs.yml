@@ -16,7 +16,7 @@ jobs:
       - name: Expose value 
         id: exposeValue
         run: |
-          echo "MY_VALUE='MYVALUE'" >> $GITHUB_OUTPUT
+          echo "MY_VALUE='MYVALUE'" >> $GITHUB_STATE
             
   consume:
 
