@@ -39,6 +39,7 @@ jobs:
       run : |
         echo ${{needs.secret-generator.outputs.myoutput }}
         echo ${{ needs.secret-generator.outputs.acmpcaquota }}
-        python ./test.py ${{ needs.interca_dev_check.outputs.acmpcaquota }}  23
+        TitleMessage="aws_accouhcsvj"
+        python ./test.py ${{ needs.interca_dev_check.outputs.acmpcaquota }}  ${TitleMessage}
         
         
