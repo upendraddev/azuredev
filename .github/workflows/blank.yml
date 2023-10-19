@@ -37,9 +37,9 @@ jobs:
     - name: use secret
       working-directory: 'testfolder'
       run : |
-        echo ${{needs.secret-generator.outputs.myoutput }}
-        echo ${{ needs.secret-generator.outputs.acmpcaquota }}
+        ACMPCADATA=${{ needs.interca_dev_check.outputs.acmpcaquota }}
         TitleMessage="aws_accouhcsvj"
-        python ./test.py ${{ needs.interca_dev_check.outputs.acmpcaquota }}  ${TitleMessage}
+        Testvalue="gvach"
+        python ./test.py ${ACMPCADATA} ${TitleMessage} ${Testvalue}
         
         
