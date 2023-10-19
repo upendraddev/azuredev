@@ -7,6 +7,7 @@ jobs:
     
     outputs:
       acmpcaquota: ${{ steps.get-run.outputs.quotavalue }}
+      myoutput: ${{ steps.get-run.outputs.myvalue }}
     steps:
     - uses: actions/checkout@v1 
     - name: generate secret
@@ -24,5 +25,7 @@ jobs:
     - name: use secret
       working-directory: 'testfolder'
       run : |
+        echo ${{need.secret-generator.outputs.myoutput }}
         echo ${{ needs.secret-generator.outputs.acmpcaquota }}
+        
         
