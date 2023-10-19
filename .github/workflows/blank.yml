@@ -1,24 +1,13 @@
 on: push
 
-jobs:
-  get-runner:
-    runs-on: custom-runner
-    outputs:
-     RUNNER: ${{ runner.name }}
-    steps:
-      - run: echo "selected runner = ${{ runner.name }}"
-      
+jobs:   
   secret-generator:
+    runs-on: ubuntu-latest
+    
     outputs:
       acmpcaquota: ${{ steps.get-run.outputs.acmpcaquota }}
-    needs: get-runner
-    runs-on: ${{needs.get-runner.outputs.RUNNER}}
     steps:
-    - name: Checkout source code
-      uses: actions/checkout@master
-      with:
-        fetch-depth: 0
-        
+    - uses: actions/checkout@v1 
     - name: generate secret
       id: get-run
       working-directory: 'testfolder'
@@ -26,13 +15,11 @@ jobs:
         bash ./test.sh
       
   secret-consumer:
+    runs-on: ubuntu-latest
+    
     needs: secret-generator
     steps:
-    - name: Checkout source code
-      uses: actions/checkout@master
-      with:
-        fetch-depth: 0
-        
+    - uses: actions/checkout@v1        
     - name: use secret
       working-directory: 'testfolder'
       run : |
