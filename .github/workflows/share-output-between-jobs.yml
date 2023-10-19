@@ -13,13 +13,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: Create value as an environment variable
-        run: |
-          echo "MY_VALUE='MYVALUE'" >> $GITHUB_ENV
       - name: Expose value 
         id: exposeValue
         run: |
-          echo "myvalue=${MY_VALUE}" >> $GITHUB_OUTPUT
+          echo "myvalue='MYVALUE'" >> $GITHUB_OUTPUT
             
   consume:
 
