@@ -9,7 +9,10 @@ jobs:
       acmpcaquota: ${{ steps.get-run.outputs.quotavalue }}
       myoutput: ${{ steps.get-run.outputs.myvalue }}
     steps:
-    - uses: actions/checkout@v1 
+    - name: Checkout source code
+      uses: actions/checkout@master
+      with:
+        fetch-depth: 0
     - name: generate secret
       id: get-run
       working-directory: 'testfolder'
@@ -21,7 +24,10 @@ jobs:
     
     needs: secret-generator
     steps:
-    - uses: actions/checkout@v1        
+    - name: Checkout source code
+      uses: actions/checkout@master
+      with:
+        fetch-depth: 0      
     - name: use secret
       working-directory: 'testfolder'
       run : |
