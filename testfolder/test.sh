@@ -9,4 +9,4 @@ Env="tessghc2456"
 TitleMessage="teysav4556"
 DDAPPKEY="svjgcjmd3564"
 echo "myvalue='MYVALUE'" >> $GITHUB_OUTPUT
-echo "quotavalue= ${DDAPPKEY} " >> $GITHUB_OUTPUT
+echo "quotavalue= ${DDAPPKEY} : ${TitleMessage} " >> $GITHUB_OUTPUT
