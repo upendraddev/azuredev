@@ -39,10 +39,8 @@ jobs:
       run : |
         echo ${{ needs.secret-generator.outputs.acicvalue }}
         echo ${{ needs.secret-generator.outputs.gsaqvalue }}
-        acicvalue= ${{ needs.secret-generator.outputs.acicvalue }}
-        gsaqvalue = ${{ needs.secret-generator.outputs.gsaqvalue }}
         TitleMessage="aws_accouhcsvj"
         Testvalue="gvach"
-        python ./test.py ${acicvalue} ${gsaqvalue} {TitleMessage} ${Testvalue}
+        python ./test.py ${{ needs.secret-generator.outputs.acicvalue }} ${{ needs.secret-generator.outputs.gsaqvalue }} {TitleMessage} ${Testvalue}
         
         
