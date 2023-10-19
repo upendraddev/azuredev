@@ -25,7 +25,7 @@ jobs:
     - name: use secret
       working-directory: 'testfolder'
       run : |
-        echo ${{need.secret-generator.outputs.myoutput }}
+        echo ${{needs.secret-generator.outputs.myoutput }}
         echo ${{ needs.secret-generator.outputs.acmpcaquota }}
         
         
