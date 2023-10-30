@@ -5,5 +5,7 @@ set -euvx -o pipefail
 shopt -s inherit_errexit
 
 G_STATUS=$(aws iam generate-credential-report --output text)
-echo ${G_STATUS}
+if ["$G_STATUS" == "COMPLETE" ]; then
 aws iam get-credential-report --output text --query Content  | base64 -d
+fi  
+done
