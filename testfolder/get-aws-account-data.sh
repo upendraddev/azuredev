@@ -13,6 +13,6 @@ sleep 30
 G_STATUS2=$(aws iam generate-credential-report --output text)
  if [[ "$G_STATUS2" == "COMPLETE" ]]
  then
-aws iam get-credential-report --output text --query Content  | base64 -d
+   aws iam get-credential-report --output text --query Content  | base64 -d
   fi
 fi
