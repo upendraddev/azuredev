@@ -10,6 +10,8 @@ G_STATUS=$(aws iam generate-credential-report --output text)
 echo "$G_STATUS"
 G_STATUS1="COMPLETE"
 until aws iam generate-credential-report --output text | grep $G_STATUS1; do echo \"Waiting for report generation complete...\"; sleep 10; done; \
-if ["$G_STATUS" == "COMPLETE" ]; then
+echo "Hello"
+if [[ $G_STATUS -eq "COMPLETE" ]]
+then
   echo "HEllo1"
 fi
