@@ -5,12 +5,12 @@ set -euvx -o pipefail
 shopt -s inherit_errexit
 
 STAGING_FILE_PATH="./staging-data.txt"
+G_STATUS=""
 
 G_STATUS=$(aws iam generate-credential-report --output text)
-echo "$G_STATUS"
 G_STATUS1="COMPLETE"
-until aws iam generate-credential-report --output text | grep $G_STATUS1; do echo \"Waiting for report generation complete...\"; sleep 10; done; \
-# echo "Hello"
+until aws iam generate-credential-report --output text | grep $G_STATUS1; do echo \"Waiting for report generation complete...\"; sleep 30; done; \
+G_STATUS=$(aws iam generate-credential-report --output text)
 if [ $G_STATUS="COMPLETE" ]
 then
   (aws iam get-credential-report --query "Content" --output text | base64 -d) >>$STAGING_FILE_PATH
