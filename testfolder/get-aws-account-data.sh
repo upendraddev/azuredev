@@ -6,11 +6,12 @@ shopt -s inherit_errexit
 
 G_STATUS=$(aws iam generate-credential-report --output text)
 G_STATUS1="COMPLETE"
-until aws iam generate-credential-report --output text | grep $G_STATUS1; do echo \"Waiting for report generation complete...\"; sleep 3; done; \
+# until aws iam generate-credential-report --output text | grep $G_STATUS1; do echo \"Waiting for report generation complete...\"; sleep 3; done; \
 if [[ "$G_STATUS" != "COMPLETE" ]]
 then
 sleep 30
- if [[ "$G_STATUS" == "COMPLETE" ]]
+G_STATUS2=$(aws iam generate-credential-report --output text)
+ if [[ "$G_STATUS2" == "COMPLETE" ]]
  then
 aws iam get-credential-report --output text --query Content  | base64 -d
   fi
