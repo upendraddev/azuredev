@@ -14,9 +14,8 @@ jobs:
         with:
           fetch-depth: 1
       - name: CI
-        working-directory: 'testfolder'
         run: |
           MSV_CODE="${{ matrix.msvcode }}"
-          bash ./vulnerability-scan.sh \
+          bash ./testfolder/vulnerability-scan.sh \
             ${MSV_CODE} 
             
