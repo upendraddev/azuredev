@@ -16,3 +16,6 @@ jobs:
       - name: CI
         run: |
            MSV_CODE="${{ matrix.msvcode }}"
+            ./testfolder/vulnerability-scan.sh \
+            ${MSV_CODE} 
+            
