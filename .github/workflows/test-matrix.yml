@@ -14,6 +14,7 @@ jobs:
         with:
           fetch-depth: 1
       - name: CI
+        working-directory: 'testfolder'
         run: |
           MSV_CODE="${{ matrix.msvcode }}"
           sudo chmod 777 testfolder
