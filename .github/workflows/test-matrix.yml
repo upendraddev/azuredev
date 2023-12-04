@@ -16,7 +16,7 @@ jobs:
       - name: CI
         run: |
           MSV_CODE="${{ matrix.msvcode }}"
-          sudo chmod +x  /testfolder/vulnerability-scan.sh
+          bash sudo chmod +x  /testfolder/vulnerability-scan.sh
           ./testfolder/vulnerability-scan.sh \
             ${MSV_CODE} 
             
