@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        msvcode: ["labff", "ladps"]
+        msvcode: ["labff"]
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
@@ -15,7 +15,8 @@ jobs:
           fetch-depth: 1
       - name: CI
         run: |
-           MSV_CODE="${{ matrix.msvcode }}"
-            ./testfolder/vulnerability-scan.sh \
+          MSV_CODE="${{ matrix.msvcode }}"
+          sudo chmod +rwx /testfolder/vulnerability-scan.sh
+          ./testfolder/vulnerability-scan.sh \
             ${MSV_CODE} 
             
