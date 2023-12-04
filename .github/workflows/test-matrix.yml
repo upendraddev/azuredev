@@ -17,6 +17,6 @@ jobs:
         working-directory: 'testfolder'
         run: |
           MSV_CODE="${{ matrix.msvcode }}"
-          ./vulnerability-scan.sh \
+          bash ./vulnerability-scan.sh \
             ${MSV_CODE} 
             
