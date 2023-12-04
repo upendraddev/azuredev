@@ -17,7 +17,6 @@ jobs:
         working-directory: 'testfolder'
         run: |
           MSV_CODE="${{ matrix.msvcode }}"
-          sudo chmod 777 testfolder
-          ./testfolder/vulnerability-scan.sh \
+          ./vulnerability-scan.sh \
             ${MSV_CODE} 
             
