@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         msvcode: ["labff","ladps"]
-        experimental: [true]
+        experimental: [false]
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
