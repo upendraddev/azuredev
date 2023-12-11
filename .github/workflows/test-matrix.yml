@@ -8,7 +8,7 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        msvcode: ["labff"]
+        msvcode: ["labff","ladps"]
         experimental: [false]
     steps:
       - name: Checkout source code
