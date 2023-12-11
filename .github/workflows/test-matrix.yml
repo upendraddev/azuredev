@@ -5,22 +5,24 @@ on:
 jobs:
   workflow-start:
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
         msvcode: ["labff"]
+        experimental: [false]
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-    - name: Setup OPA
-      uses: open-policy-agent/setup-opa@v2
-      with:
-        version: latest
+      - name: Setup OPA
+        uses: open-policy-agent/setup-opa@v2
+        with:
+          version: latest
 
-    - uses: actions/setup-go@v3
-      with:
-        go-version: 1.21.0
+      - uses: actions/setup-go@v3
+        with:
+          go-version: 1.21.0
         
       - name: CI
         run: |
