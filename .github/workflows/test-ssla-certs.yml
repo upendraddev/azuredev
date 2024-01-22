@@ -17,9 +17,12 @@ jobs:
           ChipIDCount="2"
           ChipID="Test-998"
           PASSPHRASE=$(pwgen 12 1)
+          certificate_pem="Testcertd"
           timestamp=$(date +%Y%m%d%H%M%S)
-          mkdir -p ./testfolder/testssl/${timestamp}-SOFiles 
+          dir=${timestamp}-SOFiles 
+          mkdir -p ./testfolder/testssl/${dir}
           cd testfolder/testssl/
+          echo $certificate_pem > ./testfolder/testssl/${dir}/"$ChipID"_SO_Output.pem
           echo "Pass Phrase"::${PASSPHRASE} >>./password.txt
           echo "ChipID" > ./test-gen.csv; \
           echo "Sid-001" >> ./test-gen.csv
