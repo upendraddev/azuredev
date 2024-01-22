@@ -15,11 +15,13 @@ jobs:
       run: |
           sudo apt install pwgen -y
           PASSPHRASE=$(pwgen 12 1)
-          echo "Pass Phrase"::${PASSPHRASE} >>./testfolder/testssl/password.txt
+          echo "Pass Phrase"::${PASSPHRASE} >>./password.txt
           
     - uses: actions/upload-artifact@v3
       if: ${{ always() }}
       with:
         name: SOFiles
         path: |
+          ./password.txt
           ./testfolder/testssl/
+          
