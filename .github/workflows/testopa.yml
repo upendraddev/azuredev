@@ -1,5 +1,6 @@
 name: Run OPA Tests
-on: [push]
+on:
+  workflow_dispatch:
 jobs:
   Run-OPA-Tests:
     runs-on: ubuntu-latest
