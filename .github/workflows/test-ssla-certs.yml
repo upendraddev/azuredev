@@ -20,6 +20,9 @@ jobs:
           certificate_pem="Testcertd"
           timestamp=$(date +%Y%m%d%H%M%S)
           dir=${timestamp}-SOFiles 
+          bash ./testfolder/testssl.sh \
+          "$ChipID" \
+          "$dir"
           mkdir -p ./testfolder/testssl/${dir}
           cd testfolder/testssl/
           echo "Pass Phrase"::${PASSPHRASE} >>./password.txt
