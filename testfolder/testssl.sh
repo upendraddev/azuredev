@@ -7,6 +7,4 @@ set +v
 
 ChipID=$1
 dir=$2
-certificate='dvkdvkzzd vjz' 
-certificate_pem=$(echo $certificate)
-echo $certificate_pem > ./$dir/"$ChipID"_SO_Output.pem
+echo "TEstsdvjd" > ./$dir/"$ChipID"_SO_Output.pem
