@@ -24,6 +24,8 @@ jobs:
           echo "ChipID" > ./test-gen.csv; \
           echo "Sid-001" >> ./test-gen.csv
           sudo apt install p7zip-full -y
+          cd ${timestamp}-SOFiles
+          echo "SId0-002" >> ./test.pem
           7za a -tzip -p${PASSPHRASE} -mem=AES256 ${timestamp}-SOFiles.zip ${timestamp}-SOFiles
     - uses: actions/upload-artifact@v4
       if: ${{ always() }}
