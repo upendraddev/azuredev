@@ -25,7 +25,7 @@ jobs:
     - uses: actions/upload-artifact@v4
       if: ${{ always() }}
       with:
-        name: SO-Files
+        name: SOFiles
         path: |
           ./testfolder/testssl/password.txt
           ./testfolder/testssl/test-gen.csv
