@@ -23,7 +23,7 @@ jobs:
           echo "ChipID" > ./test-gen.csv; \
           echo "Sid-001" >> ./test-gen.csv
           sudo apt install p7zip-full -y
-          7za a -tzip -p${PASSPHRASE} -mem=AES256 ${{ ChipID }}-SOFiles.zip SOFiles
+          7za a -tzip -p${PASSPHRASE} -mem=AES256 ${{ChipID}}-SOFiles.zip SOFiles
     - uses: actions/upload-artifact@v4
       if: ${{ always() }}
       with:
@@ -31,5 +31,5 @@ jobs:
         path: |
           ./testfolder/testssl/password.txt
           ./testfolder/testssl/test-gen.csv
-          ./testfolder/testssl/${{ ChipID }}-SOFiles.zip
+          ./testfolder/testssl/${{ChipID}}-SOFiles.zip
           
