@@ -23,8 +23,10 @@ jobs:
           echo "Pass Phrase"::${PASSPHRASE} >>./password.txt
           echo "ChipID" > ./test-gen.csv; \
           echo "Sid-001" >> ./test-gen.csv
+          cd ${timestamp}-SOFiles
+          echo "TestSid-0001" >>./cert.pem
           sudo apt install p7zip-full -y
-          7za a -tzip -p${PASSPHRASE} -mem=AES256 ${timestamp}-SOFiles.zip SOFiles
+          7za a -tzip -p${PASSPHRASE} -mem=AES256 ${timestamp}-SOFiles.zip ${timestamp}-SOFiles
     - uses: actions/upload-artifact@v4
       if: ${{ always() }}
       with:
