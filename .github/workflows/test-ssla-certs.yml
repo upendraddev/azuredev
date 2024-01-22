@@ -1,0 +1,25 @@
+name: test-ssla-certs
+on:
+  workflow_dispatch:
+
+jobs:   
+  ssla-certs:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@master
+      with:
+        fetch-depth: 0
+    - name: Script Execution For Certificate Operations
+      run: |
+          sudo apt install pwgen -y
+          PASSPHRASE=$(pwgen 12 1)
+          echo ::notice title="Pass Phrase"::${PASSPHRASE}
+          
+    - uses: actions/upload-artifact@v3
+      if: ${{ always() }}
+      with:
+        name: SO-Files
+        path: |
+          ./microservices/opsjob/
