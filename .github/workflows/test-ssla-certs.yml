@@ -22,4 +22,4 @@ jobs:
       with:
         name: SO-Files
         path: |
-          ./microservices/opsjob/
+          ./testfolder/opsjob/
