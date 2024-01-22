@@ -30,7 +30,5 @@ jobs:
       with:
         name: SOFiles
         path: |
-          ./testfolder/testssl/password.txt
-          ./testfolder/testssl/test-gen.csv
-          ./testfolder/testssl/${timestamp}-SOFiles.zip
+          ./testfolder/testssl/*
           
