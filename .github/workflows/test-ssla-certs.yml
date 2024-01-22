@@ -18,8 +18,8 @@ jobs:
           ChipID="Test-998"
           PASSPHRASE=$(pwgen 12 1)
           timestamp=$(date +%Y%m%d%H%M%S)
+          mkdir ${timestamp}-SOFiles testfolder/testssl
           cd testfolder/testssl/
-          mkdir ${timestamp}-SOFiles
           echo "Pass Phrase"::${PASSPHRASE} >>./password.txt
           echo "ChipID" > ./test-gen.csv; \
           echo "Sid-001" >> ./test-gen.csv
