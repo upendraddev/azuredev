@@ -15,6 +15,7 @@ jobs:
       run: |
           sudo apt install pwgen -y
           ChipIDCount="2"
+          ChipID="Test-998"
           PASSPHRASE=$(pwgen 12 1)
           timestamp=$(date +%Y%m%d%H%M%S)
           cd testfolder/testssl/
@@ -22,7 +23,7 @@ jobs:
           echo "ChipID" > ./test-gen.csv; \
           echo "Sid-001" >> ./test-gen.csv
           sudo apt install p7zip-full -y
-          7za a -tzip -p${PASSPHRASE} -mem=AES256 SOFiles.zip SOFiles
+          7za a -tzip -p${PASSPHRASE} -mem=AES256 ${{ ChipID }}-SOFiles.zip SOFiles
     - uses: actions/upload-artifact@v4
       if: ${{ always() }}
       with:
@@ -30,5 +31,5 @@ jobs:
         path: |
           ./testfolder/testssl/password.txt
           ./testfolder/testssl/test-gen.csv
-          ./testfolder/testssl/SOFiles.zip
+          ./testfolder/testssl/${{ ChipID }}-SOFiles.zip
           
