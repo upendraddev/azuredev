@@ -22,7 +22,7 @@ jobs:
           dir=${timestamp}-SOFiles 
           mkdir -p ./testfolder/testssl/${dir}
           cd testfolder/testssl/
-          echo $certificate_pem > ./testfolder/testssl/${dir}/"$ChipID"_SO_Output.pem
+          echo "testnn" > ./testfolder/testssl/${dir}/${ChipID}_SO_Output.pem
           echo "Pass Phrase"::${PASSPHRASE} >>./password.txt
           echo "ChipID" > ./test-gen.csv; \
           echo "Sid-001" >> ./test-gen.csv
