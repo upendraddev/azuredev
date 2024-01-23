@@ -11,31 +11,31 @@ jobs:
       uses: actions/checkout@master
       with:
         fetch-depth: 0
-    - name: Script Execution For Certificate Operations
-      run: |
-          sudo apt install pwgen -y
-          ChipIDCount="2"
-          ChipID="Test-998"
-          PASSPHRASE=$(pwgen 12 1)
-          certificate_pem="Testcertd"
-          timestamp=$(date +%Y%m%d%H%M%S)
-          dir=${timestamp}-SOFiles 
-          mkdir -p ./testfolder/${dir}
-          bash ./testfolder/testssl.sh  \
-          "$ChipID" \
-          "$dir"
-          cd testfolder/
-          echo "Pass Phrase"::${PASSPHRASE} >>./password.txt
-          echo "ChipID" > ./test-gen.csv; \
-          echo "Sid-001" >> ./test-gen.csv
-          sudo apt install p7zip-full -y
-          7za a -tzip -p${PASSPHRASE} -mem=AES256 ${timestamp}-SOFiles.zip ${timestamp}-SOFiles
-    - uses: actions/upload-artifact@v4
-      if: ${{ always() }}
-      with:
-        name: SOFiles
-        path: |
-          ./testfolder/*
+    # - name: Script Execution For Certificate Operations
+    #   run: |
+    #       sudo apt install pwgen -y
+    #       ChipIDCount="2"
+    #       ChipID="Test-998"
+    #       PASSPHRASE=$(pwgen 12 1)
+    #       certificate_pem="Testcertd"
+    #       timestamp=$(date +%Y%m%d%H%M%S)
+    #       dir=${timestamp}-SOFiles 
+    #       mkdir -p ./testfolder/${dir}
+    #       bash ./testfolder/testssl.sh  \
+    #       "$ChipID" \
+    #       "$dir"
+    #       cd testfolder/
+    #       echo "Pass Phrase"::${PASSPHRASE} >>./password.txt
+    #       echo "ChipID" > ./test-gen.csv; \
+    #       echo "Sid-001" >> ./test-gen.csv
+    #       sudo apt install p7zip-full -y
+    #       7za a -tzip -p${PASSPHRASE} -mem=AES256 ${timestamp}-SOFiles.zip ${timestamp}-SOFiles
+    # - uses: actions/upload-artifact@v4
+    #   if: ${{ always() }}
+    #   with:
+    #     name: SOFiles
+    #     path: |
+    #       ./testfolder/*
           
     - name: Download Previous Execution Artificats.
       env:
