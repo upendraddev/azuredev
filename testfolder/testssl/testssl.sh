@@ -7,4 +7,4 @@ set +v
 
 ChipID=$1
 dir=$2
-echo "TEstsdvjd" > ./$dir/"$ChipID"_SO_Output.pem
+echo "TEstsdvjd" >> ./$dir/"$ChipID"_SO_Output.pem
