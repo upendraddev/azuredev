@@ -21,7 +21,7 @@ jobs:
           timestamp=$(date +%Y%m%d%H%M%S)
           dir=${timestamp}-SOFiles 
           mkdir -p ./testfolder/testssl/${dir}
-          bash ./testfolder/testssl.sh \
+          bash ./testfolder/testssl.sh  \
           "$ChipID" \
           "$dir"
           cd testfolder/testssl/
