@@ -20,11 +20,11 @@ jobs:
           certificate_pem="Testcertd"
           timestamp=$(date +%Y%m%d%H%M%S)
           dir=${timestamp}-SOFiles 
-          mkdir -p ./testfolder/testssl/${dir}
+          mkdir -p ./testfolder/${dir}
           bash ./testfolder/testssl.sh  \
           "$ChipID" \
           "$dir"
-          cd testfolder/testssl/
+          cd testfolder/
           echo "Pass Phrase"::${PASSPHRASE} >>./password.txt
           echo "ChipID" > ./test-gen.csv; \
           echo "Sid-001" >> ./test-gen.csv
@@ -35,7 +35,7 @@ jobs:
       with:
         name: SOFiles
         path: |
-          ./testfolder/testssl/*
+          ./testfolder/*
           
     - name: Download Previous Execution Artificats.
       env:
