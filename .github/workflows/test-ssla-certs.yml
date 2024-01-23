@@ -11,6 +11,16 @@ jobs:
       uses: actions/checkout@master
       with:
         fetch-depth: 0
+    - name: Script Execution For Certificate Operations
+    run: |
+        sudo apt install pwgen -y
+        ChipIDCount="2"
+        ChipID="Test-998"
+        cd testfolder/
+        pwgen 12 1 >>./password.txt
+        echo "Pass Phrase"::${PASSPHRASE} >>./password.txt
+        certificate_pem="Testcertd"
+        timestamp=$(date +%Y%m%d%H%M%S)
     # - name: Script Execution For Certificate Operations
     #   run: |
     #       sudo apt install pwgen -y
@@ -30,21 +40,21 @@ jobs:
     #       echo "Sid-001" >> ./test-gen.csv
     #       sudo apt install p7zip-full -y
     #       7za a -tzip -p${PASSPHRASE} -mem=AES256 ${timestamp}-SOFiles.zip ${timestamp}-SOFiles
-    # - uses: actions/upload-artifact@v4
-    #   if: ${{ always() }}
-    #   with:
-    #     name: SOFiles
-    #     path: |
-    #       ./testfolder/*
+    - uses: actions/upload-artifact@v4
+      if: ${{ always() }}
+      with:
+        name: SOFiles
+        path: |
+          ./testfolder/*
           
-    - name: Download Previous Execution Artificats.
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-          OTHER_REPO="upendraddev/azuredev"
-          WF_NAME="test-ssla-certs.yml"
-          ARTIFACT_NAME="SOFiles"
-          RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
-          gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
+    # - name: Download Previous Execution Artificats.
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   run: |
+    #       OTHER_REPO="upendraddev/azuredev"
+    #       WF_NAME="test-ssla-certs.yml"
+    #       ARTIFACT_NAME="SOFiles"
+    #       RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
+    #       gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
 
           
