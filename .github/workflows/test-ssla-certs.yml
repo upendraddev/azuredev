@@ -17,8 +17,10 @@ jobs:
         ChipIDCount="2"
         ChipID="Test-998"
         cd testfolder/
+        PASSPHRASE=$(pwgen 12 1)
+        cd microservices/opsjob/
         pwgen 12 1 >>./password.txt
-        echo "Pass Phrase"::${PASSPHRASE} >>./password.txt
+        echo ${PASSPHRASE}
         certificate_pem="Testcertd"
         timestamp=$(date +%Y%m%d%H%M%S)
     # - name: Script Execution For Certificate Operations
@@ -40,12 +42,12 @@ jobs:
     #       echo "Sid-001" >> ./test-gen.csv
     #       sudo apt install p7zip-full -y
     #       7za a -tzip -p${PASSPHRASE} -mem=AES256 ${timestamp}-SOFiles.zip ${timestamp}-SOFiles
-    - uses: actions/upload-artifact@v4
-      if: ${{ always() }}
-      with:
-        name: SOFiles
-        path: |
-          ./testfolder/*
+    # - uses: actions/upload-artifact@v4
+    #   if: ${{ always() }}
+    #   with:
+    #     name: SOFiles
+    #     path: |
+    #       ./testfolder/*
           
     # - name: Download Previous Execution Artificats.
     #   env:
