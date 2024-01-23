@@ -12,7 +12,7 @@ jobs:
       with:
         fetch-depth: 0
     - name: Script Execution For Certificate Operations
-    run: |
+      run: |
         sudo apt install pwgen -y
         ChipIDCount="2"
         ChipID="Test-998"
