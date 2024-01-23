@@ -41,7 +41,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-          OTHER_REPO="/azuredev"
+          OTHER_REPO="upendraddev/azuredev"
           WF_NAME="test-ssla-certs.yml"
           ARTIFACT_NAME="SOFiles"
           RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
