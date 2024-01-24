@@ -13,16 +13,9 @@ jobs:
         fetch-depth: 0
     - name: Script Execution For Certificate Operations
       run: |
-        sudo apt install pwgen -y
-        ChipIDCount="2"
-        ChipID="Test-998"
-        cd testfolder/
-        PASSPHRASE=$(pwgen 12 1)
-        cd microservices/opsjob/
-        pwgen 12 1 >>./password.txt
-        echo ${PASSPHRASE}
-        certificate_pem="Testcertd"
-        timestamp=$(date +%Y%m%d%H%M%S)
+          ChipIDC="{'chipIds':Aid-00050001,Aid-00050002,Aid-00050003,Aid-00050004}"
+          ChipIDContent=$(echo $ChipIDC | tr "," "\n")
+          ChipIDCount=$(echo $ChipIDC | grep -o "," | wc -l)
     # - name: Script Execution For Certificate Operations
     #   run: |
     #       sudo apt install pwgen -y
