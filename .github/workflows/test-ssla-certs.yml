@@ -16,7 +16,7 @@ jobs:
         timestamp=$(date +%Y%m%d%H%M%S)
         Dirname=${timestamp}-SOFiles
         CSVFilename=SO_Outputs.csv
-        bash echo "ChipID" > ./testssl/"$CSVFilename"; \
+        bash echo "ChipID" > ./testfolder/testssl/"$CSVFilename"; \
     # - name: Script Execution For Certificate Operations
     #   run: |
     #       sudo apt install pwgen -y
