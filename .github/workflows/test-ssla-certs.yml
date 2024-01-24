@@ -13,16 +13,10 @@ jobs:
         fetch-depth: 0
     - name: Script Execution For Certificate Operations
       run: |
-          ChipIDC="{Aid-00050001,Aid-00050002,Aid-00050003,Aid-00050004}"
-          ChipIDContent=$(echo $ChipIDC | tr "," "\n")
-          ChipIDCount=$(echo $ChipIDC | grep -o "," | wc -l)
-          if [[ $ChipIDCount < 100 ]]; then
-          
-           for ChipID in $ChipIDContent
-            do
-             echo "$ChipID"
-            done
-          fi
+        timestamp=$(date +%Y%m%d%H%M%S)
+        Dirname=${timestamp}-SOFiles
+        CSVFilename=${timestamp}-SO_Outputs.csv
+        echo "ChipID" > ./testssl/"$CSVFilename"; \
     # - name: Script Execution For Certificate Operations
     #   run: |
     #       sudo apt install pwgen -y
