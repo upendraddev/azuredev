@@ -16,6 +16,13 @@ jobs:
           ChipIDC="{'chipIds':Aid-00050001,Aid-00050002,Aid-00050003,Aid-00050004}"
           ChipIDContent=$(echo $ChipIDC | tr "," "\n")
           ChipIDCount=$(echo $ChipIDC | grep -o "," | wc -l)
+          if [[ $ChipIDCount < 100 ]]; then
+          
+           for ChipID in $ChipIDContent
+            do
+             echo "$ChipID"
+            done
+          fi
     # - name: Script Execution For Certificate Operations
     #   run: |
     #       sudo apt install pwgen -y
