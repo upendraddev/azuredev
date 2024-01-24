@@ -15,7 +15,7 @@ jobs:
       run: |
         timestamp=$(date +%Y%m%d%H%M%S)
         Dirname=${timestamp}-SOFiles
-        CSVFilename=${timestamp}-SO_Outputs.csv
+        CSVFilename=SO_Outputs.csv
         echo "ChipID" > ./testssl/"$CSVFilename"; \
     # - name: Script Execution For Certificate Operations
     #   run: |
