@@ -14,6 +14,7 @@ jobs:
     - name: Script Execution For Certificate Operations
       run: |
         timestamp=$(date +%Y%m%d%H%M%S)
+        sudo apt install pwgen -y
         PASSPHRASE=$(pwgen 12 1)
         echo ${PASSPHRASE} >./password.txt
         #Dirname=${timestamp}-SOFiles
