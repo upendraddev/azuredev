@@ -14,9 +14,11 @@ jobs:
     - name: Script Execution For Certificate Operations
       run: |
         timestamp=$(date +%Y%m%d%H%M%S)
-        Dirname=${timestamp}-SOFiles
-        CSVFilename=SO_Outputs.csv
-        echo "ChipID" > ./testfolder/testssl/"$CSVFilename"; \
+        PASSPHRASE=$(pwgen 12 1)
+        echo ${PASSPHRASE} >./password.txt
+        #Dirname=${timestamp}-SOFiles
+        #CSVFilename=SO_Outputs.csv
+        #echo "ChipID" > ./testfolder/testssl/"$CSVFilename"; \
     # - name: Script Execution For Certificate Operations
     #   run: |
     #       sudo apt install pwgen -y
@@ -36,12 +38,12 @@ jobs:
     #       echo "Sid-001" >> ./test-gen.csv
     #       sudo apt install p7zip-full -y
     #       7za a -tzip -p${PASSPHRASE} -mem=AES256 ${timestamp}-SOFiles.zip ${timestamp}-SOFiles
-    # - uses: actions/upload-artifact@v4
-    #   if: ${{ always() }}
-    #   with:
-    #     name: SOFiles
-    #     path: |
-    #       ./testfolder/*
+    - uses: actions/upload-artifact@v4
+      if: ${{ always() }}
+      with:
+        name: SOFiles
+        path: |
+          ./*.txt
           
     # - name: Download Previous Execution Artificats.
     #   env:
