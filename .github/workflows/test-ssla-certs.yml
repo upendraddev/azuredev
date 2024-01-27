@@ -13,7 +13,6 @@ jobs:
         ChipIDC="Aid-0005-000000000002,Aid-0005-000000000003,Aid-0005-000000000004,Aid-0005-000000000005,Aid-0005-000000000006"
         ChipIDContent=$(echo $ChipIDC | tr "," "\n")
         ChipIDCount=5
-        if [[ $ChipIDCount < 100 ]]; then
         Token="hdbzvb"
         timestamp=$(date +%Y%m%d%H%M%S)
         Dirname=${timestamp}-SOFiles
@@ -35,10 +34,6 @@ jobs:
         echo ${PASSPHRASE} >>./password.txt
         sudo apt install p7zip-full -y
         7za a -tzip -p${PASSPHRASE} -mem=AES256 ${Dirname}.zip ${Dirname}
-        else
-        echo "More than 100 ChipID's were provided as an Input. Please review the input again"
-        exit 1
-        fi
           
     # - name: Download Previous Execution Artificats.
     #   env:
