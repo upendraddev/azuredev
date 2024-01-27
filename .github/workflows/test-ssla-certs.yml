@@ -13,38 +13,35 @@ jobs:
         fetch-depth: 0
     - name: Script Execution For Certificate Operations
       run: |
+        ChipIDC="Aid-0005-000000000002,Aid-0005-000000000003,Aid-0005-000000000004,Aid-0005-000000000005,Aid-0005-000000000006"
+        ChipIDContent=$(echo $ChipIDC | tr "," "\n")
+        ChipIDCount=$(echo $ChipIDC | grep -o "," | wc -l)
+        if [[ $ChipIDCount < 100 ]]; then
+        Token="hdbzvb"
         timestamp=$(date +%Y%m%d%H%M%S)
+        Dirname=${timestamp}-SOFiles
+        CSVFilename=${timestamp}-SO_Outputs.csv
+        echo "ChipID,No of time requested" > ./opsjob/"$CSVFilename"; \
+        mkdir -p ./opsjob/${Dirname}
+        for ChipID in $ChipIDContent
+        do
+            bash ./opsjob/scripts/run_sssla_cetificate_operations.sh \
+            "https://aig-tri-sand.com" \
+            "$ChipID" \
+            "$Token"  \
+            "$Dirname" \
+            "$CSVFilename"
+        done
         sudo apt install pwgen -y
         PASSPHRASE=$(pwgen 12 1)
-        echo ${PASSPHRASE} >./password.txt
-        #Dirname=${timestamp}-SOFiles
-        #CSVFilename=SO_Outputs.csv
-        #echo "ChipID" > ./testfolder/testssl/"$CSVFilename"; \
-    # - name: Script Execution For Certificate Operations
-    #   run: |
-    #       sudo apt install pwgen -y
-    #       ChipIDCount="2"
-    #       ChipID="Test-998"
-    #       PASSPHRASE=$(pwgen 12 1)
-    #       certificate_pem="Testcertd"
-    #       timestamp=$(date +%Y%m%d%H%M%S)
-    #       dir=${timestamp}-SOFiles 
-    #       mkdir -p ./testfolder/${dir}
-    #       bash ./testfolder/testssl.sh  \
-    #       "$ChipID" \
-    #       "$dir"
-    #       cd testfolder/
-    #       echo "Pass Phrase"::${PASSPHRASE} >>./password.txt
-    #       echo "ChipID" > ./test-gen.csv; \
-    #       echo "Sid-001" >> ./test-gen.csv
-    #       sudo apt install p7zip-full -y
-    #       7za a -tzip -p${PASSPHRASE} -mem=AES256 ${timestamp}-SOFiles.zip ${timestamp}-SOFiles
-    - uses: actions/upload-artifact@v4
-      if: ${{ always() }}
-      with:
-        name: SOFiles
-        path: |
-          ./*.txt
+        cd opsjob
+        echo ${PASSPHRASE} >>./password.txt
+        sudo apt install p7zip-full -y
+        7za a -tzip -p${PASSPHRASE} -mem=AES256 ${Dirname}.zip ${Dirname}
+        else
+        echo "More than 100 ChipID's were provided as an Input. Please review the input again"
+        exit 1
+        fi
           
     # - name: Download Previous Execution Artificats.
     #   env:
