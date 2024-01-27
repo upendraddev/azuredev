@@ -11,7 +11,7 @@ WORKFLOW_RUN_ID="7677580437"
 ARTIFACT_NAME="SO-Files"
 
 # Set the path to the specific file within the artifact
-SPECIFIC_FILE_PATH="./opsjob/*.csv"
+SPECIFIC_FILE_PATH="./*SO_Outputs.csv"
 
 # Set the Personal Access Token (PAT)
 #GITHUB_TOKEN="your-personal-access-token"
