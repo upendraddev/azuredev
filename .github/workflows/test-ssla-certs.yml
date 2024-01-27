@@ -44,9 +44,9 @@ jobs:
           ./opsjob/password.txt
           ./opsjob/*.zip 
 
-    - name: Download Previous Execution Artificats.
-      - uses: actions/download-artifact@v4
-      - name: Display structure of downloaded files
-        run: ls -R
+  - name: Download Previous Execution Artificats.
+    - uses: actions/download-artifact@v4
+    - name: Display structure of downloaded files
+      run: ls -R
 
           
