@@ -8,7 +8,7 @@ REPO_NAME="azuredev"
 WORKFLOW_RUN_ID="7677580437"
 
 # Set the name of the artifact you want to download
-ARTIFACT_NAME="test-ssla-certs"
+ARTIFACT_NAME="SO-Files"
 
 # Set the path to the specific file within the artifact
 SPECIFIC_FILE_PATH="./opsjob/*.csv"
