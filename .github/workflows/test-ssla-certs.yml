@@ -44,10 +44,16 @@ jobs:
           ./opsjob/password.txt
           ./opsjob/*.zip 
 
-    - uses: actions/download-artifact@v4
-      with:
-        name: SO-Files
-    - name: Display structure of downloaded files
-      run: ls -R
+    download:
+      needs: upload
+      runs-on: ubuntu-latest
+      steps:
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: opsjob
+          pattern: ./opsjob/*.csv
+          merge-multiple: true
+      - run: ls -R opsjob
 
           
