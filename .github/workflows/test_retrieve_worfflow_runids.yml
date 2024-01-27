@@ -10,4 +10,4 @@ jobs:
     - uses: actions/checkout@v4  
     - name: Script Execution For Certificate Operations
       run: |
-      bash ./testfolder/retrieve_runids.sh \
+        bash ./testfolder/retrieve_runids.sh \
