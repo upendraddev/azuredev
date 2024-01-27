@@ -9,5 +9,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4  
     - name: Script Execution For Certificate Operations
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         bash ./testfolder/retrieve_runids.sh \

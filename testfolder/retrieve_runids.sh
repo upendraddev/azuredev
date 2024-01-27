@@ -8,7 +8,7 @@ REPO_NAME="azuredev"
 WORKFLOW_NAME="test-ssla-certs"
 
 # Set the Personal Access Token (PAT)
-GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+
 
 # Set the GitHub API URL for workflow runs
 API_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/workflows/${WORKFLOW_NAME}/runs"
