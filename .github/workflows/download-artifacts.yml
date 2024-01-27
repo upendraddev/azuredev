@@ -1,0 +1,29 @@
+name: Download Artifacts
+on:
+  workflow_run:
+    workflows: ["test-ssla-certs"]
+    types:
+      - completed
+
+jobs:
+  download-artifacts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get artifacts list
+        id: get_artifacts
+        run: |
+          API_URL="https://api.github.com/repos/upendraddev/azuredev/actions/runs/${{ github.run_id }}/artifacts"
+          ARTIFACTS=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" $API_URL | jq -r '.artifacts[].id')
+
+          echo "::set-output name=artifacts::$ARTIFACTS"
+
+      - name: Download artifacts
+        run: |
+          for artifact_id in ${{ steps.get_artifacts.outputs.artifacts }}; do
+            ARTIFACT_URL="https://api.github.com/repos/upendraddev/azuredev/actions/artifacts/$artifact_id/zip"
+            curl -L -o "artifact_$artifact_id.zip" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" $ARTIFACT_URL
+          done
