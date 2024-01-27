@@ -4,7 +4,7 @@
 REPO_OWNER="upendraddev"
 REPO_NAME="azuredev"
 
-# Set the workflow name
+# Set the name of the workflow you want to retrieve run IDs for
 WORKFLOW_NAME="test-ssla-certs"
 
 
@@ -14,10 +14,12 @@ API_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/workflo
 
 # Use curl to retrieve workflow runs
 response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
+echo "$response"
 
-# Extract workflow run IDs using jq
-workflow_run_ids=$(echo "$response" | jq -r '.workflow_runs[].id')
+# Extract run IDs using jq
+run_ids=$(echo "$response" | jq -r '.workflow_runs[].id')
 
-# Print the workflow run IDs
+# Print the run IDs
 echo "Workflow Run IDs:"
-echo "$workflow_run_ids"
+echo "$run_ids"
+
