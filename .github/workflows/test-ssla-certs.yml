@@ -45,13 +45,8 @@ jobs:
           ./opsjob/*.zip 
 
     - name: Download Previous Execution Artificats.
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        OTHER_REPO="upendraddev/azuredev"
-        WF_NAME="test-ssla-certs.yml"
-        ARTIFACT_NAME="SO-Files"
-        RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
-        gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
+      - uses: actions/download-artifact@v4
+      - name: Display structure of downloaded files
+        run: ls -R
 
           
