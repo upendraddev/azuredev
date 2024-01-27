@@ -10,11 +10,7 @@ WORKFLOW_RUN_ID="7677580437"
 # Set the name of the artifact you want to download
 ARTIFACT_NAME="SO-Files"
 
-# Set the path to the specific file within the artifact
-SPECIFIC_FILE_PATH="./*SO_Outputs.csv"
 
-# Set the Personal Access Token (PAT)
-#GITHUB_TOKEN="your-personal-access-token"
 
 # Set the GitHub API URL for artifacts
 API_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/runs/${WORKFLOW_RUN_ID}/artifacts"
@@ -37,9 +33,20 @@ curl -L -o "artifact_$artifact_id.zip" -H "Authorization: Bearer $GITHUB_TOKEN" 
 # Unzip the downloaded artifact
 unzip "artifact_$artifact_id.zip" -d "extracted_artifact_$artifact_id"
 
-# Move or process the specific file as needed
-mv "extracted_artifact_$artifact_id/$SPECIFIC_FILE_PATH" "desired-destination-directory"
+# Find all CSV files in the extracted directory
+csv_files=$(find "extracted_artifact_$artifact_id" -type f -name '*.csv')
+
+if [ -z "$csv_files" ]; then
+  echo "No CSV files found in the artifact."
+  exit 1
+fi
+
+# Move or process each CSV file as needed
+for csv_file in $csv_files; do
+  mv "$csv_file" "desired-destination-directory"
+done
 
 # Clean up: remove downloaded zip file and extracted directory
 rm "artifact_$artifact_id.zip"
 rm -rf "extracted_artifact_$artifact_id"
+
