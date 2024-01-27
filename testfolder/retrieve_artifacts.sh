@@ -5,15 +5,14 @@ REPO_OWNER="upendraddev"
 REPO_NAME="azuredev"
 
 # Set the workflow run ID for which you want to retrieve artifacts
-WORKFLOW_RUN_ID="7677580437"
+#WORKFLOW_RUN_ID="7677580437"
 
 # Set the name of the artifact you want to download
 ARTIFACT_NAME="SO-Files"
 
-
-
+for run_id in $run_ids; do
 # Set the GitHub API URL for artifacts
-API_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/runs/${WORKFLOW_RUN_ID}/artifacts"
+API_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/runs/${run_id}/artifacts"
 
 # Use curl to retrieve artifact information
 response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
@@ -49,4 +48,5 @@ done
 # Clean up: remove downloaded zip file and extracted directory
 rm "artifact_$artifact_id.zip"
 rm -rf "extracted_artifact_$artifact_id"
+done
 
