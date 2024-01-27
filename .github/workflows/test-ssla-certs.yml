@@ -38,7 +38,7 @@ jobs:
     - uses: actions/upload-artifact@v4
       if: ${{ always() }}
       with:
-        name: Test-SO-Files
+        name: SO-Files
         path: |
           ./opsjob/*.csv
           ./opsjob/password.txt
