@@ -1,0 +1,13 @@
+name: retrieve all run ids
+on:
+  workflow_dispatch:
+
+jobs:   
+  ssla-certs:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4  
+    - name: Script Execution For Certificate Operations
+      run: |
+      bash ./testfolder/retrieve_runids.sh \
