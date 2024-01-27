@@ -12,7 +12,7 @@ jobs:
       run: |
         ChipIDC="Aid-0005-000000000002,Aid-0005-000000000003,Aid-0005-000000000004,Aid-0005-000000000005,Aid-0005-000000000006"
         ChipIDContent=$(echo $ChipIDC | tr "," "\n")
-        ChipIDCount=$(echo $ChipIDC | grep -o "," | wc -l)
+        ChipIDCount=5
         if [[ $ChipIDCount < 100 ]]; then
         Token="hdbzvb"
         timestamp=$(date +%Y%m%d%H%M%S)
