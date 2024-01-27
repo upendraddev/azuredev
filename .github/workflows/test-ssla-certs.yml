@@ -6,34 +6,34 @@ jobs:
   ssla-certs:
     runs-on: ubuntu-latest
     
-    steps:
-    - uses: actions/checkout@v4  
-    - name: Script Execution For Certificate Operations
-      run: |
-        ChipIDC="Aid-0005-000000000002,Aid-0005-000000000003,Aid-0005-000000000004,Aid-0005-000000000005,Aid-0005-000000000006"
-        ChipIDContent=$(echo $ChipIDC | tr "," "\n")
-        ChipIDCount=5
-        Token="hdbzvb"
-        timestamp=$(date +%Y%m%d%H%M%S)
-        Dirname=${timestamp}-SOFiles
-        CSVFilename=${timestamp}-SO_Outputs.csv
-        echo "ChipID,No of time requested" > ./opsjob/"$CSVFilename"; \
-        mkdir -p ./opsjob/${Dirname}
-        for ChipID in $ChipIDContent
-        do
-            bash ./opsjob/scripts/run_sssla_cetificate_operations.sh \
-            "https://aig-tri-sand.com" \
-            "$ChipID" \
-            "$Token"  \
-            "$Dirname" \
-            "$CSVFilename"
-        done
-        sudo apt install pwgen -y
-        PASSPHRASE=$(pwgen 12 1)
-        cd opsjob
-        echo ${PASSPHRASE} >>./password.txt
-        sudo apt install p7zip-full -y
-        7za a -tzip -p${PASSPHRASE} -mem=AES256 ${Dirname}.zip ${Dirname}
+    # steps:
+    # - uses: actions/checkout@v4  
+    # - name: Script Execution For Certificate Operations
+    #   run: |
+    #     ChipIDC="Aid-0005-000000000002,Aid-0005-000000000003,Aid-0005-000000000004,Aid-0005-000000000005,Aid-0005-000000000006"
+    #     ChipIDContent=$(echo $ChipIDC | tr "," "\n")
+    #     ChipIDCount=5
+    #     Token="hdbzvb"
+    #     timestamp=$(date +%Y%m%d%H%M%S)
+    #     Dirname=${timestamp}-SOFiles
+    #     CSVFilename=${timestamp}-SO_Outputs.csv
+    #     echo "ChipID,No of time requested" > ./opsjob/"$CSVFilename"; \
+    #     mkdir -p ./opsjob/${Dirname}
+    #     for ChipID in $ChipIDContent
+    #     do
+    #         bash ./opsjob/scripts/run_sssla_cetificate_operations.sh \
+    #         "https://aig-tri-sand.com" \
+    #         "$ChipID" \
+    #         "$Token"  \
+    #         "$Dirname" \
+    #         "$CSVFilename"
+    #     done
+    #     sudo apt install pwgen -y
+    #     PASSPHRASE=$(pwgen 12 1)
+    #     cd opsjob
+    #     echo ${PASSPHRASE} >>./password.txt
+    #     sudo apt install p7zip-full -y
+    #     7za a -tzip -p${PASSPHRASE} -mem=AES256 ${Dirname}.zip ${Dirname}
           
     - uses: actions/upload-artifact@v4
       if: ${{ always() }}
@@ -43,14 +43,12 @@ jobs:
           ./opsjob/*.csv
           ./opsjob/password.txt
           ./opsjob/*.zip 
-    # - name: Download Previous Execution Artificats.
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #   run: |
-    #       OTHER_REPO="upendraddev/azuredev"
-    #       WF_NAME="test-ssla-certs.yml"
-    #       ARTIFACT_NAME="SOFiles"
-    #       RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
-    #       gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
+
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        name: SO-Files
+    - name: Display structure of downloaded files
+      run: ls -R
 
           
