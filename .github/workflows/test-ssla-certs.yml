@@ -43,9 +43,11 @@ jobs:
           ./opsjob/*.csv
           ./opsjob/password.txt
           ./opsjob/*.zip 
-          
+
     - uses: actions/download-artifact@v4
+      with:
+        path: ./opsjob/*.csv
     - name: Display structure of downloaded files
-      run: ls -R
+      run: ls -R ./opsjob/*.csv
 
           
