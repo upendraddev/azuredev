@@ -7,10 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout source code
-      uses: actions/checkout@master
-      with:
-        fetch-depth: 0
+    - uses: actions/checkout@v4  
     - name: Script Execution For Certificate Operations
       run: |
         ChipIDC="Aid-0005-000000000002,Aid-0005-000000000003,Aid-0005-000000000004,Aid-0005-000000000005,Aid-0005-000000000006"
