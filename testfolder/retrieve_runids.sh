@@ -5,7 +5,7 @@ REPO_OWNER="upendraddev"
 REPO_NAME="azuredev"
 
 # Set the name of the workflow you want to retrieve run IDs for
-WORKFLOW_NAME="test-ssla-certs"
+WORKFLOW_NAME="7679510334"
 
 
 
