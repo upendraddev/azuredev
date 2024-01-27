@@ -10,11 +10,11 @@ jobs:
     - uses: actions/checkout@v4  
 
 
-    - name: Retrive runid
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        bash ./testfolder/retrieve_runids.sh \
+    # - name: Retrive runid
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   run: |
+    #     bash ./testfolder/retrieve_runids.sh \
 
     - name: Retrive artifacts
       env:
