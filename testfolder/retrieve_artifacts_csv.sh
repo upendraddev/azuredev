@@ -9,8 +9,9 @@ FILE_TYPE=".csv"  # Specify the file type you are looking for
 
 
 # Get all workflow run IDs for the specified workflow
+
 # Set the GitHub API URL for workflow runs
-API_URL=" https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/runs"
+API_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/runs?workflow=${WORKFLOW_NAME}"
 
 # Use curl to retrieve workflow runs
 response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
@@ -29,12 +30,12 @@ for RUN_ID in "${RUN_IDS}"; do
 
   # Use curl to retrieve workflow runs
   response2=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
-  echo "$response2"
+  #echo "$response2"
 
   # Extract artifact ID and name from the response
   ARTIFACT_ID=$(echo "$response2" | jq -r '.artifacts[0].id')
   ARTIFACT_NAME=$(echo "$response2" | jq -r '.artifacts[0].name')
-
+  
   if [ "$ARTIFACT_ID" != "null" ] && [ "$ARTIFACT_NAME" != "null" ]; then
       echo "Artifact ID: $ARTIFACT_ID"
       echo "Artifact Name: $ARTIFACT_NAME"
