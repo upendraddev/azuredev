@@ -24,24 +24,12 @@ jobs:
         ARTIFACT_NAME="SO-Files"
         FILE_TYPE=".csv"
         RUN_ID="7700153957"
-        # Get the artifact ID
-        ARTIFACT_ID=$(gh api repos/$REPO_OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts | jq -r --arg ARTIFACT_NAME "$ARTIFACT_NAME" '.artifacts | map(select(.name == $ARTIFACT_NAME))[0].id')
-
-        # Download the artifact as a zip file
-        gh api repos/$REPO_OWNER/$REPO_NAME/actions/artifacts/$ARTIFACT_ID/zip --header 'Accept: application/vnd.github.v3+zip' --output artifact.zip
-
-        # Extract files from the zip file
-        unzip -q artifact.zip -d artifact_content
-
-        # Check for the presence of files with the specified file type
-        if find artifact_content -type f -name "*$FILE_TYPE" | grep -q .; then
-          echo "Artifact contains files of type $FILE_TYPE."
-        else
-          echo "No files of type $FILE_TYPE found in the artifact."
-        fi
-        # Clean up: remove downloaded zip file and extracted content
-        rm artifact.zip
-        rm -r artifact_content
+        # RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
+        bash ./testfolder/retrieve_artifacts.sh \
+        "$REPO_OWNER" \
+        "$REPO_NAME"  \
+        "$ARTIFACT_NAME" \
+        "$FILE_TYPE"
 
     # - name: Retrive runid
     #   env:

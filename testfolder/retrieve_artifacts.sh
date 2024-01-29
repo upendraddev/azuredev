@@ -1,11 +1,12 @@
 #!/bin/bash
 
 
-REPO_OWNER="upendraddev"
-REPO_NAME="azuredev"
-RUN_ID="7677620182"
-ARTIFACT_NAME="SO-Files"
-CSV_FILE_NAME=".csv"
+: $1 $2 $3 $4
+
+REPO_OWNER=$1
+REPO_NAME=$2
+ARTIFACT_NAME=$3
+FILE_TYPE=$4
 
 # Get artifact information for a specific run
 ARTIFACT_INFO=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
@@ -26,7 +27,7 @@ curl -L -o "artifact.zip" -H "Authorization: Bearer $GITHUB_TOKEN" \
 # Unzip the downloaded artifact
 unzip -j "artifact.zip" "*$FILE_TYPE"  -d "extracted_artifact_$artifact"
 
-mv "extracted_artifact_$artifact" "./testssl"
+mv "extracted_artifact_$artifact" "./opsjob"
 # Move or process the specific file as needed
 
 
