@@ -21,3 +21,10 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         bash ./testfolder/retrieve_artifacts.sh \
+
+    - uses: actions/upload-artifact@v4
+      if: ${{ always() }}
+      with:
+        name: SO-Files-csv
+        path: |
+          ./testssl/*.csv

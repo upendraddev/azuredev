@@ -35,7 +35,5 @@ mv "extracted_artifact_$artifact" "./testssl"
 # Move or process the specific file as needed
 
 
-
-
 # Optionally, remove the downloaded zip file
 rm "artifact.zip"
