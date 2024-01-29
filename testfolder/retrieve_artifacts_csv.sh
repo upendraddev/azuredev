@@ -22,9 +22,10 @@ for RUN_ID in "${RUN_IDS}"; do
     ARTIFACT_INFO=$(curl -s -H "Authorization: Bearer $TOKEN" \
     "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts")
 
+    echo "$ARTIFACT_INFO"
     # Extract artifact ID from the response
-    ARTIFACT_ID=$(echo "$ARTIFACT_INFO" | jq -r '.artifacts[0].id')
+    #ARTIFACT_ID=$(echo "$ARTIFACT_INFO" | jq -r '.artifacts[0].id')
 
-    echo "Artifact ID for Run $RUN_ID: $ARTIFACT_ID"
+    #echo "Artifact ID for Run $RUN_ID: $ARTIFACT_ID"
 done
 
