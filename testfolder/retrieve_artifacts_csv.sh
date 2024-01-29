@@ -15,7 +15,7 @@ response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
 # echo "$response"
 
 # Extract run IDs using jq
-run_ids=$(echo "$response" | jq -r '.workflow_runs[].id')
+RUN_IDS=$(echo "$response" | jq -r '.workflow_runs[].id')
 
 # Loop through each run ID and download the artifact if it contains a CSV file
 for RUN_ID in $RUN_IDS; do
