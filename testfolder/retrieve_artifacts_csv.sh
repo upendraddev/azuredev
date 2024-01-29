@@ -23,13 +23,13 @@ RUN_IDS=$(echo "$response" | jq -r '.workflow_runs[].id')
 # RUN_IDS ="7677620182,7691725319,7677580437"
 # 
 for RUN_ID in "${RUN_IDS}"; do
-    echo "$RUN_ID"
+  echo "$RUN_ID"
   # Get artifact information for a specific run
   API_URL="https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts"
 
   # Use curl to retrieve workflow runs
   response2=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
-  print(response2)
+  echo "$response2"
 
   # Extract artifact ID and name from the response
   ARTIFACT_ID=$(echo "$response2" | jq -r '.artifacts[0].id')
