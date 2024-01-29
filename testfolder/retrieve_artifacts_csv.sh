@@ -19,19 +19,17 @@ RUN_IDS=$(echo "$response" | jq -r '.workflow_runs[].id')
 
 for RUN_ID in "${RUN_IDS}"; do
     #echo "$RUN_ID"
-    # Get the download URL for the artifact
-    DOWNLOAD_URL=$(curl -s -H "Authorization: Bearer $TOKEN" \
-    "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts/$ARTIFACT_NAME" \
-    | jq -r '.archive_download_url')
+    API_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/runs/${RUN_ID}/artifacts"
+    
+    # Use curl to retrieve artifact information
+    response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
+    echo "$response"
+    # Extract artifact ID based on the provided artifact name
+    artifact_id=$(echo "$response" | jq -r ".artifacts[] | select(.name == \"$ARTIFACT_NAME\") | .id")
 
-    echo "$DOWNLOAD_URL"
-    # Download the artifact as a zip file
-    #curl -L -o "artifact.zip" "$DOWNLOAD_URL"
-
-    # Extract CSV files from the zip archive and store in a directory
-    #unzip -j "artifact.zip" "*$FILE_TYPE" -d "./"
-
-    # Optionally, you can remove the downloaded zip file
-    #rm "artifact.zip"
+    if [ -z "$artifact_id" ]; then
+      echo "Artifact with name '$ARTIFACT_NAME' not found."
+      exit 1
+    fi
 done
 
