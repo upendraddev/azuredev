@@ -1,6 +1,9 @@
 name: test-ssla-certs
 on:
-  workflow_dispatch:
+#   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:   
   ssla-certs:
@@ -23,6 +26,8 @@ jobs:
         gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
         if [[ -f "./opsjob/*.csv" ]]; then
           echo "Ok"
+        else
+          echo "Not ok"
         fi
 
     # - name: Retrive runid
