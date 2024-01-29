@@ -7,9 +7,7 @@ ARTIFACT_NAME="SO-Files"
 FILE_TYPE=".csv"  # Specify the file type you are looking for
 
 # Get all workflow run IDs for the specified workflow
-RUN_IDS=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
-  "https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/workflows/runs?workflow=${WORKFLOW_NAME}" \
-  | jq -r '.workflow_runs[].id')
+RUN_IDS=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/workflows/runs?workflow=${WORKFLOW_NAME}" | jq -r '.workflow_runs[].id')
 
 # Loop through each run ID and download the artifact if it contains a CSV file
 for RUN_ID in $RUN_IDS; do
