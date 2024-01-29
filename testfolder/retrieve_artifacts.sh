@@ -49,7 +49,7 @@ for run_id in $run_ids; do
 
     # Move or process each CSV file as needed
     for csv_file in $csv_files; do
-      mv "$csv_file" "desired-destination-directory"
+      mv "$csv_file" "./utils"
     done
 
     # Clean up: remove downloaded zip file and extracted directory
