@@ -1,12 +1,13 @@
 #!/bin/bash
 
 
-: $1 $2 $3 $4
+: $1 $2 $3 $4 $5
 
 REPO_OWNER=$1
 REPO_NAME=$2
 ARTIFACT_NAME=$3
 FILE_TYPE=$4
+RUN_ID=$5
 
 # Get artifact information for a specific run
 ARTIFACT_INFO=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \

@@ -29,7 +29,8 @@ jobs:
         "$REPO_OWNER" \
         "$REPO_NAME"  \
         "$ARTIFACT_NAME" \
-        "$FILE_TYPE"
+        "$FILE_TYPE" \
+        "$RUN_ID"
 
     # - name: Retrive runid
     #   env:
