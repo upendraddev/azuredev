@@ -6,6 +6,7 @@ WORKFLOW_NAME="test-ssla-certs"
 ARTIFACT_NAME="SO-Files"
 FILE_TYPE=".csv"  # Specify the file type you are looking for
 
+TOKEN="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"
 
 # Get all workflow run IDs for the specified workflow
 # Set the GitHub API URL for workflow runs
@@ -24,7 +25,7 @@ RUN_IDS=$(echo "$response" | jq -r '.workflow_runs[].id')
 for RUN_ID in "${RUN_IDS}"; do
     #echo "$RUN_ID"
   # Get artifact information for a specific run
-  ARTIFACT_INFO=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+  ARTIFACT_INFO=$(curl -s -H "Authorization: Bearer $TOKEN" \
     "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts")
 
   # Extract artifact ID and name from the response
