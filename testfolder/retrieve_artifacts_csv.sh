@@ -17,5 +17,7 @@ response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
 # Extract run IDs using jq
 RUN_IDS=$(echo "$response" | jq -r '.workflow_runs[].id')
 
-print(RUN_IDS)
+for RUN_ID in "${RUN_IDS}"; do
+    echo "$RUN_ID"
+done
 
