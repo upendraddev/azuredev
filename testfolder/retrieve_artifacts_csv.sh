@@ -12,7 +12,7 @@ API_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/runs?wo
 
 # Use curl to retrieve workflow runs
 response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
-echo "$response"
+# echo "$response"
 
 # Extract run IDs using jq
 run_ids=$(echo "$response" | jq -r '.workflow_runs[].id')
