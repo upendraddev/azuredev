@@ -6,7 +6,7 @@ WORKFLOW_NAME="test-ssla-certs"
 ARTIFACT_NAME="SO-Files"
 FILE_TYPE=".csv"  # Specify the file type you are looking for
 
-TOKEN="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"
+
 
 # Get all workflow run IDs for the specified workflow
 # Set the GitHub API URL for workflow runs
@@ -23,14 +23,17 @@ RUN_IDS=$(echo "$response" | jq -r '.workflow_runs[].id')
 # RUN_IDS ="7677620182,7691725319,7677580437"
 # 
 for RUN_ID in "${RUN_IDS}"; do
-    #echo "$RUN_ID"
+    echo "$RUN_ID"
   # Get artifact information for a specific run
-  ARTIFACT_INFO=$(curl -s -H "Authorization: Bearer $TOKEN" \
-    "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts")
+  API_URL="https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts"
+
+  # Use curl to retrieve workflow runs
+  response2=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
+  print(response2)
 
   # Extract artifact ID and name from the response
-  ARTIFACT_ID=$(echo "$ARTIFACT_INFO" | jq -r '.artifacts[0].id')
-  ARTIFACT_NAME=$(echo "$ARTIFACT_INFO" | jq -r '.artifacts[0].name')
+  ARTIFACT_ID=$(echo "$response2" | jq -r '.artifacts[0].id')
+  ARTIFACT_NAME=$(echo "$response2" | jq -r '.artifacts[0].name')
 
   if [ "$ARTIFACT_ID" != "null" ] && [ "$ARTIFACT_NAME" != "null" ]; then
       echo "Artifact ID: $ARTIFACT_ID"
