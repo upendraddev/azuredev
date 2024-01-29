@@ -32,7 +32,7 @@ curl -L -o "artifact.zip" -H "Authorization: Bearer $GITHUB_TOKEN" \
 unzip "$artifact.zip" -d "extracted_artifact_$artifact"
 
 # Move or process the specific file as needed
-mv "extracted_artifact_$artifact_id/$CSV_FILE_NAME" "./utils"
+mv "extracted_artifact_$artifact/$CSV_FILE_NAME" "./utils"
 
 
 
