@@ -1,26 +1,22 @@
 #!/bin/bash
 
+# Set the repository owner and name
 REPO_OWNER="upendraddev"
 REPO_NAME="azuredev"
+
+# Set the name of the workflow you want to retrieve run IDs for
 WORKFLOW_NAME="test-ssla-certs"
-ARTIFACT_NAME="SO-Files"
 
-# Get information about workflow runs for a specific workflow
-WORKFLOW_RUNS=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
-  "https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/runs?workflow=${WORKFLOW_NAME}")
+# Set the GitHub API URL for workflow runs
+API_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/runs?workflow=${WORKFLOW_NAME}"
 
-# Iterate through each run to find the one with the specified artifact
-for RUN in $(echo "$WORKFLOW_RUNS" | jq -c '.workflow_runs[]'); do
-  RUN_ID=$(echo "$RUN" | jq -r '.id')
-  
-  # Check if the artifact exists in the run
-  ARTIFACT_EXISTS=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
-    "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts" \
-    | jq -r --arg ARTIFACT_NAME "$ARTIFACT_NAME" '.artifacts | map(select(.name == $ARTIFACT_NAME)) | length')
+# Use curl to retrieve workflow runs
+response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
+echo "$response"
 
-  if [ "$ARTIFACT_EXISTS" -gt 0 ]; then
-    echo "Run ID for Workflow $WORKFLOW_NAME with Artifact $ARTIFACT_NAME: $RUN_ID"
-    break
-  fi
-done
+# Extract run IDs using jq
+run_ids=$(echo "$response" | jq -r '.workflow_runs[].id')
 
+# Print the run IDs
+echo "Workflow Run IDs:"
+echo "$run_ids"
