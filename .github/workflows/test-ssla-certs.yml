@@ -18,7 +18,9 @@ jobs:
         WF_NAME="test-ssla-certs"
         ARTIFACT_NAME="SO-Files"
         RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
-        gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
+        echo "$RUN_ID"
+        response=$(gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME})
+        echo "$response"
         if [[ -f "./opsjob/*.csv" ]]; then
           echo "Ok"
         fi
