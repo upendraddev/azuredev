@@ -10,17 +10,17 @@ jobs:
     - uses: actions/checkout@v4  
 
 
-    # - name: Retrive runid
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #   run: |
-    #     bash ./testfolder/retrieve_runids.sh \
-
-    - name: Retrive artifacts
+    - name: Retrive runid
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        bash ./testfolder/retrieve_artifacts_csv.sh \
+        bash ./testfolder/retrieve_runids.sh \
+
+    # - name: Retrive artifacts
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   run: |
+    #     bash ./testfolder/retrieve_artifacts_csv.sh \
 
     # - uses: actions/upload-artifact@v4
     #   if: ${{ always() }}
