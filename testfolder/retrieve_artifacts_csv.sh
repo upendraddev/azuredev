@@ -23,7 +23,7 @@ for RUN_ID in "${RUN_IDS}"; do
     
     # Use curl to retrieve artifact information
     response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
-    echo "$response"
+    #echo "$response"
     # Extract artifact ID based on the provided artifact name
     artifact_id=$(echo "$response" | jq -r ".artifacts[] | select(.name == \"$ARTIFACT_NAME\") | .id")
 
