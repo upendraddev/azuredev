@@ -15,7 +15,9 @@ response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
 # echo "$response"
 
 # Extract run IDs using jq
-RUN_IDS=$(echo "$response" | jq -r '.workflow_runs[].id')
+#RUN_IDS=$(echo "$response" | jq -r '.workflow_runs[].id')
+
+RUN_IDS ="7677620182,7691725319,7677580437"
 
 for RUN_ID in "${RUN_IDS}"; do
     # Get artifact information for a specific run
