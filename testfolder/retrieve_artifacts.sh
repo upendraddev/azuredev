@@ -1,59 +1,29 @@
 #!/bin/bash
 
-# Set the repository owner and name
+
 REPO_OWNER="upendraddev"
 REPO_NAME="azuredev"
-
-# Set the workflow run ID for which you want to retrieve artifacts
-#WORKFLOW_RUN_ID="7677580437"
-# Set the name of the workflow you want to retrieve run IDs for
-WORKFLOW_NAME="test-ssla-certs"
-# Set the name of the artifact you want to download
+RUN_ID="7677620182"
 ARTIFACT_NAME="SO-Files"
+CSV_FILE_NAME="20240127090347-SO_Outputs.csv"
 
+# Get artifact information for a specific run
+ARTIFACT_INFO=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+  "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts")
 
-MAX_RUNS=5
+# Extract artifact ID and name from the response
+ARTIFACT_ID=$(echo "$ARTIFACT_INFO" | jq -r '.artifacts[0].id')
+ARTIFACT_NAME=$(echo "$ARTIFACT_INFO" | jq -r '.artifacts[0].name')
 
-# Get the workflow run IDs using the GitHub API
-run_ids=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/workflows/runs?workflow=${WORKFLOW_NAME}" | jq -r '.workflow_runs[].id')
+echo "Artifact ID: $ARTIFACT_ID"
+echo "Artifact Name: $ARTIFACT_NAME"
 
-for run_id in $run_ids; do
-    # Set the GitHub API URL for artifacts
-    API_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/runs/${run_id}/artifacts"
+# Download the artifact as a zip file
+curl -L -o "artifact.zip" -H "Authorization: Bearer $GITHUB_TOKEN" \
+  "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/artifacts/$ARTIFACT_ID/zip"
 
-    # Use curl to retrieve artifact information
-    response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
+# Extract the CSV file from the zip archive
+unzip -j "artifact.zip" "$ARTIFACT_NAME/$CSV_FILE_NAME" -d "./"
 
-    # Extract artifact ID based on the provided artifact name
-    artifact_id=$(echo "$response" | jq -r ".artifacts[] | select(.name == \"$ARTIFACT_NAME\") | .id")
-
-    if [ -z "$artifact_id" ]; then
-      echo "Artifact with name '$ARTIFACT_NAME' not found."
-      exit 1
-    fi
-
-    # Download the entire artifact as a zip file
-    ARTIFACT_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/artifacts/$artifact_id/zip"
-    curl -L -o "artifact_$artifact_id.zip" -H "Authorization: Bearer $GITHUB_TOKEN" $ARTIFACT_URL
-
-    # Unzip the downloaded artifact
-    unzip "artifact_$artifact_id.zip" -d "extracted_artifact_$artifact_id"
-
-    # Find all CSV files in the extracted directory
-    csv_files=$(find "extracted_artifact_$artifact_id" -type f -name '*.csv')
-
-    if [ -z "$csv_files" ]; then
-      echo "No CSV files found in the artifact."
-      exit 1
-    fi
-
-    # Move or process each CSV file as needed
-    for csv_file in $csv_files; do
-      mv "$csv_file" "./utils"
-    done
-
-    # Clean up: remove downloaded zip file and extracted directory
-    rm "artifact_$artifact_id.zip"
-    rm -rf "extracted_artifact_$artifact_id"
-done
-
+# Optionally, remove the downloaded zip file
+rm "artifact.zip"
