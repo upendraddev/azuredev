@@ -1,0 +1,63 @@
+name: test-certs
+on:
+  workflow_dispatch:
+    inputs:
+      chipIds:
+        description: 'Specify the ChipID'
+        required: true
+jobs:   
+  ssla-certs:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4  
+
+    - name: Retrive runid
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        bash ./testfolder/retrieve_artifacts_csv.sh \
+
+    - name: Script Execution For Certificate Operations
+      run: |
+        ChipIDC=${{ github.event.inputs.chipIds }}
+        ChipIDContent=$(echo $ChipIDC | tr "," "\n")
+        ChipIDCount=5
+        Token="hdbzvb"
+        timestamp=$(date +%Y%m%d%H%M%S)
+        Dirname=${timestamp}-SOFiles
+        CSVFilename=${timestamp}-SO_Outputs.csv
+        echo "ChipID,No of time requested" > ./opsjob/"$CSVFilename"; \
+        mkdir -p ./opsjob/${Dirname}
+        for ChipID in $ChipIDContent
+        do
+            bash ./opsjob/scripts/run_sssla_cetificate_operations.sh \
+            "https://aig-tri-sand.com" \
+            "$ChipID" \
+            "$Token"  \
+            "$Dirname" \
+            "$CSVFilename"
+        done
+        sudo apt install pwgen -y
+        PASSPHRASE=$(pwgen 12 1)
+        cd opsjob
+        echo ${PASSPHRASE} >>./password.txt
+        sudo apt install p7zip-full -y
+        7za a -tzip -p${PASSPHRASE} -mem=AES256 ${Dirname}.zip ${Dirname}
+          
+    - uses: actions/upload-artifact@v4
+      if: ${{ always() }}
+      with:
+        name: SO-Files
+        path: |
+          ./opsjob/*.csv
+          ./opsjob/password.txt
+          ./opsjob/*.zip 
+
+    - uses: actions/download-artifact@v4
+      with:
+        path: ./opsjob/*.csv
+    - name: Display structure of downloaded files
+      run: ls -R ./opsjob/*.csv
+
+          

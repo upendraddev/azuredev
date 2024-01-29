@@ -11,14 +11,11 @@ FILE_TYPE=".csv"  # Specify the file type you are looking for
 # Get all workflow run IDs for the specified workflow
 
 # Set the GitHub API URL for workflow runs
-API_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/runs?workflow=${WORKFLOW_NAME}"
+RUN_ID=$(curl -s -H "Authorization: Bearer $TOKEN" \
+  "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/workflows/$WORKFLOW_NAME/runs" \
+  | jq -r '.workflow_runs[0].id')
 
-# Use curl to retrieve workflow runs
-response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
-#echo "$response"
-
-# Extract run IDs using jq
-RUN_IDS=$(echo "$response" | jq -r '.workflow_runs[].id')
+echo "Latest Run ID for Workflow $WORKFLOW_NAME: $RUN_ID"
 
 #echo "$RUN_IDS"
 # RUN_IDS ="7677620182,7691725319,7677580437"
