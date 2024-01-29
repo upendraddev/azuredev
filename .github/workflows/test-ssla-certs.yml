@@ -24,7 +24,7 @@ jobs:
         # RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
         echo "$RUN_ID"
         gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
-        if [[ -f "*.csv" ]]; then
+        if [[ -f "./opsjob/*.csv" ]]; then
           echo "Ok"
         else
           echo "Not ok"
