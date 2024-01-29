@@ -22,12 +22,6 @@ echo "Artifact Name: $ARTIFACT_NAME"
 curl -L -o "artifact.zip" -H "Authorization: Bearer $GITHUB_TOKEN" \
   "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/artifacts/$ARTIFACT_ID/zip"
 
-
-
-# Extract the CSV file from the zip archive
-#unzip -j "artifact.zip" "$ARTIFACT_NAME/$CSV_FILE_NAME" -d "./"
-
-
 # Unzip the downloaded artifact
 unzip -j "artifact.zip" "*$FILE_TYPE"  -d "extracted_artifact_$artifact"
 
