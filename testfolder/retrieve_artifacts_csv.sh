@@ -21,7 +21,7 @@ RUN_IDS=$(echo "$response" | jq -r '.workflow_runs[].id')
 # RUN_IDS ="7677620182,7691725319,7677580437"
 
 for RUN_ID in "${RUN_IDS}"; do
-    echo "$RUN_ID"
+    #echo "$RUN_ID"
     # Get artifact information for a specific run
     ARTIFACT_INFO=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
       "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts")
@@ -33,7 +33,8 @@ for RUN_ID in "${RUN_IDS}"; do
     Download the artifact as a zip file
     curl -L -o "artifact.zip" -H "Authorization: Bearer $GITHUB_TOKEN" \
     "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/artifacts/$ARTIFACT_ID/zip"
-
+    sudo apt-get install unzip
+    
     Unzip the downloaded artifact
     unzip -j "artifact.zip" "*$FILE_TYPE"  -d "extracted_artifact_$artifact"
 
