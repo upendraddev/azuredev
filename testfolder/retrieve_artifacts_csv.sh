@@ -9,7 +9,7 @@ FILE_TYPE=".csv"  # Specify the file type you are looking for
 
 # Get all workflow run IDs for the specified workflow
 # Set the GitHub API URL for workflow runs
-API_URL="https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/workflows/$WORKFLOW_NAME/runs"
+API_URL=" https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/runs"
 
 # Use curl to retrieve workflow runs
 response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
