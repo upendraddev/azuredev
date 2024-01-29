@@ -15,7 +15,7 @@ ARTIFACT_INFO=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
 ARTIFACT_ID=$(echo "$ARTIFACT_INFO" | jq -r '.artifacts[0].id')
 ARTIFACT_NAME=$(echo "$ARTIFACT_INFO" | jq -r '.artifacts[0].name')
 
-if [[ "$ARTIFACT_ID" != "null" ]] && [ "$ARTIFACT_NAME" !="null"]; then
+if [ "$ARTIFACT_ID" != "null" ] && [ "$ARTIFACT_NAME" != "null" ]; then
     echo "Artifact ID: $ARTIFACT_ID"
     echo "Artifact Name: $ARTIFACT_NAME"
 fi
