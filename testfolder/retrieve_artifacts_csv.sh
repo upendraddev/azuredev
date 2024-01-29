@@ -18,7 +18,7 @@ response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
 RUN_IDS=$(echo "$response" | jq -r '.workflow_runs[].id')
 
 for RUN_ID in "${RUN_IDS}"; do
-    #echo "$RUN_ID"
+    echo "$RUN_ID"
     ARTIFACT_INFO=$(curl -s -H "Authorization: Bearer $TOKEN" \
     "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts")
 
