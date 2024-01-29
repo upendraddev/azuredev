@@ -7,7 +7,7 @@ ARTIFACT_NAME="SO-Files"
 
 # Get information about workflow runs for a specific workflow
 WORKFLOW_RUNS=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
-  "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/workflows/$WORKFLOW_NAME/runs")
+  "https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/runs?workflow=${WORKFLOW_NAME}")
 
 # Iterate through each run to find the one with the specified artifact
 for RUN in $(echo "$WORKFLOW_RUNS" | jq -c '.workflow_runs[]'); do
