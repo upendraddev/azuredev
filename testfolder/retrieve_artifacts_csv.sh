@@ -31,22 +31,22 @@ for RUN_ID in "${RUN_IDS}"; do
     ARTIFACT_NAME=$(echo "$ARTIFACT_INFO" | jq -r '.artifacts[0].name')
 
     if [ "$ARTIFACT_ID" != "null" ] && [ "$ARTIFACT_NAME" != "null" ]; then
-    echo "Artifact ID: $ARTIFACT_ID"
-    echo "Artifact Name: $ARTIFACT_NAME"
+    # echo "Artifact ID: $ARTIFACT_ID"
+    # echo "Artifact Name: $ARTIFACT_NAME"
     fi
 
-    # Download the artifact as a zip file
-    # curl -L -o "artifact.zip" -H "Authorization: Bearer $GITHUB_TOKEN" \
-    # "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/artifacts/$ARTIFACT_ID/zip"
+    Download the artifact as a zip file
+    curl -L -o "artifact.zip" -H "Authorization: Bearer $GITHUB_TOKEN" \
+    "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/artifacts/$ARTIFACT_ID/zip"
 
-    # Unzip the downloaded artifact
-    # unzip -j "artifact.zip" "*$FILE_TYPE"  -d "extracted_artifact_$artifact"
+    Unzip the downloaded artifact
+    unzip -j "artifact.zip" "*$FILE_TYPE"  -d "extracted_artifact_$artifact"
 
-    # mv "extracted_artifact_$artifact" "./testssl"
-    # Move or process the specific file as needed
+    mv "extracted_artifact_$artifact" "./testssl"
+    Move or process the specific file as needed
 
 
-    # Optionally, remove the downloaded zip file
-    # rm "artifact.zip"
+    Optionally, remove the downloaded zip file
+    rm "artifact.zip"
 done
 
