@@ -1,10 +1,13 @@
 name: test-certs
 on:
   workflow_dispatch:
-    inputs:
-      chipIds:
-        description: 'Specify the ChipID'
-        required: true
+    # inputs:
+    #   chipIds:
+    #     description: 'Specify the ChipID'
+    #     required: true
+  push:
+    branches:
+      - main
 jobs:   
   test-certs:
     runs-on: ubuntu-latest
