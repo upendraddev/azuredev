@@ -22,16 +22,18 @@ RUN_IDS=$(echo "$response" | jq -r '.workflow_runs[].id')
 
 for RUN_ID in "${RUN_IDS}"; do
     #echo "$RUN_ID"
-    # Get artifact information for a specific run
-    ARTIFACT_INFO=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
-      "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts")
+  # Get artifact information for a specific run
+  ARTIFACT_INFO=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+    "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts")
 
-    # Extract artifact ID and name from the response
-    ARTIFACT_ID=$(echo "$ARTIFACT_INFO" | jq -r '.artifacts[0].id')
-    ARTIFACT_NAME=$(echo "$ARTIFACT_INFO" | jq -r '.artifacts[0].name')
+  # Extract artifact ID and name from the response
+  ARTIFACT_ID=$(echo "$ARTIFACT_INFO" | jq -r '.artifacts[0].id')
+  ARTIFACT_NAME=$(echo "$ARTIFACT_INFO" | jq -r '.artifacts[0].name')
 
-    echo "Artifact ID: $ARTIFACT_ID"
-    echo "Artifact Name: $ARTIFACT_NAME" 
+  if [ "$ARTIFACT_ID" != "null" ] && [ "$ARTIFACT_NAME" != "null" ]; then
+      echo "Artifact ID: $ARTIFACT_ID"
+      echo "Artifact Name: $ARTIFACT_NAME"
+  fi
     # Download the artifact as a zip file
     # curl -L -o "artifact.zip" -H "Authorization: Bearer $GITHUB_TOKEN" \
     # "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/artifacts/$ARTIFACT_ID/zip"
