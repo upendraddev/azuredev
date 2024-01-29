@@ -29,8 +29,9 @@ curl -L -o "artifact.zip" -H "Authorization: Bearer $GITHUB_TOKEN" \
 
 
 # Unzip the downloaded artifact
-unzip -j "artifact.zip" "*$FILE_TYPE" -d "./"
+unzip -j "artifact.zip" "*$FILE_TYPE"  -d "extracted_artifact_$artifact"
 
+mv "extracted_artifact_$artifact" "./testssl"
 # Move or process the specific file as needed
 
 
