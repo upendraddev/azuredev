@@ -39,7 +39,6 @@ jobs:
         else
           echo "No files of type $FILE_TYPE found in the artifact."
         fi
-
         # Clean up: remove downloaded zip file and extracted content
         rm artifact.zip
         rm -r artifact_content
