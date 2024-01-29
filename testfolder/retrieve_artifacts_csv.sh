@@ -17,12 +17,12 @@ response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
 # Extract run IDs using jq
 #RUN_IDS=$(echo "$response" | jq -r '.workflow_runs[].id')
 
-RUN_IDS ="7677620182,7691725319,7677580437"
+# RUN_IDS ="7677620182,7691725319,7677580437"
 
-for RUN_ID in "${RUN_IDS}"; do
+# for RUN_ID in "${RUN_IDS}"; do
     # Get artifact information for a specific run
     ARTIFACT_INFO=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
-    "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts")
+    "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/runs/7677620182/artifacts")
 
     # Extract artifact ID and name from the response
     ARTIFACT_ID=$(echo "$ARTIFACT_INFO" | jq -r '.artifacts[0].id')
@@ -44,5 +44,5 @@ for RUN_ID in "${RUN_IDS}"; do
 
     # Optionally, remove the downloaded zip file
     # rm "artifact.zip"
-done
+# done
 
