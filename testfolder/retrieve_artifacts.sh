@@ -5,7 +5,7 @@ REPO_OWNER="upendraddev"
 REPO_NAME="azuredev"
 RUN_ID="7677620182"
 ARTIFACT_NAME="SO-Files"
-CSV_FILE_NAME="20240127090347-SO_Outputs.csv"
+CSV_FILE_NAME=".csv"
 
 # Get artifact information for a specific run
 ARTIFACT_INFO=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
@@ -29,10 +29,10 @@ curl -L -o "artifact.zip" -H "Authorization: Bearer $GITHUB_TOKEN" \
 
 
 # Unzip the downloaded artifact
-unzip "$artifact.zip" -d "extracted_artifact_$artifact"
+unzip -j "artifact.zip" "*$FILE_TYPE" -d "./"
 
 # Move or process the specific file as needed
-mv "extracted_artifact_$artifact/$CSV_FILE_NAME" "./utils"
+
 
 
 
