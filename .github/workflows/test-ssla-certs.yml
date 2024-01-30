@@ -33,7 +33,7 @@ jobs:
         filecount=$(ls | grep .csv -c)
         if [[  $filecount == 1 ]]; then 
           filename=$(ls | grep .csv )          
-          cp $filename ./opsjob/
+          # cp $filename ./opsjob/
         fi
 
     - name: Script Execution For Certificate Operations
