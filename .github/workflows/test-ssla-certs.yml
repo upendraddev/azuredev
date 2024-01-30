@@ -28,10 +28,8 @@ jobs:
         WF_NAME="test-ssla-certs"
         ARTIFACT_NAME="SO-Files"
         #RUN_ID="7700153957"
-        set +e
-        RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
-        gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
-        set -e
+        RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId) || true
+        gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME} || true
         filecount=$(ls | grep .csv -c)
         if [[  $filecount == 1 ]]; then 
           filename=$(ls | grep .csv )          
