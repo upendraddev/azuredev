@@ -47,7 +47,7 @@ jobs:
         # timestamp=$(date +%Y%m%d%H%M%S)
         # Dirname=${timestamp}-SOFiles
         # mkdir -p ./opsjob/${Dirname}
-        if [[ $ChipIDCount < 100 ]]; then
+        if [[ "$ChipIDCount" < 100 ]]; then
         for ChipID in $ChipIDContent
         do
             bash ./opsjob/scripts/run_sssla_cetificate_operations_latest.sh \
