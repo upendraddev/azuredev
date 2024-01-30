@@ -18,11 +18,11 @@ Exitvalue=$?
 if [ $Exitvalue -gt 0 ] || [ $exit_code -gt 0 ]; then
     Exitvalue=0
     echo " exit_code=$exit_code"
-    cd ../
-    echo "S.no" > ./"$CSVFilename"; \
-    echo "ChipID" >>./"$CSVFilename"; 
-    echo "Date" >>./"$CSVFilename"; 
-    echo "Requested Count" >>./"$CSVFilename"; 
+
+    echo "S.no" > ./opsjob/"$CSVFilename"; \
+    echo "ChipID" >>./opsjob/"$CSVFilename"; 
+    echo "Date" >>./opsjob/"$CSVFilename"; 
+    echo "Requested Count" >>./opsjob/"$CSVFilename"; 
 fi
 }
 trap cleanup EXIT
@@ -31,7 +31,6 @@ RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseI
 gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME} || exit_code=$?
 filecount=$(ls | grep .csv -c)
 if [[  $filecount == 1 ]]; then 
-    filename=$(ls | grep .csv ) 
-    cd ../         
-    cp $filename 
+    filename=$(ls | grep .csv )       
+    cp $filename ./opsjob/
 fi
