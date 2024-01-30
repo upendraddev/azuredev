@@ -29,9 +29,6 @@ jobs:
         ARTIFACT_NAME="SO-Files"
         # RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
         RUN_ID="7700153957"
-        #echo "hello"
-        #ls
-        #echo "hello2"
         gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
         filecount=$(ls | grep .csv -c)
         if [[  $filecount == 1 ]]; then 

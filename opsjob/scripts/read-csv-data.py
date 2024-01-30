@@ -22,7 +22,7 @@ else:
         csvFile = csv.reader(file)
         for lines in csvFile:  
             csv_data.append(lines)
- 
+    print(csv_data)
     for i in range(len(csv_data)):
         for j in chipIDs.split(","):
             if j in csv_data[i]:
