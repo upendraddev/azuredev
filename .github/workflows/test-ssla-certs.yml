@@ -36,9 +36,9 @@ jobs:
         Exitvalue=$?
         if [ $Exitvalue -gt 0 ] || [ $exit_code -gt 0 ]; then
             Exitvalue=0
-            echo " exit_code=$exit_code"
+            # echo " exit_code=$exit_code"
 
-            echo "S.no" > ./opsjob/"$CSVFilename"; \
+            echo "S.no" > ./opsjob/"$CSVFilename"; 
             echo "ChipID" >>./opsjob/"$CSVFilename"; 
             echo "Date" >>./opsjob/"$CSVFilename"; 
             echo "Requested Count" >>./opsjob/"$CSVFilename"; 
