@@ -36,6 +36,7 @@ jobs:
             echo "hello"
             echo " exit_code=$exit_code"
             $?=0
+            echo $?
             # echo "S.no" > ./opsjob/"$CSVFilename"; 
             # echo "ChipID" >>./opsjob/"$CSVFilename"; 
             # echo "Date" >>./opsjob/"$CSVFilename"; 
