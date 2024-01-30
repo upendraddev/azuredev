@@ -27,6 +27,8 @@ jobs:
         OTHER_REPO="upendraddev/azuredev"
         WF_NAME="test-ssla-certs"
         ARTIFACT_NAME="SO-Files"
+        Exitvalue=""
+        exit_code=""
         #RUN_ID="7700153957"
         timestamp=$(date +%Y%m%d%H%M%S)
         CSVFilename=${timestamp}-SO_Outputs.csv
@@ -43,8 +45,8 @@ jobs:
         fi
         }
         trap cleanup EXIT
-        RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId) || true
-        gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME} || true
+        RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId) || exit_code=$?
+        gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME} || exit_code=$?
         filecount=$(ls | grep .csv -c)
         if [[  $filecount == 1 ]]; then 
           filename=$(ls | grep .csv )          
