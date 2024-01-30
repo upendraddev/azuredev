@@ -1,0 +1,33 @@
+name: test-ssla-certs
+on:
+  workflow_dispatch:
+    inputs:
+      chipIds:
+        description: 'Specify the ChipID'
+        required: true
+  # push:
+  #   branches:
+  #     - main
+
+jobs:   
+  ssla-certs:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4  
+
+    # - name: Install dependencies
+    #   run: |
+    #     sudo apt-get install python3-setuptools
+
+    - name: Download Previous Execution Artificats.
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        OTHER_REPO="upendraddev/azuredev"
+        WF_NAME="test-ssla-certs2.yml"
+        RUNS=$(curl -s -H "Accept: application/vnd.github.v3+json" \
+        -H "Authorization: Bearer $GITHUB_TOKEN" \
+        "https://api.github.com/repos/$OTHER_REPO/actions/workflows/$WF_NAME/runs")
+        RUN_ID=$(echo "$RUNS" | jq -r '.workflow_runs[1].id')
+        echo "RUNID: $RUN_ID"
