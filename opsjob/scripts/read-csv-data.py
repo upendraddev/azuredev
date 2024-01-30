@@ -10,7 +10,7 @@ for i in files:
         filename=i
 chipIDs=sys.argv[1]
 csv_data=[]
-if filename == "":
+if filename != "":
     filename=datetime.datetime.now().strftime("%Y%m%d%H%M%S")+"SO_Outputs.csv"
     csv_data=[["S.No","ChipID","Date","RequestedCount"]]
     count=1
