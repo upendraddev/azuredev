@@ -12,7 +12,7 @@ chipIDs=sys.argv[1].split(",")
 csv_data=[]
 if filename == "":
     filename=datetime.datetime.now().strftime("%Y%m%d%H%M%S")+"-SO_Outputs.csv"
-    csv_data=[["s.no","ChipID","Date","RequestedCount"]]
+    csv_data=[["s.no","ChipID","Date","Requested Count"]]
     count=1
     for j in chipIDs:
         csv_value=[count,j,datetime.datetime.now().strftime("%Y-%m-%d"),1]
