@@ -27,17 +27,13 @@ jobs:
         OTHER_REPO="upendraddev/azuredev"
         WF_NAME="test-ssla-certs"
         ARTIFACT_NAME="SO-Files"
-        Exitvalue=""
-        exit_code=""
+        exit_code=0
         #RUN_ID="7700153957"
         timestamp=$(date +%Y%m%d%H%M%S)
         CSVFilename=${timestamp}-SO_Outputs.csv
         cleanup() {
-        Exitvalue=$?
-        if [ $Exitvalue -gt 0 ] || [ $exit_code -gt 0 ]; then
-            Exitvalue=0
+        if [ $exit_code -gt 0 ]; then
             echo " exit_code=$exit_code"
-            exit_code=0
             # echo "S.no" > ./opsjob/"$CSVFilename"; 
             # echo "ChipID" >>./opsjob/"$CSVFilename"; 
             # echo "Date" >>./opsjob/"$CSVFilename"; 
