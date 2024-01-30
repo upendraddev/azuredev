@@ -30,4 +30,7 @@ jobs:
         -H "Authorization: Bearer $GITHUB_TOKEN" \
         "https://api.github.com/repos/$OTHER_REPO/actions/workflows/$WF_NAME/runs")
         RUN_ID=$(echo "$RUNS" | jq -r '.workflow_runs[1].id')
-        echo "RUNID: $RUN_ID"
+        if [ -z "$RUN_ID" ]; then
+        else
+        echo "HEllo I am null"
+        fi
