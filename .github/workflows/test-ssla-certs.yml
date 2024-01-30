@@ -25,20 +25,17 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         OTHER_REPO="upendraddev/azuredev"
-        WF_NAME="test-ssla-certs"
+        WF_NAME="test-ssla-certs.yml"
         ARTIFACT_NAME="SO-Files"
         exit_code=0
         #RUN_ID="7700153957"
         timestamp=$(date +%Y%m%d%H%M%S)
         CSVFilename=${timestamp}-SO_Outputs.csv
         RUNS=$(curl -s -H "Accept: application/vnd.github.v3+json" \
-          -H "Authorization: Bearer $GITHUB_TOKEN" \
-          "https://api.github.com/repos/$REPO/actions/workflows/$WORKFLOW_FILE/runs")
-
-        # Extract the IDs of the workflow runs (excluding the current one)
-        RUN_ID=$(echo "$RUNS" | jq -r '.workflow_runs[1].id')
-
-        echo "Previous run ID: $PREVIOUS_RUN_ID"
+        -H "Authorization: Bearer $GITHUB_TOKEN" \
+        "https://api.github.com/repos/$OTHER_REPO/actions/workflows/$WF_NAME/runs")
+        PREVIOUS_RUN_ID=$(echo "$RUNS" | jq -r '.workflow_runs[1].id')
+        echo "Previous" $PREVIOUS_RUN_ID
         # RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId) 
         API_URL="https://api.github.com/repos/${OTHER_REPO}/actions/runs/${RUN_ID}/artifacts"
         response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
