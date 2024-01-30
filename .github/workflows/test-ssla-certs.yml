@@ -41,11 +41,13 @@ jobs:
         # ChipIDC="Aid-0005-000000000007,Aid-0005-000000000003,Aid-0005-000000000004,Aid-0005-000000000005,Aid-0005-000000000008"
         ChipIDC=${{ github.event.inputs.chipIds }}
         ChipIDContent=$(echo $ChipIDC | tr "," "\n")
-        ChipIDCount=5
-        Token="hdbzvb"
-        timestamp=$(date +%Y%m%d%H%M%S)
-        Dirname=${timestamp}-SOFiles
-        mkdir -p ./opsjob/${Dirname}
+        ChipIDCount=$(echo $ChipIDC | grep -o "," | wc -l)
+        echo $ChipIDCount
+        # Token="hdbzvb"
+        # timestamp=$(date +%Y%m%d%H%M%S)
+        # Dirname=${timestamp}-SOFiles
+        # mkdir -p ./opsjob/${Dirname}
+        if [[ $ChipIDCount < 100 ]]; then
         for ChipID in $ChipIDContent
         do
             bash ./opsjob/scripts/run_sssla_cetificate_operations_latest.sh \
@@ -61,7 +63,10 @@ jobs:
         echo ${PASSPHRASE} >>./password.txt
         sudo apt install p7zip-full -y
         7za a -tzip -p${PASSPHRASE} -mem=AES256 ${Dirname}.zip ${Dirname}
-          
+        else
+          echo "More than 100 ChipID's were provided as an Input. Please review the input again"
+          exit 1
+        fi
     - uses: actions/upload-artifact@v4
       if: ${{ always() }}
       with:
