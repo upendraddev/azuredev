@@ -1,7 +1,7 @@
 name: test-ssla-certs
 on:
   workflow_dispatch:
-      inputs:
+    inputs:
       chipIds:
         description: 'Specify the ChipID'
         required: true
