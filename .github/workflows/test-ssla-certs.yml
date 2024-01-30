@@ -27,9 +27,9 @@ jobs:
         OTHER_REPO="upendraddev/azuredev"
         WF_NAME="test-ssla-certs"
         ARTIFACT_NAME="SO-Files"
-        RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
         #RUN_ID="7700153957"
         set +e
+        RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
         gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
         set -e
         filecount=$(ls | grep .csv -c)
