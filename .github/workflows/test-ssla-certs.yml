@@ -36,7 +36,7 @@ jobs:
         "https://api.github.com/repos/$OTHER_REPO/actions/workflows/$WF_NAME/runs")
         RUN_ID=$(echo "$RUNS" | jq -r '.workflow_runs[1].id')
         if [[ "$RUN_ID" == "null" ]];  then 
-          echo "S.no" >> ./opsjob/"$CSVFilename"; 
+          echo "S.no" > ./opsjob/"$CSVFilename"; 
           echo "ChipID" >>./opsjob/"$CSVFilename"; 
           echo "Date" >>./opsjob/"$CSVFilename"; 
           echo "Requested Count" >>./opsjob/"$CSVFilename"; 
@@ -47,7 +47,7 @@ jobs:
           if [ -z "$artifact_id" ]; then
             # echo "Artifact with name '$ARTIFACT_NAME' not found."
             exit 0
-            echo "S.no" >> ./opsjob/"$CSVFilename"; 
+            echo "S.no" > ./opsjob/"$CSVFilename"; 
             echo "ChipID" >>./opsjob/"$CSVFilename"; 
             echo "Date" >>./opsjob/"$CSVFilename"; 
             echo "Requested Count" >>./opsjob/"$CSVFilename"; 
