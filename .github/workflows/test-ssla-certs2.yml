@@ -1,4 +1,4 @@
-name: test-ssla-certs
+name: test-ssla-certs2
 on:
   workflow_dispatch:
     inputs:
