@@ -59,7 +59,7 @@ jobs:
         sudo apt install pwgen -y
         PASSPHRASE=$(pwgen 12 1)
         cd opsjob
-        sudo python3 ./opsjob/scripts/read-csv-data.py $ChipIDC
+        sudo python3 ./scripts/read-csv-data.py $ChipIDC
         echo ${PASSPHRASE} >>./password.txt
         sudo apt install p7zip-full -y
         7za a -tzip -p${PASSPHRASE} -mem=AES256 ${Dirname}.zip ${Dirname}
