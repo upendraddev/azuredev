@@ -11,7 +11,7 @@ for i in files:
 chipIDs=sys.argv[1].split(",")
 csv_data=[]
 if filename == "":
-    filename=datetime.datetime.now().strftime("%Y%m%d%H%M%S")+"-SoFiles.csv"
+    filename=datetime.datetime.now().strftime("%Y%m%d%H%M%S")+"-SO_Outputs.csv"
     csv_data=[["s.no","ChipID","Date","RequestedCount"]]
     count=1
     for j in chipIDs:

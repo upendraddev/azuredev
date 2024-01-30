@@ -1,10 +1,10 @@
 name: test-ssla-certs
 on:
   workflow_dispatch:
-      # inputs:
-      # chipIds:
-      #   description: 'Specify the ChipID'
-      #   required: true
+      inputs:
+      chipIds:
+        description: 'Specify the ChipID'
+        required: true
   # push:
   #   branches:
   #     - main
@@ -38,7 +38,8 @@ jobs:
 
     - name: Script Execution For Certificate Operations
       run: |
-        ChipIDC="Aid-0005-000000000007,Aid-0005-000000000003,Aid-0005-000000000004,Aid-0005-000000000005,Aid-0005-000000000008"
+        # ChipIDC="Aid-0005-000000000007,Aid-0005-000000000003,Aid-0005-000000000004,Aid-0005-000000000005,Aid-0005-000000000008"
+        ChipIDC=${{ github.event.inputs.chipIds }}
         ChipIDContent=$(echo $ChipIDC | tr "," "\n")
         ChipIDCount=5
         Token="hdbzvb"
