@@ -21,67 +21,53 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         OTHER_REPO="upendraddev/azuredev"
-        REPO_OWNER="upendraddev"
-        REPO_NAME="azuredev"
         WF_NAME="test-ssla-certs"
         ARTIFACT_NAME="SO-Files"
-        FILE_TYPE=".csv"
-        RUN_ID="7700153957"
-        echo "hello"
-        ls
-        echo "hello2"
-        gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
-        ls
-        echo "hello3"
         # RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
-        # bash ./testfolder/retrieve_artifacts.sh \
-        # "$REPO_OWNER" \
-        # "$REPO_NAME"  \
-        # "$ARTIFACT_NAME" \
-        # "$FILE_TYPE" \
-        # "$RUN_ID"
+        RUN_ID="7700153957"
+        #echo "hello"
+        #ls
+        #echo "hello2"
+        gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
+        filecount=$(ls | grep .csv -c)
+        if [[  $filecount == 1 ]]; then 
+          filename=$(ls | grep .csv )          
+          cp $filename ./opsjob/
+        fi
 
-    # - name: Retrive runid
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #   run: |
-    #     bash ./testfolder/retrieve_artifacts_csv.sh \
-
-    # - name: Script Execution For Certificate Operations
-    #   run: |
-    #     ChipIDC="Aid-0005-000000000007,Aid-0005-000000000003,Aid-0005-000000000004,Aid-0005-000000000005,Aid-0005-000000000008"
-    #     ChipIDContent=$(echo $ChipIDC | tr "," "\n")
-    #     ChipIDCount=5
-    #     Token="hdbzvb"
-    #     timestamp=$(date +%Y%m%d%H%M%S)
-    #     Dirname=${timestamp}-SOFiles
-    #     #CSVFilename=${timestamp}-SO_Outputs.csv
-    #     #echo "ChipID,No of time requested" > ./opsjob/"$CSVFilename"; \
-    #     mkdir -p ./opsjob/${Dirname}
-    #     for ChipID in $ChipIDContent
-    #     do
-    #         bash ./opsjob/scripts/run_sssla_cetificate_operations.sh \
-    #         "https://aig-tri-sand.com" \
-    #         "$ChipID" \
-    #         "$Token"  \
-    #         "$Dirname" \
-    #         "$ChipIDC"
-    #     done
-    #     sudo apt install pwgen -y
-    #     PASSPHRASE=$(pwgen 12 1)
-    #     cd opsjob
-    #     echo ${PASSPHRASE} >>./password.txt
-    #     sudo apt install p7zip-full -y
-    #     7za a -tzip -p${PASSPHRASE} -mem=AES256 ${Dirname}.zip ${Dirname}
+    - name: Script Execution For Certificate Operations
+      run: |
+        ChipIDC="Aid-0005-000000000007,Aid-0005-000000000003,Aid-0005-000000000004,Aid-0005-000000000005,Aid-0005-000000000008"
+        ChipIDContent=$(echo $ChipIDC | tr "," "\n")
+        ChipIDCount=5
+        Token="hdbzvb"
+        timestamp=$(date +%Y%m%d%H%M%S)
+        Dirname=${timestamp}-SOFiles
+        mkdir -p ./opsjob/${Dirname}
+        for ChipID in $ChipIDContent
+        do
+            bash ./opsjob/scripts/run_sssla_cetificate_operations_latest.sh \
+            "https://aig-tri-sand.com" \
+            "$ChipID" \
+            "$Token"  \
+            "$Dirname" 
+        done
+        sudo apt install pwgen -y
+        PASSPHRASE=$(pwgen 12 1)
+        cd opsjob
+        sudo python3 read-csv-data.py $ChipIDC
+        echo ${PASSPHRASE} >>./password.txt
+        sudo apt install p7zip-full -y
+        7za a -tzip -p${PASSPHRASE} -mem=AES256 ${Dirname}.zip ${Dirname}
           
-    # - uses: actions/upload-artifact@v4
-    #   if: ${{ always() }}
-    #   with:
-    #     name: SO-Files
-    #     path: |
-    #       ./opsjob/*.csv
-    #       ./opsjob/password.txt
-    #       ./opsjob/*.zip 
+    - uses: actions/upload-artifact@v4
+      if: ${{ always() }}
+      with:
+        name: SO-Files
+        path: |
+          ./opsjob/*.csv
+          ./opsjob/password.txt
+          ./opsjob/*.zip 
 
     # - uses: actions/download-artifact@v4
     #   with:

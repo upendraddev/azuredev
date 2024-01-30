@@ -13,8 +13,6 @@ url=$1
 ChipID=$2
 token=$3
 dir=$4
-csvfilname=$5
-ChipIDC=$6
 
 
 
@@ -25,6 +23,6 @@ exit 1
 else
 certificate_pem="eftgfdaf356r4i2tdmgbgu35yl475934fbdsjhvfdfsdgsckafldjsgbbsd"
 echo $certificate_pem > ./opsjob/"$dir"/"$ChipID"_SO_Output.pem
-sudo chmod 777 ./opsjob/"$csvfilname"
-echo "$ChipID,1" >> ./opsjob/"$csvfilname"
+# sudo chmod 777 ./opsjob/"$csvfilname"
+# echo "$ChipID,1" >> ./opsjob/"$csvfilname"
 fi
