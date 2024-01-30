@@ -57,15 +57,14 @@ jobs:
         echo "after"
         res=$(curl -L \
         -H "Accept: application/vnd.github+json" \
-        -H "Authorization: Bearer $GH_TOKEN" \
+        -H "Authorization: Bearer $GITHUB_TOKEN" \
         -H "X-GitHub-Api-Version: 2022-11-28" \
         $url)
-        ls
         count=$(echo $res | jq -r '.total_count')
         if [[ $count == 0 ]] ; then
           echo "$count"
           else
-          echo " Count : $count"
+          echo "Count : $count"
           fi
         # gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME} 
         filecount=$(ls | grep .csv -c)
