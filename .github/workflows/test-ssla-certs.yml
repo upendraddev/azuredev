@@ -24,7 +24,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        pwd
         OTHER_REPO="upendraddev/azuredev"
         WF_NAME="test-ssla-certs"
         ARTIFACT_NAME="SO-Files"
