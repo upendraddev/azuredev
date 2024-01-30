@@ -31,6 +31,7 @@ jobs:
         "https://api.github.com/repos/$OTHER_REPO/actions/workflows/$WF_NAME/runs")
         RUN_ID=$(echo "$RUNS" | jq -r '.workflow_runs[1].id')
         if [ -z "$RUN_ID" ]; then
+        echo "I am not null"
         else
         echo "HEllo I am null"
         fi
