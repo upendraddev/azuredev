@@ -43,9 +43,10 @@ jobs:
         }
         trap cleanup EXIT
         RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId) | exit_code=$?
-        echo "$RUN_ID"
+        echo "RUndid:$RUN_ID"
         gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME} | exit_code=$?
         ls
+        echo "RUndid:$RUN_ID"
         filecount=$(ls | grep .csv -c)
         if [[  $filecount == 1 ]]; then 
           filename=$(ls | grep .csv )          
