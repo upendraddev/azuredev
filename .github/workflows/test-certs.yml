@@ -5,9 +5,9 @@ on:
     #   chipIds:
     #     description: 'Specify the ChipID'
     #     required: true
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
 jobs:   
   test-certs:
     runs-on: ubuntu-latest
