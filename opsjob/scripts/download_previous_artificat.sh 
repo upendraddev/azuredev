@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+echo -e "\n===== [$(readlink -f $0)] =====\n" 1>&2
+set -euvx
+shopt -s inherit_errexit
+set +v
+
+: $1 $2 $3 
+
+OTHER_REPO=$1
+WF_NAME=$2
+ARTIFACT_NAME=$3
+timestamp=$(date +%Y%m%d%H%M%S)
+Dirname=${timestamp}-SOFiles
+CSVFilename=${timestamp}-SO_Outputs.csv
+
+cleanup() {
+Exitvalue=$?
+if [ $Exitvalue -gt 0 ] || [ $exit_code -gt 0 ]; then
+    Exitvalue=0
+    echo " exit_code=$exit_code"
+    cd ../
+    echo "S.no" > ./"$CSVFilename"; \
+    echo "ChipID" >>./"$CSVFilename"; 
+    echo "Date" >>./"$CSVFilename"; 
+    echo "Requested Count" >>./"$CSVFilename"; 
+fi
+}
+trap cleanup EXIT
+
+RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId) || exit_code=$?
+gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME} || exit_code=$?
+filecount=$(ls | grep .csv -c)
+if [[  $filecount == 1 ]]; then 
+    filename=$(ls | grep .csv ) 
+    cd ../         
+    cp $filename 
+fi

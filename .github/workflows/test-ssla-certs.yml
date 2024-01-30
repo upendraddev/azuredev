@@ -28,13 +28,17 @@ jobs:
         WF_NAME="test-ssla-certs"
         ARTIFACT_NAME="SO-Files"
         #RUN_ID="7700153957"
-        RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId) || true
-        gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME} || true
-        filecount=$(ls | grep .csv -c)
-        if [[  $filecount == 1 ]]; then 
-          filename=$(ls | grep .csv )          
-          cp $filename ./opsjob/
-        fi
+        bash ./opsjob/scripts/download_previous_artificat.sh \
+        "$OTHER_REPO" \
+        "$WF_NAME"  \
+        "$ARTIFACT_NAME" 
+        # RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId) || true
+        # gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME} || true
+        # filecount=$(ls | grep .csv -c)
+        # if [[  $filecount == 1 ]]; then 
+        #   filename=$(ls | grep .csv )          
+        #   cp $filename ./opsjob/
+        # fi
 
     - name: Script Execution For Certificate Operations
       run: |
