@@ -38,5 +38,5 @@ jobs:
         API_URL="https://api.github.com/repos/${OTHER_REPO}/actions/runs/${RUN_ID}/artifacts"
         response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
         artifact_id=$(echo "$response" | jq -r ".artifacts[] | select(.name == \"$ARTIFACT_NAME\") | .id")
-        echo "$artifact_id"
+        echo "artifact: $artifact_id"
         fi
