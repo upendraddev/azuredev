@@ -78,7 +78,7 @@ jobs:
     #     path: |
     #       ./opsjob/*.csv
     #       ./opsjob/password.txt
-          ./opsjob/*.zip 
+          # ./opsjob/*.zip 
 
     # - uses: actions/download-artifact@v4
     #   with:
