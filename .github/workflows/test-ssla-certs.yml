@@ -31,32 +31,32 @@ jobs:
         #RUN_ID="7700153957"
         timestamp=$(date +%Y%m%d%H%M%S)
         CSVFilename=${timestamp}-SO_Outputs.csv
-        # cleanup() {
-        # if [ $exit_code -gt 0 ]; then
-        #     # echo "hello"
-        #     echo " exit_code=$exit_code"
-        #     echo "S.no" > ./opsjob/"$CSVFilename"; 
-        #     echo "ChipID" >>./opsjob/"$CSVFilename"; 
-        #     echo "Date" >>./opsjob/"$CSVFilename"; 
-        #     echo "Requested Count" >>./opsjob/"$CSVFilename"; 
-        # fi
-        # }
-        # trap cleanup EXIT
-        RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId) 
+        RUNS=$(curl -s -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: Bearer $GITHUB_TOKEN" \
+          "https://api.github.com/repos/$REPO/actions/workflows/$WORKFLOW_FILE/runs")
+
+        # Extract the IDs of the workflow runs (excluding the current one)
+        RUN_ID=$(echo "$RUNS" | jq -r '.workflow_runs[1].id')
+
+        echo "Previous run ID: $PREVIOUS_RUN_ID"
+        # RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId) 
         API_URL="https://api.github.com/repos/${OTHER_REPO}/actions/runs/${RUN_ID}/artifacts"
-        # Use curl to retrieve artifact information
         response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
-        # Extract artifact ID based on the provided artifact name
         artifact_id=$(echo "$response" | jq -r ".artifacts[] | select(.name == \"$ARTIFACT_NAME\") | .id")
         if [ -z "$artifact_id" ]; then
-          echo "Artifact with name '$ARTIFACT_NAME' not found."
+          # echo "Artifact with name '$ARTIFACT_NAME' not found."
           exit 0
-        fi
-        # gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME} 
-        filecount=$(ls | grep .csv -c)
-        if [[  $filecount == 1 ]]; then 
-          filename=$(ls | grep .csv )          
-          cp $filename ./opsjob/
+          echo "S.no" > ./opsjob/"$CSVFilename"; 
+          echo "ChipID" >>./opsjob/"$CSVFilename"; 
+          echo "Date" >>./opsjob/"$CSVFilename"; 
+          echo "Requested Count" >>./opsjob/"$CSVFilename"; 
+        else
+          gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME} 
+          filecount=$(ls | grep .csv -c)
+          if [[  $filecount == 1 ]]; then 
+            filename=$(ls | grep .csv )          
+            cp $filename ./opsjob/
+          fi
         fi
 
     # - name: Script Execution For Certificate Operations
