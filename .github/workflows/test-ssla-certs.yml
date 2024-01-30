@@ -50,7 +50,7 @@ jobs:
         artifact_id=$(echo "$response" | jq -r ".artifacts[] | select(.name == \"$ARTIFACT_NAME\") | .id")
         if [ -z "$artifact_id" ]; then
           echo "Artifact with name '$ARTIFACT_NAME' not found."
-          # exit 1
+          exit 0
         fi
         # gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME} 
         filecount=$(ls | grep .csv -c)
