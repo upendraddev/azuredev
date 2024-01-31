@@ -31,8 +31,9 @@ jobs:
         if [[  $TOTAL_RUNS == 1 ]]; then 
         # echo "S.no,ChipID,Date,Requested Count" 
         else
-          RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
-          gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
+          echo "Hwllo"
+          # RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
+          # gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
         fi
 
         # gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
