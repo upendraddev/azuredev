@@ -31,7 +31,7 @@ jobs:
         if [[  $TOTAL_RUNS == 1 ]]; then 
         # echo "S.no,ChipID,Date,Requested Count" 
         else
-        echo "HEllo Run idd"
+          echo "HEllo Run idd"
         fi
         # gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
         # filecount=$(ls | grep .csv -c)
