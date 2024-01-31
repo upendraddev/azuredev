@@ -29,7 +29,7 @@ jobs:
         ARTIFACT_NAME="Test"
         TOTAL_RUNS=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId | jq '. | length')
         if [[  $TOTAL_RUNS == 1 ]]; then 
-        # echo "S.no,ChipID,Date,Requested Count" 
+        echo "S.no,ChipID,Date,Requested Count" 
         else
           echo "HEllo Run idd"
         fi
