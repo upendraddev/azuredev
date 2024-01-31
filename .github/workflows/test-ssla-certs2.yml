@@ -28,10 +28,12 @@ jobs:
         WF_NAME="test-ssla-certs2.yml"
         ARTIFACT_NAME="Test"
         TOTAL_RUNS=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId | jq '. | length')
-        echo "$TOTAL_RUNS"
-        RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
-        if [[ "$RUN_ID" == "null" ]];  then 
-            echo "S.no,ChipID,Date,Requested Count" 
+        if [[  $TOTAL_RUNS == 1 ]]; then 
+        echo "S.no,ChipID,Date,Requested Count" 
+        fi
+        else
+        echo "HEllo Run idd"
+        # RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
         fi
         # gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
         # filecount=$(ls | grep .csv -c)
