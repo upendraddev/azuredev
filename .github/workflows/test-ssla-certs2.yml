@@ -27,7 +27,7 @@ jobs:
         OTHER_REPO="upendraddev/azuredev"
         WF_NAME="test-ssla-certs2.yml"
         ARTIFACT_NAME="Test"
-        gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId | jq '.databaseId | length'
+        gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json | jq '.databaseId | length'
         RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
         if [[ "$RUN_ID" == "null" ]];  then 
             echo "S.no,ChipID,Date,Requested Count" 
