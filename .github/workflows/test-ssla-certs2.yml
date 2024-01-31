@@ -67,7 +67,7 @@ jobs:
 
       - name: Copy the Artifacts locally
         run: |
-          cp -r ./output/*.csv ./opsjob
+          cp -r ./opsjob/*.csv ./opsjob
 
       - name: Script Execution For Certificate Operations
         run: |
