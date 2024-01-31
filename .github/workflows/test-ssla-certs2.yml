@@ -25,7 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Copy Previous Execution Artificats.
+      - name: Download Previous Execution Artificats.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -39,7 +39,7 @@ jobs:
             filename=$(ls | grep .csv )          
             cp $filename ./opsjob/
           fi
-          
+
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
@@ -67,7 +67,7 @@ jobs:
 
       - name: Copy the Artifacts locally
         run: |
-          cp -r ./opsjob/ ./opsjob
+          cp -r ./output/*.csv ./opsjob
 
       - name: Script Execution For Certificate Operations
         run: |
