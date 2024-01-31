@@ -39,6 +39,13 @@ jobs:
             filename=$(ls | grep .csv )          
             cp $filename ./opsjob/
           fi
+          
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: SO-Files
+          path: |
+            ./opsjob/*.csv
 
   certificate_operations:
     needs: [workflow-start,download-previous-artificats]
