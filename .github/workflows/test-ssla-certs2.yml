@@ -11,14 +11,22 @@ on:
 
 jobs:   
   workflow-start:
+    outputs:
+      testrunner: ${{ steps.runner_out.outputs.testrunner }}
     runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v4  
 
+    - name: output values
+        id: runner_out
+        run: |
+          echo "testrunner=runner-${{ steps.get-runs.outputs.result}}" >> $GITHUB_OUTPUT
+
 
   download-previous-artificats:
     needs: [workflow-start]
+    runs-on: ${{ needs.workflow-start.outputs.testrunner }}
     name: Download Previous Execution Artificat
     steps:
       - uses: actions/checkout@v4
@@ -40,6 +48,7 @@ jobs:
 
   certificate_operations:
     needs: [workflow-start,download-previous-artificats]
+    runs-on: ${{ needs.workflow-start.outputs.testrunner }}
     name: Certificate Operations
     steps:
       - uses: actions/checkout@v4
