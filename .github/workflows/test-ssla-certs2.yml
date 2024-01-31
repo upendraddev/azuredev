@@ -27,16 +27,12 @@ jobs:
         OTHER_REPO="upendraddev/azuredev"
         WF_NAME="test-ssla-certs2.yml"
         ARTIFACT_NAME="Test"
-        RUNS=$(curl -s -H "Accept: application/vnd.github.v3+json" \
-        -H "Authorization: Bearer $GITHUB_TOKEN" \
-        "https://api.github.com/repos/$OTHER_REPO/actions/workflows/$WF_NAME/runs")
-        RUN_ID=$(echo "$RUNS" | jq -r '.workflow_runs[1].id')
-        if [[ "$RUN_ID" == "null" ]];  then 
-        echo "iamm  null"
-        else
-        # echo "$RUN_ID HEllo I am not null"
-        API_URL="https://api.github.com/repos/${OTHER_REPO}/actions/runs/${RUN_ID}/artifacts"
-        response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" $API_URL)
-        artifact_id=$(echo "$response" | jq -r ".artifacts[] | select(.name == \"$ARTIFACT_NAME\") | .id")
-        echo "artifact: $artifact_id"
+        RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
+        echo "$RUN_ID"
+        gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
+        filecount=$(ls | grep .csv -c)
+        echo "$filecount"
+        if [[  $filecount == 1 ]]; then 
+          filename=$(ls | grep .csv )          
+          # cp $filename ./microservices/opsjob/
         fi
