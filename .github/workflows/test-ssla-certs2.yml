@@ -19,6 +19,7 @@ jobs:
 
   download-previous-artificats:
     needs: [workflow-start]
+    name: Download Previous Execution Artificat
     steps:
       - uses: actions/checkout@v4
 
@@ -39,6 +40,7 @@ jobs:
 
   certificate_operations:
     needs: [workflow-start,download-previous-artificats]
+    name: Certificate Operations
     steps:
       - uses: actions/checkout@v4
 
