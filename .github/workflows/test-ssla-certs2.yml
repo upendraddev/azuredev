@@ -34,8 +34,9 @@ jobs:
         # echo "HEllo Run idd"
         RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
         # echo "$RUN_ID"
-        fi
         gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
+        fi
+
         # gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
         # filecount=$(ls | grep .csv -c)
         # echo "$filecount"
