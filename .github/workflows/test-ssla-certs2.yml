@@ -1,4 +1,4 @@
-name: test-ssla-certs
+name: test-ssla-certs2
 on:
   workflow_dispatch:
     inputs:
@@ -36,7 +36,7 @@ jobs:
 
   certificate_operations:
     needs: [workflow-start,download-previous-artificats]
-    
+
     - name: Install dependencies
       run: |
         sudo apt-get install python3-setuptools
