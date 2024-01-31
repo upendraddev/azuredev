@@ -19,68 +19,73 @@ jobs:
 
   download-previous-artificats:
     needs: [workflow-start]
-    - name: Download Previous Execution Artificats.
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        OTHER_REPO="upendraddev/azuredev"
-        WF_NAME="test-ssla-certs2.yml"
-        ARTIFACT_NAME="SO-Files"
-        RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
-        gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME} 
-        filecount=$(ls | grep .csv -c)
-        if [[  $filecount == 1 ]]; then 
-          filename=$(ls | grep .csv )          
-          cp $filename ./opsjob/
-        fi
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Copy Previous Execution Artificats.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          OTHER_REPO="upendraddev/azuredev"
+          WF_NAME="test-ssla-certs2.yml"
+          ARTIFACT_NAME="SO-Files"
+          RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
+          gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME} 
+          filecount=$(ls | grep .csv -c)
+          if [[  $filecount == 1 ]]; then 
+            filename=$(ls | grep .csv )          
+            cp $filename ./opsjob/
+          fi
 
   certificate_operations:
     needs: [workflow-start,download-previous-artificats]
+    steps:
+      - uses: actions/checkout@v4
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get install python3-setuptools
+      - name: Install dependencies
+        run: |
+          sudo apt-get install python3-setuptools
 
-    - name: Script Execution For Certificate Operations
-      run: |
-        # ChipIDC="Aid-0005-000000000007,Aid-0005-000000000003,Aid-0005-000000000004,Aid-0005-000000000005,Aid-0005-000000000008"
-        ChipIDC=${{ github.event.inputs.chipIds }}
-        ChipIDContent=$(echo $ChipIDC | tr "," "\n")
-        ChipIDCount=$(echo $ChipIDC | grep -o "," | wc -l)
-        echo $ChipIDCount
-        # Token="hdbzvb"
-        timestamp=$(date +%Y%m%d%H%M%S)
-        Dirname=${timestamp}-SOFiles
-        mkdir -p ./opsjob/${Dirname}
-        if [[ "$ChipIDCount" -lt 100 ]]; then
-        for ChipID in $ChipIDContent
-        do
-            bash ./opsjob/scripts/run_sssla_cetificate_operations_latest.sh \
-            "https://aig-tri-sand.com" \
-            "$ChipID" \
-            "$Token"  \
-            "$Dirname" 
-        done
-        sudo apt install pwgen -y
-        PASSPHRASE=$(pwgen 12 1)
-        cd opsjob
-        sudo python3 ./scripts/read-csv-data.py $ChipIDC
-        echo ${PASSPHRASE} >>./password.txt
-        sudo apt install p7zip-full -y
-        7za a -tzip -p${PASSPHRASE} -mem=AES256 ${Dirname}.zip ${Dirname}
-        else
-          echo "More than 100 ChipID's were provided as an Input. Please review the input again"
-          exit 1
-        fi
+      - name: Script Execution For Certificate Operations
+        run: |
+          # ChipIDC="Aid-0005-000000000007,Aid-0005-000000000003,Aid-0005-000000000004,Aid-0005-000000000005,Aid-0005-000000000008"
+          ChipIDC=${{ github.event.inputs.chipIds }}
+          ChipIDContent=$(echo $ChipIDC | tr "," "\n")
+          ChipIDCount=$(echo $ChipIDC | grep -o "," | wc -l)
+          echo $ChipIDCount
+          # Token="hdbzvb"
+          timestamp=$(date +%Y%m%d%H%M%S)
+          Dirname=${timestamp}-SOFiles
+          mkdir -p ./opsjob/${Dirname}
+          if [[ "$ChipIDCount" -lt 100 ]]; then
+          for ChipID in $ChipIDContent
+          do
+              bash ./opsjob/scripts/run_sssla_cetificate_operations_latest.sh \
+              "https://aig-tri-sand.com" \
+              "$ChipID" \
+              "$Token"  \
+              "$Dirname" 
+          done
+          sudo apt install pwgen -y
+          PASSPHRASE=$(pwgen 12 1)
+          cd opsjob
+          sudo python3 ./scripts/read-csv-data.py $ChipIDC
+          echo ${PASSPHRASE} >>./password.txt
+          sudo apt install p7zip-full -y
+          7za a -tzip -p${PASSPHRASE} -mem=AES256 ${Dirname}.zip ${Dirname}
+          else
+            echo "More than 100 ChipID's were provided as an Input. Please review the input again"
+            exit 1
+          fi
 
-    - uses: actions/upload-artifact@v4
-      if: ${{ always() }}
-      with:
-        name: SO-Files
-        path: |
-          ./opsjob/*.csv
-          ./opsjob/password.txt
-          ./opsjob/*.zip 
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: SO-Files
+          path: |
+            ./opsjob/*.csv
+            ./opsjob/password.txt
+            ./opsjob/*.zip 
 
 
           
