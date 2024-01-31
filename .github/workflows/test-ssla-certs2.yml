@@ -30,6 +30,7 @@ jobs:
         RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
         if [[ "$RUN_ID" == "null" ]];  then 
             echo "S.no,ChipID,Date,Requested Count" 
+        fi
         # gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
         # filecount=$(ls | grep .csv -c)
         # echo "$filecount"
