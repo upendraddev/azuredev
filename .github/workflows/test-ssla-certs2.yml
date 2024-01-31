@@ -31,11 +31,10 @@ jobs:
         if [[  $TOTAL_RUNS == 1 ]]; then 
         # echo "S.no,ChipID,Date,Requested Count" 
         else
-          echo "Hwllo"
-          # RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
-          # gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
+        # echo "HEllo Run idd"
+        RUN_ID=$(gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[1].databaseId)
+        echo "$RUN_ID"
         fi
-
         # gh run --repo ${OTHER_REPO} download ${RUN_ID} -n ${ARTIFACT_NAME}
         # filecount=$(ls | grep .csv -c)
         # echo "$filecount"
