@@ -5,6 +5,10 @@ on:
       chipIds:
         description: 'Specify the ChipID'
         required: true
+      filename:
+        description: 'Specify the Input for File Name'
+        required: true
+        type: string
   # push:
   #   branches:
   #     - main
@@ -77,8 +81,7 @@ jobs:
           ChipIDCount=$(echo $ChipIDC | grep -o "," | wc -l)
           echo $ChipIDCount
           # Token="hdbzvb"
-          timestamp=$(date +%Y%m%d%H%M%S)
-          Dirname=${timestamp}-SOFiles
+          Dirname=${{ github.event.inputs.filename }}-SOFiles
           mkdir -p ./opsjob/${Dirname}
           if [[ "$ChipIDCount" -lt 100 ]]; then
           for ChipID in $ChipIDContent
