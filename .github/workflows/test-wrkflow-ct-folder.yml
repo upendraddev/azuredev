@@ -16,5 +16,4 @@ jobs:
         timestamp=$(date +%Y%m%d%H%M%S)
         file="~!@#$%^-_=+,."
         Dirname=${timestamp}-${file}
-        create=$(mkdir -p ./opsjob/${Dirname})
-        echo "$create"
+        mkdir -p ./opsjob/${Dirname} -v
