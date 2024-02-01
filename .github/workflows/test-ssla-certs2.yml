@@ -61,7 +61,8 @@ jobs:
           ChipIDC=${{ github.event.inputs.chipIds }}
           ChipIDContent=$(echo $ChipIDC | tr "," "\n")
           ChipIDCount=$(echo $ChipIDC | grep -o "," | wc -l)
-          Dirname=${{ github.event.inputs.filename }}-SOFiles
+          timestamp=$(date +%Y%m%d%H%M%S)
+          Dirname=${timestamp}-${{ github.event.inputs.filename }}
           mkdir -p ./opsjob/${Dirname}
           if [[ "$ChipIDCount" -lt 100 ]]; then
           for ChipID in $ChipIDContent
