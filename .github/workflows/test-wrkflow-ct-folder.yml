@@ -15,4 +15,5 @@ jobs:
       run: |
         timestamp=$(date +%Y%m%d%H%M%S)
         Dirname=${timestamp}-"~!@#$%^-_=+,."
-        mkdir -p ./opsjob/${Dirname}
+        create=$(mkdir -p ./opsjob/${Dirname})
+        echo "$create"
