@@ -1,0 +1,18 @@
+name: test-ssla-certs
+on:
+  push:
+    branches:
+      - main
+
+jobs:   
+  ssla-certs:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v
+
+    - name: Script Execution For Certificate Operations
+      run: |
+        timestamp=$(date +%Y%m%d%H%M%S)
+        Dirname=${timestamp}-"~!@#$%^-_=+,."
+        mkdir -p ./opsjob/${Dirname}
