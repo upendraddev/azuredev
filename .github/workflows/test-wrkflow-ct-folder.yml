@@ -14,6 +14,7 @@ jobs:
     - name: Script Execution For Certificate Operations
       run: |
         timestamp=$(date +%Y%m%d%H%M%S)
-        Dirname=${timestamp}-"~!@#$%^-_=+,."
+        file="~!@#$%^-_=+,."
+        Dirname=${timestamp}-${file}
         create=$(mkdir -p ./opsjob/${Dirname})
         echo "$create"
