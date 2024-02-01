@@ -44,13 +44,6 @@ jobs:
             cp $filename ./opsjob/
           fi
 
-      - uses: actions/upload-artifact@v4
-        if: ${{ always() }}
-        with:
-          name: SO-Files
-          path: |
-            ./opsjob/*.csv
-
   certificate_operations:
     needs: [workflow-start,download-previous-artificats]
     runs-on: ubuntu-latest
@@ -62,25 +55,12 @@ jobs:
         run: |
           sudo apt-get install python3-setuptools
 
-      - name: Download Previous Job Execution Artificats.
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        uses: actions/download-artifact@v3
-        with:
-          name: SO-Files
-
-      - name: Copy the Artifacts locally
-        run: |
-          cp -r ./opsjob/*.csv ./opsjob
-
       - name: Script Execution For Certificate Operations
         run: |
           # ChipIDC="Aid-0005-000000000007,Aid-0005-000000000003,Aid-0005-000000000004,Aid-0005-000000000005,Aid-0005-000000000008"
           ChipIDC=${{ github.event.inputs.chipIds }}
           ChipIDContent=$(echo $ChipIDC | tr "," "\n")
           ChipIDCount=$(echo $ChipIDC | grep -o "," | wc -l)
-          echo $ChipIDCount
-          # Token="hdbzvb"
           Dirname=${{ github.event.inputs.filename }}-SOFiles
           mkdir -p ./opsjob/${Dirname}
           if [[ "$ChipIDCount" -lt 100 ]]; then
