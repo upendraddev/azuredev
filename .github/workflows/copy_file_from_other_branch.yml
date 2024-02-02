@@ -33,11 +33,11 @@ jobs:
 
     - name: Check For Artifact file in feat branch
       run: |
+        ls
         if [[ -z "./opsjob/SO_Outputs.csv" ]]; then
         echo "S.no","ChipID","Date","RequestedCount" > ./opsjob/SO_Outputs.csv;
         fi
-        
-
+      
     - name: Commit and push changes
       run: |
         git config user.name "${{ github.actor }}"
@@ -46,4 +46,4 @@ jobs:
         echo "2,ChipID-0003,2024-02-02,1" >> ./opsjob/SO_Outputs.csv;
         git add ./opsjob/SO_Outputs.csv 
         git commit -m "Copy file from source_branch to destination_branch"
-        git push origin feat/test-main
+        git push origin ${{ env.BRANCH_NAME }}
