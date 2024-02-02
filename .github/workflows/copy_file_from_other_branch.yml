@@ -19,7 +19,7 @@ jobs:
       run: |
         cd opsjob
         ls
-        cp -f ./opsjob/SO_Outputs.csv ./opsjob  # Adjust the file paths accordingly
+        cp -f ./opsjob/SO_Outputs.csv ./opsjob 
 
     # - name: Commit and push changes
     #   run: |
