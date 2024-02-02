@@ -23,8 +23,8 @@ jobs:
       run: |
         git config user.name "${{ github.actor }}"
         git config user.email "${{ github.actor }}@users.noreply.github.com"
-        echo "1,ChipID-0001,2024-02-02,1" > ./opsjob/SO_Outputs.csv;
-        echo "2,ChipID-0001,2024-02-02,1" > ./opsjob/SO_Outputs.csv;
+        echo "2,ChipID-0002,2024-02-02,1" > ./opsjob/SO_Outputs.csv;
+        echo "3,ChipID-0003,2024-02-02,1" > ./opsjob/SO_Outputs.csv;
         git add ./opsjob/SO_Outputs.csv 
         git commit -m "Copy file from source_branch to destination_branch"
         git push origin feat/test-main
