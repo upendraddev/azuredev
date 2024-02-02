@@ -26,7 +26,7 @@ jobs:
 
     - name: Copy file to destination branch
       run: |
-          ls 
+        ls 
     # - name: Commit and push changes
     #   run: |
     #     git config user.name "${{ github.actor }}"
