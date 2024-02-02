@@ -9,20 +9,31 @@ jobs:
   copy-file:
     runs-on: ubuntu-latest
 
+    - name: Set variables
+      env:
+        featbranch: feat/test-main2
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Set branch name
+      run: echo "BRANCH_NAME=feat/test-main2" >> $GITHUB_ENV
+
     - name: Check For feat branch
       run: |
         GITHUB_REPOSITORY="upendraddev/azuredev"
-        branch="feat/test-main2"
-        REPO_API="https://api.github.com/repos/${GITHUB_REPOSITORY}/branches/${branch}"
+        REPO_API="https://api.github.com/repos/${GITHUB_REPOSITORY}/branches/${{ env.BRANCH_NAME }}"
         response=$(curl -s -o /dev/null -w "%{http_code}" ${REPO_API})
         if [ $response != 200 ]; then
-        git checkout -b ${branch}
-        git push origin ${branch}
+        git checkout -b ${{ env.BRANCH_NAME }}
+        git push origin ${{ env.BRANCH_NAME }}
         fi
+
+    - name: Checkout source branch
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ env.BRANCH_NAME }}
 
     - name: Check For Artifact file in feat branch
       run: |
