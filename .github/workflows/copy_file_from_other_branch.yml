@@ -8,6 +8,9 @@ on:
 jobs:
   copy-file:
     runs-on: ubuntu-latest
+  - name: Set variables
+    env:
+      featbranch: feat/test-main2
 
     steps:
 
@@ -28,7 +31,7 @@ jobs:
     - name: Checkout source branch
       uses: actions/checkout@v2
       with:
-        ref:  ${branch}  # Replace with the branch from where you want to copy the file
+        ref: ${{ env.featbranch }}
 
     - name: Check For Artifact file in feat branch
       run: |
