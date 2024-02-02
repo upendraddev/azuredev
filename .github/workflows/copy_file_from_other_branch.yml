@@ -16,9 +16,12 @@ jobs:
 
     - name: Check For feat branch
       run: |
-        branch="feat/test-main"
+        branch="feat/test-main2"
         BRANCH_NAME=$(git ls-remote --heads origin | grep ${branch})
-        echo "$BRANCH_NAME"
+        if [[ -z "$BRANCH_NAME" ]]; then
+        git checkout -b $branch
+        git push origin $branch
+        fi
 
     # - name: Checkout source branch
     #   uses: actions/checkout@v2
