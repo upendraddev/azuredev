@@ -16,11 +16,13 @@ jobs:
 
     - name: Check For feat branch
       run: |
+        GITHUB_REPOSITORY="upendraddev/azuredev"
         branch="feat/test-main2"
-        BRANCH_NAME=$(git ls-remote --heads origin | grep ${branch})
-        if [[ -z "$BRANCH_NAME" ]]; then
-        git checkout -b $branch
-        git push origin $branch
+        REPO_API="https://api.github.com/repos/${GITHUB_REPOSITORY}/branches/${branch}"
+        response=$(curl -s -o /dev/null -w "%{http_code}" ${REPO_API})
+        if [ $response -nq 200 ]; then
+        git checkout -b ${branch}
+        git push origin ${branch}
         fi
 
     # - name: Checkout source branch
