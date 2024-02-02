@@ -12,13 +12,11 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
-    - name: Set branch name
-      run: echo "BRANCH_NAME=feat/test-main" >> $GITHUB_ENV
-
+      
     - name: Check For feat branch
       run: |
         GITHUB_REPOSITORY="upendraddev/azuredev"
+        echo "BRANCH_NAME=feat/test-main" >> $GITHUB_ENV
         REPO_API="https://api.github.com/repos/${GITHUB_REPOSITORY}/branches/${{ env.BRANCH_NAME }}"
         response=$(curl -s -o /dev/null -w "%{http_code}" ${REPO_API})
         if [ $response != 200 ]; then
