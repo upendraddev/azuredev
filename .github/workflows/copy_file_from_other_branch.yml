@@ -20,7 +20,7 @@ jobs:
         branch="feat/test-main2"
         REPO_API="https://api.github.com/repos/${GITHUB_REPOSITORY}/branches/${branch}"
         response=$(curl -s -o /dev/null -w "%{http_code}" ${REPO_API})
-        if [ $response -nq 200 ]; then
+        if [ $response != 200 ]; then
         git checkout -b ${branch}
         git push origin ${branch}
         fi
