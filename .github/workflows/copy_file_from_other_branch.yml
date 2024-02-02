@@ -11,9 +11,25 @@ jobs:
 
     steps:
 
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Check For feat branch
       run: |
         git ls-remote --heads origin | grep "feat/test-main"
+
+    - name: Check if branch exists
+      run: |
+        BRANCH_NAME="feat/test-main"
+        REPO_API="https://api.github.com/repos/upendraddev/azuredev/branches/${BRANCH_NAME}"
+
+        response=$(curl -s -o /dev/null -w "%{http_code}" ${REPO_API})
+
+        if [ $response -eq 200 ]; then
+          echo "Branch exists!"
+        else
+          echo "Branch does not exist!"
+        fi
 
     # - name: Checkout source branch
     #   uses: actions/checkout@v2
