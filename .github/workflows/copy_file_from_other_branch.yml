@@ -17,7 +17,7 @@ jobs:
 
     - name: Copy file to destination branch
       run: |
-        mv ./opsjob/SO_Outputs.csv ./opsjob # Adjust the file paths accordingly
+        mv ./opsjob/SO_Outputs.csv ./opsjob/scripts # Adjust the file paths accordingly
 
     - name: Commit and push changes
       run: |
