@@ -20,13 +20,14 @@ jobs:
         cp -f ./opsjob/SO_Outputs.csv ./
 
     - name: Checkout source branch
-    uses: actions/checkout@v2
-    with:
-      ref: 'main' 
+      uses: actions/checkout@v2
+      with:
+        ref: 'main' 
 
     - name: Copy file to destination branch
       run: |
-        ls 
+        ls
+        cp -f SO_Outputs.csv ./opsjob
     # - name: Commit and push changes
     #   run: |
     #     git config user.name "${{ github.actor }}"
