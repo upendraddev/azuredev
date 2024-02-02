@@ -8,12 +8,8 @@ on:
 jobs:
   copy-file:
     runs-on: ubuntu-latest
-  - name: Set variables
-    env:
-      featbranch: feat/test-main2
 
     steps:
-
     - name: Checkout code
       uses: actions/checkout@v2
 
@@ -27,11 +23,6 @@ jobs:
         git checkout -b ${branch}
         git push origin ${branch}
         fi
-
-    - name: Checkout source branch
-      uses: actions/checkout@v2
-      with:
-        ref: ${{ env.featbranch }}
 
     - name: Check For Artifact file in feat branch
       run: |
