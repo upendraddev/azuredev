@@ -17,7 +17,7 @@ jobs:
 
     - name: Copy file to destination branch
       run: |
-        cp ./opsjob/SO_Outputs.csv ./opsjob # Adjust the file paths accordingly
+        cp -f ./opsjob/SO_Outputs.csv ./opsjob  # Adjust the file paths accordingly
 
     - name: Commit and push changes
       run: |
@@ -27,4 +27,4 @@ jobs:
         echo "2,ChipID-0001,2024-02-02,1" > ./opsjob/SO_Outputs.csv;
         git add ./opsjob/SO_Outputs.csv 
         git commit -m "Copy file from source_branch to destination_branch"
-        git push origin main
+        git push origin feat/test-main
