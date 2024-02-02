@@ -17,8 +17,6 @@ jobs:
 
     - name: Copy file to destination branch
       run: |
-        cd opsjob
-        ls
         cp -f ./opsjob/SO_Outputs.csv ./opsjob 
 
     # - name: Commit and push changes
