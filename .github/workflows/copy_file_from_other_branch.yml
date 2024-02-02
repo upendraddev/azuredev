@@ -25,24 +25,24 @@ jobs:
         git push origin ${branch}
         fi
 
-    # - name: Checkout source branch
-    #   uses: actions/checkout@v2
-    #   with:
-    #     ref: 'feat/test-main'  # Replace with the branch from where you want to copy the file
+    - name: Checkout source branch
+      uses: actions/checkout@v2
+      with:
+        ref:  ${branch}  # Replace with the branch from where you want to copy the file
 
-    # - name: Check For Artifact file in feat branch
-    #   run: |
-    #     if [[ -z "./opsjob/SO_Outputs.csv" ]]; then
-    #     echo "S.no","ChipID","Date","RequestedCount" > ./opsjob/SO_Outputs.csv;
-    #     fi
+    - name: Check For Artifact file in feat branch
+      run: |
+        if [[ -z "./opsjob/SO_Outputs.csv" ]]; then
+        echo "S.no","ChipID","Date","RequestedCount" > ./opsjob/SO_Outputs.csv;
+        fi
         
 
-    # - name: Commit and push changes
-    #   run: |
-    #     git config user.name "${{ github.actor }}"
-    #     git config user.email "${{ github.actor }}@users.noreply.github.com"
-    #     echo "1,ChipID-0002,2024-02-02,1" >> ./opsjob/SO_Outputs.csv;
-    #     echo "2,ChipID-0003,2024-02-02,1" >> ./opsjob/SO_Outputs.csv;
-    #     git add ./opsjob/SO_Outputs.csv 
-    #     git commit -m "Copy file from source_branch to destination_branch"
-    #     git push origin feat/test-main
+    - name: Commit and push changes
+      run: |
+        git config user.name "${{ github.actor }}"
+        git config user.email "${{ github.actor }}@users.noreply.github.com"
+        echo "1,ChipID-0002,2024-02-02,1" >> ./opsjob/SO_Outputs.csv;
+        echo "2,ChipID-0003,2024-02-02,1" >> ./opsjob/SO_Outputs.csv;
+        git add ./opsjob/SO_Outputs.csv 
+        git commit -m "Copy file from source_branch to destination_branch"
+        git push origin feat/test-main
