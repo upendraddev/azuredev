@@ -20,6 +20,12 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         bash ./testfolder/retrieve_annotations.sh \
+        
+    - name: Download CSV from Azure Blob Storage
+      run: |
+        AZURE_STORAGE_KEY="E01TNVx/K23FCmj5qUV+AStZfQpig=="
+      env:
+        AZURE_STORAGE_KEY: ${{ AZURE_STORAGE_KEY }}
 
     # - name: Script Execution For Certificate Operations
     #   run: |
