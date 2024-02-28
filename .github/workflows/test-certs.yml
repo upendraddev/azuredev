@@ -33,7 +33,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Dispaly env values
-        run: echo "Value of MY_VAR is $AZURE_STORAGE_KEY"
+        run: |
+          AZURE_STORAGE_KEY=${{ env.AZURE_STORAGE_KEY }}
+          echo "Value of MY_VAR is $AZURE_STORAGE_KEY"
     # - name: Script Execution For Certificate Operations
     #   run: |
     #     ChipIDC=${{ github.event.inputs.chipIds }}
