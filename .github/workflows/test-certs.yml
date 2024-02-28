@@ -26,6 +26,7 @@ jobs:
         
 
   certificate_operations:
+    needs: test-certs
     runs-on: ubuntu-latest
     name: Certificate_Operations
     steps:
