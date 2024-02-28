@@ -26,7 +26,24 @@ jobs:
         AZURE_STORAGE_KEY="E01TNVx/K23FCmj5qUV+AStZfQpig=="
       env:
         AZURE_STORAGE_KEY: ${{ AZURE_STORAGE_KEY }}
+        
+    - name: Dispaly env varables
+      run: |
+        {
+          echo "AZURE_STORAGE_KEY=${{ env.AZURE_STORAGE_KEY }}"
+        } >> $GITHUB_ENV
 
+
+  certificate_operations:
+    runs-on: ubuntu-latest
+    name: Certificate_Operations
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Dispaly env values
+        run: |
+          AZURE_STORAGE_KEY="${{ env.AZURE_STORAGE_KEY }}"
+          echo "$AZURE_STORAGE_KEY"
     # - name: Script Execution For Certificate Operations
     #   run: |
     #     ChipIDC=${{ github.event.inputs.chipIds }}
