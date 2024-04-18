@@ -30,16 +30,6 @@ on:
         description: "ENV_NAME of resources to be deployed.:"
         required: true
         default: sand
-      RUNNER_NAME:
-        type: choice
-        description: "Runner name of your choice.:"
-        required: true
-        default: "default"
-        options:
-        - "default"
-        - "deprecated"
-        - "dev"
-        - github
   workflow_call:
     inputs:
       SVC_CODE:
