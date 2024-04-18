@@ -54,18 +54,11 @@ on:
       ENV_NAME:
         required: true
         type: string
-      RUNNER_NAME:
-        type: string
-      RUNNER_LABEL_NUMBER:
-        required: false
-        default: ""
-        type: string
 
 jobs:
 
   main:
-    runs-on: ${{ needs.workflow-start.outputs.runner }}
-    needs: [workflow-start]
+    runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.SVC_CODE }}-pf-${{ inputs.ENV_GRP }}-allMsv
     steps:
