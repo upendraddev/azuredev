@@ -1,0 +1,92 @@
+name: ms 900 SSSLA Create Storage Account
+
+on:
+  workflow_dispatch:
+    inputs:
+      SVC_CODE:
+        description: "SVC_CODE of resources to be deployed.:"
+        required: true
+        default: aig
+      MSV_CODE:
+        type: choice
+        description: "MSV_CODE of resources to be deployed:"
+        required: true
+        options:
+          - labff
+          - lasss
+          - ladps
+          - laopa
+          - opsjob
+          - facsibff
+          - facsidps
+      ENV_GRP:
+        type: choice
+        description: "ENV_GRP of resources to be deployed (e.g. tri, pre, rls):"
+        required: true
+        options:
+          - tri
+          - pre
+      ENV_NAME:
+        description: "ENV_NAME of resources to be deployed.:"
+        required: true
+        default: sand
+      RUNNER_NAME:
+        type: choice
+        description: "Runner name of your choice.:"
+        required: true
+        default: "default"
+        options:
+        - "default"
+        - "deprecated"
+        - "dev"
+        - github
+  workflow_call:
+    inputs:
+      SVC_CODE:
+        required: true
+        type: string
+      MSV_CODE:
+        required: true
+        type: string
+      ENV_GRP:
+        required: true
+        type: string
+      ENV_NAME:
+        required: true
+        type: string
+      RUNNER_NAME:
+        type: string
+      RUNNER_LABEL_NUMBER:
+        required: false
+        default: ""
+        type: string
+
+jobs:
+
+  main:
+    runs-on: ${{ needs.workflow-start.outputs.runner }}
+    needs: [workflow-start]
+    environment:
+      name: ${{ inputs.SVC_CODE }}-pf-${{ inputs.ENV_GRP }}-allMsv
+    steps:
+      - name: Set variables
+        run: |
+          {
+            echo "SVC_CODE=${{ inputs.SVC_CODE }}"
+            echo "ENV_GRP=${{ inputs.ENV_GRP }}"
+            echo "ENV_NAME=${{ inputs.ENV_NAME }}"
+            echo "MSV_CODE=${{ inputs.MSV_CODE }}"
+            echo "USAGE=main"
+            echo "REGION_CODE=japaneast"
+          } >> $GITHUB_ENV
+
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+
+      - name: Create Storage Account
+        id: storage-account
+        run: |
+          CMN_PARAMS="${SVC_CODE} ${MSV_CODE} ${ENV_GRP} ${ENV_NAME} ${USAGE} ${REGION_CODE}"
