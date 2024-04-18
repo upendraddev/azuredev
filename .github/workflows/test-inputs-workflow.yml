@@ -4,21 +4,16 @@ on:
   workflow_dispatch:
     inputs:
       SVC_CODE:
-        description: "SVC_CODE of resources to be deployed.:"
+        description: "SVC_CODE of resources to be deployed:"
         required: true
         default: aig
       MSV_CODE:
         type: choice
         description: "MSV_CODE of resources to be deployed:"
         required: true
+        default: labff
         options:
           - labff
-          - lasss
-          - ladps
-          - laopa
-          - opsjob
-          - facsibff
-          - facsidps
       ENV_GRP:
         type: choice
         description: "ENV_GRP of resources to be deployed (e.g. tri, pre, rls):"
@@ -27,23 +22,9 @@ on:
           - tri
           - pre
       ENV_NAME:
-        description: "ENV_NAME of resources to be deployed.:"
+        description: "ENV_NAME of resources to be deployed:"
         required: true
         default: sand
-  workflow_call:
-    inputs:
-      SVC_CODE:
-        required: true
-        type: string
-      MSV_CODE:
-        required: true
-        type: string
-      ENV_GRP:
-        required: true
-        type: string
-      ENV_NAME:
-        required: true
-        type: string
 
 jobs:
 
