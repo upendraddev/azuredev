@@ -16,8 +16,4 @@ jobs:
 
     - name: Run Assertible tests
       run: |
-        curl -u OtbOWOLjGfJBYYrZ: "https://assertible.com/deployments" -d'{
-    "service": "4ed3742c-5f92-44ec-b96f-8813fd40b3c9",
-    "environment": "production",
-    "version": "v1"
-    }'
+        curl -XPOST -u $ASSERTIBLE_API_TOKEN: https://assertible.com/apis/4ed3742c-5f92-44ec-b96f-8813fd40b3c9/run
