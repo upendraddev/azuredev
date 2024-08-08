@@ -16,4 +16,4 @@ jobs:
     
     - name: Run Assertible tests
       run: |
-        curl https://assertible.com/apis/4ed3742c-5f92-44ec-b96f-8813fd40b3c9/run?api_token=OtbOWOLjGfJBYYrZ
+        curl https://assertible.com/apis/4ed3742c-5f92-44ec-b96f-8813fd40b3c9/run?api_token=${{ secrets.ASSERTIBLE_API_TOKEN }}
