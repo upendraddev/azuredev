@@ -16,14 +16,4 @@ jobs:
     
     - name: Run Assertible tests
       run: |
-        curl -X POST "https://assertible.com/deployments" \
-        -H "Content-Type: application/json" \
-        -H "Authorization: Bearer ${{ secrets.ASSERTIBLE_API_TOKEN }}" \
-        -d '{
-          "service": "Sample API",
-          "environment": "production",
-          "deploy": {
-            "commit_sha": "${{ github.sha }}",
-            "branch": "${{ github.ref }}"
-          }
-        }'
+        curl https://assertible.com/apis/4ed3742c-5f92-44ec-b96f-8813fd40b3c9/run?api_token=OtbOWOLjGfJBYYrZ
