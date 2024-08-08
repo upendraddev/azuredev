@@ -1,0 +1,21 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run Assertible tests
+      run: |
+        ASSERTIBLE_API_KEY="OtbOWOLjGfJBYYrZ"
+        ASSERTIBLE_SERVICE_ID="4ed3742c-5f92-44ec-b96f-8813fd40b3c9"
+        curl -X POST "https://api.assertible.com/v1/services/${{ secrets.ASSERTIBLE_SERVICE_ID }}/tests/openapi" \
+          -H "Authorization: Bearer $ASSERTIBLE_API_KEY" \
+          -F "spec=./testfolder/openapi.json"
