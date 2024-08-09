@@ -1,4 +1,4 @@
-name: CI/CD Workflow with Assertible
+name: Generate API Test Cases
 
 on:
   push:
@@ -8,24 +8,18 @@ on:
 jobs:
   generate-test-cases:
     runs-on: ubuntu-latest
-    environment:
-      name: assertible_tool
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Generate test cases
-        run: |
-          curl https://assertible.com/apis/4ed3742c-5f92-44ec-b96f-8813fd40b3c9/run?api_token=${{ secrets.ASSERTIBLE_API_TOKEN }}
-
-      - name: Download test cases
-        run: |
-          curl -X GET "https://assertible.com/api/services/4ed3742c-5f92-44ec-b96f-8813fd40b3c9/tests" \
-          -H "Authorization: Bearer ${{ secrets.ASSERTIBLE_API_TOKEN }}" \
-          -o downloaded-test-cases.json
-
-      - name: Save artifact
-        uses: actions/upload-artifact@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          name: test-cases
-          path: downloaded-test-cases.json
+          node-version: '14'
+
+      - name: Install Assertible CLI
+        run: npm install -g @assertible/assertible
+
+      - name: Verify Assertible CLI Installation
+        run: assertible --version
