@@ -1,0 +1,36 @@
+name: Assertible Test Case Generation
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-test-cases:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: Install Assertible CLI
+        run: npm install -g assertible
+
+      - name: Generate and Download Test Cases
+        run: |
+          assertible tests:create \
+            --api-key ${{ secrets.ASSERTIBLE_API_TOKEN }} \
+            --service-id 4ed3742c-5f92-44ec-b96f-8813fd40b3c9 \
+            --openapi ./testfolder/openapi.json \
+            --save-tests ./assertible-tests.json
+
+      - name: Download Test Cases
+        run: |
+          curl -H "Authorization: Bearer ${{ secrets.ASSERTIBLE_API_TOKEN }}" \
+          "https://assertible.com/apis/4ed3742c-5f92-44ec-b96f-8813fd40b3c9/tests" \
+          -o assertible-tests.json
+
