@@ -1,4 +1,4 @@
-name: Assertible Test Case Generation
+name: CI/CD Workflow with Assertible
 
 on:
   push:
@@ -8,29 +8,27 @@ on:
 jobs:
   generate-test-cases:
     runs-on: ubuntu-latest
+    environment:
+      name: assertible_tool
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14'
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       - name: Install Assertible CLI
-        run: npm install -g assertible
+        run: npm install -g @assertible/assertible
 
-      - name: Generate and Download Test Cases
+      - name: Generate test cases
         run: |
-          assertible tests:create \
-            --api-key ${{ secrets.ASSERTIBLE_API_TOKEN }} \
-            --service-id 4ed3742c-5f92-44ec-b96f-8813fd40b3c9 \
-            --openapi ./testfolder/openapi.json \
-            --save-tests ./assertible-tests.json
+          curl https://assertible.com/apis/4ed3742c-5f92-44ec-b96f-8813fd40b3c9/run?api_token=${{ secrets.ASSERTIBLE_API_TOKEN }}
 
-      - name: Download Test Cases
+      - name: Download test cases
         run: |
-          curl -H "Authorization: Bearer ${{ secrets.ASSERTIBLE_API_TOKEN }}" \
-          "https://assertible.com/apis/4ed3742c-5f92-44ec-b96f-8813fd40b3c9/tests" \
-          -o assertible-tests.json
+          curl -X GET "https://assertible.com/api/services/4ed3742c-5f92-44ec-b96f-8813fd40b3c9/tests" \
+          -H "Authorization: Bearer ${{ secrets.ASSERTIBLE_API_TOKEN }}" \
+          -o downloaded-test-cases.json
 
+      - name: Save artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-cases
+          path: downloaded-test-cases.json
