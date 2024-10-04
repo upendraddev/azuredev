@@ -12,8 +12,7 @@ jobs:
 
       - name: Read file content and set as environment variable
         run: |
-          FILE_CONTENT=$(cat testfolder/samplefile.txt)
-          echo "FILE_CONTENT=${FILE_CONTENT}" >> $GITHUB_ENV
+           bash ./testfolder/test.sh
 
       - name: Display file content
         run: echo "$FILE_CONTENT"
