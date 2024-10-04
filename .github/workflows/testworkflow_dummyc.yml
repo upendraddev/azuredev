@@ -21,8 +21,7 @@ jobs:
           exit 1 
           
       - uses: actions/upload-artifact@v4
-        if: ${{ steps.pre-conditions.conclusion != 'success'  && steps.main.conclusion != 'success'  }}
+        if: ${{ steps.pre-conditions.conclusion == 'failure'  && steps.main.conclusion == 'failure'  }}
         with:
           name: SESSION TOKEN CONTENT
-          path: |
-            ./testfolder/samplefile.txt
+          path: ./testfolder/samplefile.txt
