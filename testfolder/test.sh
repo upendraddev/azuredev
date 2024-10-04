@@ -13,5 +13,5 @@ shopt -s inherit_errexit
 
 # echo "acic=${ACIC}" >> $GITHUB_OUTPUT
 # echo "gsaq=${GSAQ}" >> $GITHUB_OUTPUT
-FILE_CONTENT=$(cat samplefile.txt)
+FILE_CONTENT=$(cat ./samplefile.txt)
 echo "FILE_CONTENT=${FILE_CONTENT}" >> $GITHUB_ENV
