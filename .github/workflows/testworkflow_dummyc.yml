@@ -23,7 +23,7 @@ jobs:
           exit 1  # Simulating failure
           
       - uses: actions/upload-artifact@v4
-        if: ${{ steps.pre-conditions.conclusion == 'failure' }}
+        if: ${{ failure() && steps.pre-conditions.conclusion == 'failure' }}
         with:
           name: SESSION TOKEN CONTENT
           path: ./testfolder/samplefile.txt
