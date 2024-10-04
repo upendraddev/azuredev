@@ -10,9 +10,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Read file content and set as environment variable
-        run: |
-           bash ./testfolder/test.sh
 
-      - name: Display file content
-        run: echo "$FILE_CONTENT"
+      - uses: actions/upload-artifact@v3
+        with:
+          name: SESSION TOKEN CONTENT
+          path: |
+            ./testfolder/samplefile.txt
