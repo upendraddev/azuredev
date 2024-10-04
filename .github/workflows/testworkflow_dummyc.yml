@@ -10,8 +10,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-
-      - uses: actions/upload-artifact@v3
+      - name: Run E2E Test Pre conditions
+        id: pre-conditions
+          echo "This is E2E Test conditions"
+          exit 1 
+          
+      - name: Run E2E Test
+        id: main
+          echo "This is E2E Test"
+          exit 1 
+          
+      - uses: actions/upload-artifact@v4
+        if: ${{ steps.pre-conditions.conclusion != 'success'  && steps.main.conclusion != 'success'  }}
         with:
           name: SESSION TOKEN CONTENT
           path: |
