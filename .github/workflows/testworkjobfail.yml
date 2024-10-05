@@ -1,0 +1,46 @@
+name: Pass Failure to Another Job Example
+
+on:
+  workflow_dispatch:
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+
+    outputs:
+      step1_failed: ${{ steps.check_step1_outcome.failed }}
+      step2_failed: ${{ steps.check_step2_outcome.failed }}
+
+    steps:
+      - name: Step 1 - This may fail
+        id: step1
+        run: exit 1  # Simulate failure in Step 1
+
+      - name: Step 2 - This may also fail
+        id: step2
+        run: exit 0  # Simulate success in Step 2
+
+      - name: Check Step 1 Outcome
+        id: check_step1_outcome
+        run: |
+          if [ "${{ steps.step1.outcome }}" == "failure" ]; then
+            echo "failed=true" >> $GITHUB_ENV
+          else
+            echo "failed=false" >> $GITHUB_ENV
+
+      - name: Check Step 2 Outcome
+        id: check_step2_outcome
+        run: |
+          if [ "${{ steps.step2.outcome }}" == "failure" ]; then
+            echo "failed=true" >> $GITHUB_ENV
+          else
+            echo "failed=false" >> $GITHUB_ENV
+
+  job2:
+    runs-on: ubuntu-latest
+    needs: job1
+    if: ${{ needs.job1.outputs.step1_failed == 'true' || needs.job1.outputs.step2_failed == 'true' }}
+    
+    steps:
+      - name: Handle failure from previous steps
+        run: echo "Handling failure from Job 1 steps."
