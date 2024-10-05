@@ -1,8 +1,6 @@
 name: test-ssla-certs
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:   
   ssla-certs:
