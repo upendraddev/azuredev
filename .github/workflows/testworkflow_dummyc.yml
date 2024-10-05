@@ -5,51 +5,31 @@ on:
 
 jobs:
   job1:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v2
-  
-        - name: Run E2E Test Pre conditions
-          id: pre-conditions
-          run: |
-            echo "Run E2E Test Pre conditions"
-            exit 1  # Simulating failure
+    runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.pre-conditions.outputs }}
+      output2: ${{ steps.main.outputs }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Run E2E Test Pre conditions
+        id: pre-conditions
+        run: |
+          echo "Run E2E Test Pre conditions"
+          exit 1  # Simulating failure
+          
+      - name: Run E2E Test
+        id: main
+        run: |
+          echo "Run E2E Test"
+          exit 1  # Simulating failure
             
-        - name: Run E2E Test
-          id: main
-          run: |
-            echo "Run E2E Test"
-            exit 1  # Simulating failure
-            
-        - name: Pre Conditions Status Check
-          if: ${{always()}}
-          id: pre-cond-step-status-check
-          run: |
-            if [ "${{ steps.main.conclusion }}" == "success" ]; then
-              echo "status=success" >> $GITHUB_OUTPUT
-            elif [ "${{ steps.main.conclusion }}" == "skipped" ]; then
-              echo "status=skipped" >> $GITHUB_OUTPUT
-            else
-              echo "status=failed" >> $GITHUB_OUTPUT
-            fi
-            
-        - name: Main Step Status Check
-          if: ${{always()}}
-          id: main-step-status-check
-          run: |
-            if [ "${{ steps.main.conclusion }}" == "success" ]; then
-              echo "status=success" >> $GITHUB_OUTPUT
-            elif [ "${{ steps.main.conclusion }}" == "skipped" ]; then
-              echo "status=skipped" >> $GITHUB_OUTPUT
-            else
-              echo "status=failed" >> $GITHUB_OUTPUT
-            fi
 
   job2:
     runs-on: ubuntu-latest
     needs: job1
-    if: ${{ needs.job1.outputs.pre-cond-step-status-check == 'true' || needs.job1.outputs.main-step-status-check == 'true' }}
+    if: ${{ needs.job1.outputs.output1 == 'true' || needs.job1.outputs.output2 == 'true' }}
     steps:
       - name: Handle failure from previous steps
         run: echo "Handling failure from Job 1 steps."
