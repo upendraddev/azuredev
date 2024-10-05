@@ -7,9 +7,6 @@ jobs:
   job1:
     runs-on: ubuntu-latest
 
-    outputs:
-      step1_failed: ${{ steps.check_step1_outcome.failed }}
-      step2_failed: ${{ steps.check_step2_outcome.failed }}
 
     steps:
       - name: Step 1 - This may fail
@@ -23,6 +20,7 @@ jobs:
       - name: Check Step 1 Outcome
         id: check_step1_outcome
         run: |
+        if: failure()
           if [ "${{ steps.step1.outcome }}" == "failure" ]; then
             echo "failed=true" >> $GITHUB_ENV
           else
@@ -31,6 +29,7 @@ jobs:
       - name: Check Step 2 Outcome
         id: check_step2_outcome
         run: |
+        if: failure()
           if [ "${{ steps.step2.outcome }}" == "failure" ]; then
             echo "failed=true" >> $GITHUB_ENV
           else
