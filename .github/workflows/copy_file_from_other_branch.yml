@@ -1,9 +1,7 @@
 name: Copy File Between Branches
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   copy-file:
