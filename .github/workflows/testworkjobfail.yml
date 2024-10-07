@@ -30,15 +30,15 @@ jobs:
           name: SESSION TOKEN CONTENT
           path: ./testfolder/samplefile.txt
 
-  upload_artifact_on_failure:
-    needs: job_a
-    runs-on: ubuntu-latest
+  # upload_artifact_on_failure:
+  #   needs: job_a
+  #   runs-on: ubuntu-latest
 
-    # This job runs only if job_a has failed
-    if: ${{ failure() }}
+  #   # This job runs only if job_a has failed
+  #   if: ${{ failure() }}
 
-    steps:
-      - name: Download logs from previous job
-        uses: actions/download-artifact@v4
-        with:
-          name: SESSION TOKEN CONTENT
+  #   steps:
+  #     - name: Download logs from previous job
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: SESSION TOKEN CONTENT
