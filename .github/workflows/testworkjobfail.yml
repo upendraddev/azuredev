@@ -23,13 +23,20 @@ jobs:
           # Simulate failure
           exit 0
 
-      - name: Upload logs (optional - if you want to upload in the same job)
-        if:  ${{failure()}}
-        uses: actions/upload-artifact@v4
-        with:
-          name: SESSION TOKEN CONTENT
-          path: ./testfolder/samplefile.txt
-
+      # - name: Upload logs (optional - if you want to upload in the same job)
+      #   if:  ${{failure()}}
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: SESSION TOKEN CONTENT
+      #     path: ./testfolder/samplefile.txt
+  run-on-failure:
+    runs-on: ubuntu-latest
+    needs: job_a
+    if: failure()  # This will run only if the 'job a' job fails
+    steps:
+      - name: Run on Failure
+        run: |
+          echo "Running this job because the build failed"
   # upload_artifact_on_failure:
   #   needs: job_a
   #   runs-on: ubuntu-latest
