@@ -16,10 +16,10 @@ jobs:
         id: store_file_content
         run: |
           # Read the file content into a variable
-          FILE_CONTENT=$(cat ./testfolder/samplefile.txt) >> $GITHUB_ENV 
+          echo "FILE_CONTENT=$(cat ./testfolder/samplefile.txt)" >> $GITHUB_ENV 
           
           # Set the file content as an output of this step
-          echo "::set-output name=file_content::$FILE_CONTENT"
+          # echo "::set-output name=file_content::$FILE_CONTENT"
 
   job2:
     needs: job1  # Ensure this job runs after job1
