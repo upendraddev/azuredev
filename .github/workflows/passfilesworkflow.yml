@@ -16,7 +16,7 @@ jobs:
         id: store_file_content
         run: |
           # Read the file content into a variable
-          FILE_CONTENT=$(cat ./testfolder/samplefile.txt) # Replace 'myfile.txt' with your file
+          FILE_CONTENT=$(cat ./testfolder/samplefile.txt) >> $GITHUB_ENV 
           
           # Set the file content as an output of this step
           echo "::set-output name=file_content::$FILE_CONTENT"
@@ -28,4 +28,6 @@ jobs:
       - name: Use file content from job1
         run: |
           # Access the file content from job1 output
+          $FILE_CONTENT> sessiontoken.json
+           cat sessiontoken.json
           echo "File content from job1: ${{ needs.job1.outputs.file_content }}"
