@@ -23,12 +23,12 @@ jobs:
           # Simulate failure
           exit 0
 
-      # - name: Upload logs (optional - if you want to upload in the same job)
-      #   if:  ${{failure()}}
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: SESSION TOKEN CONTENT
-      #     path: ./testfolder/samplefile.txt
+      - name: Upload logs (optional - if you want to upload in the same job)
+        if:  ${{failure()}}
+        uses: actions/upload-artifact@v4
+        with:
+          name: SESSION TOKEN CONTENT
+          path: ./testfolder/samplefile.txt
           
   job_b:
     runs-on: ubuntu-latest
