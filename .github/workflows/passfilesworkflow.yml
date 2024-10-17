@@ -23,5 +23,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         - run: |
-              echo "::add-mask::${{needs.job1.outputs.output1}}" > sessiontoken.txt
+                token=${{needs.job1.outputs.output1}} > sessiontoken.txt
+                cat sessiontoken.txt
 
