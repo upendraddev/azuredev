@@ -7,13 +7,13 @@ jobs:
   job1:
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ steps.sessiontoken.outputs.sessiontoken }}
+      output1: ${{ steps.session_token.outputs.sessiontoken }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         
       - name: Read file content
-        id: store_file_content
+        id: session_token
         run: |
           # Read the file content into a variable
           echo "sessiontoken=$(cat ./testfolder/samplefile.txt) " >> "$GITHUB_OUTPUT"
