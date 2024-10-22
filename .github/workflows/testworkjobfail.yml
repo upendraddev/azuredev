@@ -21,7 +21,7 @@ jobs:
         id: run_may
         run: |
           # Simulate failure
-          exit 0
+          exit 1
 
       - name: Upload logs (optional - if you want to upload in the same job)
         if:  ${{ failure() }}
