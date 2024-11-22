@@ -12,6 +12,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         
+      - name: Install dependencies
+        run: |
+          sudo apt-get install python3-setuptools
+          python3 -m pip3 install --upgrade pip3
+          pip3 install fpdf
+        
       - name: Read file content
         id: session_token
         run: |
