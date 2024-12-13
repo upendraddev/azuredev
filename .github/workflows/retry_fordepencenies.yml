@@ -12,8 +12,6 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
-    - name: Simulate DNS Issue
-      run: echo "127.0.0.1 pypi.org" | sudo tee -a /etc/hosts
       
     - name: Retry Setup Python
       working-directory: ./opsjob/scripts
@@ -39,6 +37,3 @@ jobs:
             sleep 10
           done
           python -m pip install -U selenium==4.12.0
-          
-    - name: Restore DNS Settings
-      run: sudo sed -i '/pypi.org/d' /etc/hosts
