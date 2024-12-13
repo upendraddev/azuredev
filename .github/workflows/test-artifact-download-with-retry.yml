@@ -35,7 +35,7 @@ jobs:
 
           while [ $retry_count -lt $MAX_RETRIES ]; do
             echo "Attempt $((retry_count + 1)) to download artifact..."
-            if actions/download-artifact@v3 --name sample-artifact --path ./downloaded-artifact; then
+            if actions/download-artifact@v3 --name sample-artifact --path ./output; then
               echo "Artifact downloaded successfully!"
               break
             else
