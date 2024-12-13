@@ -1,0 +1,25 @@
+name: Retry Mechainsm for install dependencies python test
+
+on:
+  workflow_dispatch:
+
+jobs:   
+  retry-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install python
+      run: |
+        for i in {1..3}; do
+          echo "Attempt $i to setup Python"
+          if gh api --method POST -H "Accept: application/vnd.github.v3+json" \
+            /repos/{owner}/{repo}/actions/workflows/setup-python --data '{"ref":"main"}'; then
+            echo "Python setup succeeded!"
+            break
+          elif [ $i -eq 3 ]; then
+            echo "setup-python action failed after $i attempts. Exiting."
+            exit 1
+          fi
+          sleep 5
+        done
