@@ -1,0 +1,57 @@
+name: Upload and Download Artifacts with Retry
+
+on:
+  workflow_dispatch:
+
+jobs:
+  upload-artifact:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Generate a sample file
+      - name: Create Sample File
+        run: |
+          mkdir -p output
+          echo "This is a sample file" > output/sample.txt
+
+      # Step 2: Upload the artifact
+      - name: Upload Sample Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: sample-artifact
+          path: output/
+
+  download-artifact:
+    needs: upload-artifact
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Retry logic for downloading artifact
+      - name: Download Artifact with Retry
+        id: download_with_retry
+        run: |
+          set -e
+          MAX_RETRIES=5
+          RETRY_DELAY=10
+          retry_count=0
+
+          while [ $retry_count -lt $MAX_RETRIES ]; do
+            echo "Attempt $((retry_count + 1)) to download artifact..."
+            if actions/download-artifact@v3 --name sample-artifact --path ./downloaded-artifact; then
+              echo "Artifact downloaded successfully!"
+              break
+            else
+              retry_count=$((retry_count + 1))
+              echo "Download failed. Retrying $retry_count/$MAX_RETRIES in $RETRY_DELAY seconds..."
+              sleep $RETRY_DELAY
+            fi
+          done
+
+          if [ $retry_count -eq $MAX_RETRIES ]; then
+            echo "Failed to download artifact after $MAX_RETRIES attempts."
+            exit 1
+          fi
+
+      # Step 2: Verify the downloaded file
+      - name: Verify Downloaded Artifact
+        run: |
+          echo "Downloaded files:"
+          ls -R ./downloaded-artifact
