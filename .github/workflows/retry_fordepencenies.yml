@@ -39,8 +39,6 @@ jobs:
             fi
             sleep 10
           done
-          pip install -r ./e2e-test/requirement.txt
-          sudo pip install html-testRunner
           python -m pip install -U selenium==4.12.0
           
     - name: Restore DNS Settings
