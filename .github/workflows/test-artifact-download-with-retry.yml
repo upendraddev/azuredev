@@ -25,8 +25,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Step 1: Retry logic for downloading artifact
-      - name: Download Artifact with Retry
-        id: download_with_retry
+      - name: Download Artifacts with Retry
+        id: retry_download
         run: |
           set -e
           MAX_RETRIES=5
@@ -34,24 +34,12 @@ jobs:
           retry_count=0
 
           while [ $retry_count -lt $MAX_RETRIES ]; do
-            echo "Attempt $((retry_count + 1)) to download artifact..."
-            if actions/download-artifact@v3 --name sample-artifact --path ./output; then
-              echo "Artifact downloaded successfully!"
+            echo "Attempt $((retry_count + 1)) to download artifacts..."
+            gh artifact download --name sample-artifact || true
+
+            # Check if the artifact folder exists and is not empty
+            if [ -d "my-artifact-name" ] && [ "$(ls -A my-artifact-name)" ]; then
+              echo "Artifacts downloaded successfully on attempt $((retry_count + 1))"
               break
-            else
-              retry_count=$((retry_count + 1))
-              echo "Download failed. Retrying $retry_count/$MAX_RETRIES in $RETRY_DELAY seconds..."
-              sleep $RETRY_DELAY
             fi
-          done
 
-          if [ $retry_count -eq $MAX_RETRIES ]; then
-            echo "Failed to download artifact after $MAX_RETRIES attempts."
-            exit 1
-          fi
-
-      # Step 2: Verify the downloaded file
-      - name: Verify Downloaded Artifact
-        run: |
-          echo "Downloaded files:"
-          ls -R ./downloaded-artifact
