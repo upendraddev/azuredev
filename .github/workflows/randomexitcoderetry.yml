@@ -9,19 +9,16 @@ jobs:
     steps:
       - name: Retry sudo commands with random exit codes
         run: |
-          # Enable script to continue on errors
-          set +e
-          
           # Define the maximum number of retries and delay between attempts
           MAX_RETRIES=5
-          DELAY=2
-          RANDOM_EXIT_CODE=$((RANDOM % 2))
+          DELAY=10
           # Retry logic using a for loop
           for ((i=1; i<=MAX_RETRIES; i++)); do
             echo "Attempt $i..."
             # Simulate a random sudo command that might fail
             echo "Simulating sudo command with exit code $RANDOM_EXIT_CODE"
-            sudo apt-get update 
+            sudo apt-get update
+            RANDOM_EXIT_CODE=$((RANDOM % 2))
             sudo apt install firefox -y 
             python -m pip install --upgrade pip 
             pip install -r requirement.txt 
