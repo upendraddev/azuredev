@@ -40,7 +40,6 @@ jobs:
             # Print final status
           if [ $EXIT_CODE -ne 0 ]; then
             echo "Command did not succeed after $MAX_RETRIES attempts"
-            set -e
             exit 1
           else
             echo "Command succeeded!"
