@@ -23,13 +23,10 @@ jobs:
           Pin-Priority: 1001
           ' | sudo tee /etc/apt/preferences.d/mozilla-firefox
           echo 'Unattended-Upgrade::Allowed-Origins:: "LP-PPA-mozillateam:${distro_codename}";' | sudo tee /etc/apt/apt.conf.d/51unattended-upgrades-firefox
-          max_retries=3
-          retry_count=0
-          while [ $retry_count -lt $max_retries ]; do
+          for i in {1..5}; do
+              echo "Attempt $i to install depences..."
               sudo apt-get update && sudo apt install firefox -y && exit 1 && python -m pip install --upgrade pip && pip install -r requirement.txt && sudo pip install html-testRunner && python -m pip install -U selenium==4.12.0 && break
-              retry_count=$((retry_count + 1))
-              echo "Retrying commands... ($retry_count/$max_retries)"
-              sleep 2
+              [[ $i -lt 5 ]] && sleep 10 || { echo "Max retries reached. Exiting..."; exit 1; }
           done
 
           if [ $retry_count -eq $max_retries ]; then
