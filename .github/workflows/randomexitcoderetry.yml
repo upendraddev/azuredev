@@ -26,7 +26,7 @@ jobs:
             # Run the command
             sudo bash -c "exit $RANDOM_EXIT_CODE"
             EXIT_CODE=$?
-            if [[ $i -lt 5 ]] && [[ $EXIT_CODE -ne 0 ]]; then
+            if [[ $i -lt 5 ]] || [[ $EXIT_CODE -ne 0 ]]; then
               sleep 10
             else
               echo "Command did not succeed after 5 attempts"
