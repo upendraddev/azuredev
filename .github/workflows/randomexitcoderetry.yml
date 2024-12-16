@@ -12,10 +12,10 @@ jobs:
           # Enable script to continue on errors
           set +e
           # Retry logic using a for loop
-          RANDOM_EXIT_CODE=$((RANDOM % 2))
           for ((i=1; i<=5; i++)); do
             echo "Attempt $i..."
             # Simulate a random sudo command that might fail
+            RANDOM_EXIT_CODE=$((RANDOM % 2))
             echo "Simulating sudo command with exit code $RANDOM_EXIT_CODE"
             sudo apt-get update
             sudo apt install firefox -y 
