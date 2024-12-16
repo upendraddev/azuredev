@@ -30,7 +30,18 @@ jobs:
             # Run the command
             sudo bash -c "exit $RANDOM_EXIT_CODE"
             EXIT_CODE=$?
-            echo "Exitcode: $EXIT_CODE"
-            [[ $i -lt 5 ]] && sleep 10 || { echo "Max retries reached. Exiting..."; exit 1; }
-            echo "Exitcode: $EXIT_CODE"
+            if [ $EXIT_CODE -eq 0 ]; then
+              echo "Command succeeded on attempt $i!"
+              break
+            else
+              echo "Command failed with exit code $EXIT_CODE. Retrying..."
+            fi
+            sleep $DELAY
           done
+            # Print final status
+          if [ $EXIT_CODE -ne 0 ]; then
+            echo "Command did not succeed after $MAX_RETRIES attempts, but the workflow will not fail."
+          else
+            echo "Command succeeded!"
+          fi
+
