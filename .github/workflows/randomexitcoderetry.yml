@@ -1,0 +1,47 @@
+name: Test Random Exit Codes with Retry
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-random-exit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Test random exit code with retries
+        run: |
+          # Define the maximum number of retries
+          MAX_RETRIES=5
+          
+          # Retry logic using a for loop
+          for ((i=1; i<=MAX_RETRIES; i++)); do
+            echo "Attempt $i..."
+            
+            # Generate a random exit code (0 for success, 1 for failure)
+            RANDOM_EXIT_CODE=$((RANDOM % 2))
+            
+            # Simulate a command (sudo for example) that returns the random exit code
+            echo "Simulating a sudo command with exit code $RANDOM_EXIT_CODE"
+            sudo bash -c "exit $RANDOM_EXIT_CODE"
+            
+            # Check if the command was successful
+            if [ $? -eq 0 ]; then
+              echo "Command succeeded on attempt $i!"
+              break
+            else
+              echo "Command failed with exit code $RANDOM_EXIT_CODE. Retrying..."
+            fi
+            
+            # If it's the last attempt, fail the job
+            if [ $i -eq $MAX_RETRIES ]; then
+              echo "Max retries reached. Failing the job."
+              exit 1
+            fi
+            
+            # Optional delay between retries
+            sleep 2
+          done
