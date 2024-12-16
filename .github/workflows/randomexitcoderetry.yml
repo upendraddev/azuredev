@@ -20,7 +20,7 @@ jobs:
             # Simulate a random sudo command that might fail
             echo "Simulating sudo command with exit code $RANDOM_EXIT_CODE"
             sudo apt-get update
-            RANDOM_EXIT_CODE=$((RANDOM % 2))
+            RANDOM_EXIT_CODE=1
             # sudo apt install firefox -y 
             python -m pip install --upgrade pip 
             pip install -r requirement.txt 
