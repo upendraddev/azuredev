@@ -25,6 +25,7 @@ jobs:
             python -m pip install -U selenium==4.12.0 
             # Run the command
             sudo bash -c "exit $RANDOM_EXIT_CODE"
+            EXIT_CODE=$?
             if [[ $i -lt 5 ]] && [[ $EXIT_CODE -ne 0 ]]; then
               sleep 10
             else
