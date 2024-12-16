@@ -15,12 +15,11 @@ jobs:
           # Define the maximum number of retries and delay between attempts
           MAX_RETRIES=5
           DELAY=2
-          
+          RANDOM_EXIT_CODE=$((RANDOM % 2))
           # Retry logic using a for loop
           for ((i=1; i<=MAX_RETRIES; i++)); do
             echo "Attempt $i..."
             # Simulate a random sudo command that might fail
-            RANDOM_EXIT_CODE=$((RANDOM % 2))
             echo "Simulating sudo command with exit code $RANDOM_EXIT_CODE"
             sudo apt-get update 
             sudo apt install firefox -y 
@@ -30,7 +29,6 @@ jobs:
             python -m pip install -U selenium==4.12.0 
             # Run the command
             sudo bash -c "exit $RANDOM_EXIT_CODE"
-            break
             EXIT_CODE=$?
             echo "Exitcode: $EXIT_CODE"
             [[ $i -lt 5 ]] && sleep 10 || { echo "Max retries reached. Exiting..."; exit 1; }
