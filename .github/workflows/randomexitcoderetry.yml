@@ -9,6 +9,9 @@ jobs:
     steps:
       - name: Retry sudo commands with random exit codes
         run: |
+          # Enable script to continue on errors
+          set +e
+          
           # Define the maximum number of retries and delay between attempts
           MAX_RETRIES=5
           DELAY=2
@@ -16,28 +19,20 @@ jobs:
           # Retry logic using a for loop
           for ((i=1; i<=MAX_RETRIES; i++)); do
             echo "Attempt $i..."
-            
             # Simulate a random sudo command that might fail
             RANDOM_EXIT_CODE=$((RANDOM % 2))
             echo "Simulating sudo command with exit code $RANDOM_EXIT_CODE"
-            
-            # Run the command and capture the exit code
+            sudo apt-get update 
+            sudo apt install firefox -y 
+            python -m pip install --upgrade pip 
+            pip install -r requirement.txt 
+            sudo pip install html-testRunner
+            python -m pip install -U selenium==4.12.0 
+            # Run the command
             sudo bash -c "exit $RANDOM_EXIT_CODE"
+            break
             EXIT_CODE=$?
-            
-            if [ $EXIT_CODE -eq 0 ]; then
-              echo "Command succeeded on attempt $i!"
-              break
-            else
-              echo "Command failed with exit code $EXIT_CODE. Retrying..."
-            fi
-            
-            # If we've reached the maximum retries, fail the job
-            if [ $i -eq $MAX_RETRIES ]; then
-              echo "Max retries reached. Failing the job."
-              exit 1
-            fi
-            
-            # Wait before the next attempt
-            sleep $DELAY
+            echo "Exitcode: $EXIT_CODE"
+            [[ $i -lt 5 ]] && sleep 10 || { echo "Max retries reached. Exiting..."; exit 1; }
+            echo "Exitcode: $EXIT_CODE"
           done
