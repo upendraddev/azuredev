@@ -1,9 +1,7 @@
 name: Test Random Exit Codes with Retry
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   test-random-exit:
