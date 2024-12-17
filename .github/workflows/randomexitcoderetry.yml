@@ -37,9 +37,7 @@ jobs:
             sleep $DELAY
           done
           if [ $EXIT_CODE -ne 0 ]; then
-            echo "Command did not succeed after $MAX_RETRIES attempts"
-	    exit 1
+            echo "Command did not succeed after $MAX_RETRIES attempts" && exit 1
           else
              echo "Command succeeded!"
-          fi
-		  
+          fi  
