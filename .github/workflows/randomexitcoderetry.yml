@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Retry sudo commands with random exit codes
+        working-directory: ./opsjob/scripts
         run: |
           # Enable script to continue on errors
           set +e
