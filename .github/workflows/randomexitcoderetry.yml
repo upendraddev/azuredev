@@ -17,10 +17,10 @@ jobs:
           # Retry logic using a for loop
           for ((i=1; i<=MAX_RETRIES; i++)); do
             echo "Attempt $i..."
+            RANDOM_EXIT_CODE=$((RANDOM % 2))
             # Simulate a random sudo command that might fail
             echo "Simulating sudo command with exit code $RANDOM_EXIT_CODE"
             sudo apt-get update
-            RANDOM_EXIT_CODE=$((RANDOM % 2))
             # sudo apt install firefox -y 
             python -m pip install --upgrade pip 
             sudo pip install html-testRunner
