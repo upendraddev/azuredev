@@ -13,8 +13,8 @@ jobs:
           set +e
           # Retry logic using a for loop
           for ((i=1; i<=5; i++)); do
-            echo "Attempt $i..."
-            RANDOM_EXIT_CODE=1
+            echo "Attempt $i... To Install Dependencies"
+            RANDOM_EXIT_CODE=$((RANDOM % 2))
             # Simulate a random sudo command that might fail
             echo "Simulating sudo command with exit code $RANDOM_EXIT_CODE"
             sudo apt-get update
@@ -25,15 +25,15 @@ jobs:
             # Run the command
             sudo bash -c "exit $RANDOM_EXIT_CODE"
             if [ $? -eq 0 ]; then
-              echo "Installations succeeded on attempt $i!"
+              echo "Dependencies Installation succeeded on attempt $i!"
               break
             else
-              echo "Installations failed with exit code $?. Retrying..."
+              echo "Dependencies Installation failed with exit code $?. Retrying..."
             fi
             sleep 20
           done
           if [ $? -ne 0 ]; then
-            echo "Installations not succeed after 5 attempts" && exit 1
+            echo "Dependencies Installation not succeed after 5 attempts" && exit 1
           else
-             echo "Installations succeeded!"
+             echo "Dependencies Installation succeeded!"
           fi  
