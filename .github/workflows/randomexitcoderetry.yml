@@ -27,6 +27,7 @@ jobs:
             EXIT_CODE=$?
             if [[ $i -lt 5 ]] || [[ $EXIT_CODE -ne 0 ]]; then
               sleep 10
+              break
             else
               echo "Command did not succeed after 5 attempts"
               exit 1
