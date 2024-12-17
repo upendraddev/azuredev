@@ -11,26 +11,36 @@ jobs:
         run: |
           # Enable script to continue on errors
           set +e
+          # Define the maximum number of retries and delay between attempts
+          MAX_RETRIES=5
+          DELAY=10
           # Retry logic using a for loop
-          for ((i=1; i<=5; i++)); do
+          for ((i=1; i<=MAX_RETRIES; i++)); do
             echo "Attempt $i..."
             # Simulate a random sudo command that might fail
-            RANDOM_EXIT_CODE=$((RANDOM % 2))
             echo "Simulating sudo command with exit code $RANDOM_EXIT_CODE"
             sudo apt-get update
-            sudo apt install firefox -y 
+            RANDOM_EXIT_CODE=$((RANDOM % 2))
+            # sudo apt install firefox -y 
             python -m pip install --upgrade pip 
             sudo pip install html-testRunner
             python -m pip install -U selenium==4.12.0 
             # Run the command
             sudo bash -c "exit $RANDOM_EXIT_CODE"
             EXIT_CODE=$?
-            if [[ $i -lt 5 ]] || [[ $EXIT_CODE -ne 0 ]]; then
-              sleep 10
+            if [ $EXIT_CODE -eq 0 ]; then
+              echo "Command succeeded on attempt $i!"
               break
             else
-              echo "Command did not succeed after 5 attempts"
-              exit 1
+              echo "Command failed with exit code $EXIT_CODE. Retrying..."
             fi
+            sleep $DELAY
           done
-
+          # Print final status
+          if [ $? -ne 0 ]; then
+            echo "Command did not succeed after $MAX_RETRIES attempts"
+			      exit 1
+          else
+              echo "Command succeeded!"
+          fi
+		  
