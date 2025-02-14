@@ -22,8 +22,8 @@ jobs:
           git clone https://github.com/upendraddev/azuredev2.git target-repo
           cd target-repo
           git checkout -b sync-file-update
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
+          git config user.email "upendrad.dev@gmail.com"
+          git config user.name "upendraddev"
 
       - name: Copy the updated file
         run: |
