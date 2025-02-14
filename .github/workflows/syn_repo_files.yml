@@ -1,0 +1,44 @@
+name: Sync
+'on':
+  push:
+    branches:
+      - main
+jobs:
+  secrets:
+    name: Secrets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: jpoehnelt/secrets-sync-action@v1.7.2
+        with:
+          SECRETS: |
+            ^SYNCED_
+          REPOSITORIES: |-
+            ^upendraddev\/azuredev$
+          GITHUB_TOKEN: ${{ secrets.SYNCED_GITHUB_TOKEN }}
+        env:
+          SYNCED_GITHUB_TOKEN: ${{ secrets.SYNCED_GITHUB_TOKEN }}
+          SYNCED_TODO_ACTIONS_MONGO_URL: ${{ secrets.SYNCED_TODO_ACTIONS_MONGO_URL }}
+  github-automation:
+    name: GitHub Automation
+    runs-on: ubuntu-latest
+    needs: secrets
+    steps:
+      - uses: adrianjost/files-sync-action@master
+        with:
+          COMMIT_MESSAGE: Update Synced GitHub Automation Workflows
+          GITHUB_TOKEN: ${{ secrets.SYNCED_GITHUB_TOKEN }}
+          SRC_ROOT: /testfolder/samplefile.txt
+          TARGET_REPOS: |-
+            ^upendraddev/azuredev2
+          TARGET_ROOT: /test/samplefile.txt
+  mergify:
+    name: Mergify
+    runs-on: ubuntu-latest
+    needs: github-automation
+    steps:
+      - uses: adrianjost/files-sync-action@master
+        with:
+          COMMIT_MESSAGE: Update Synced Mergify Config
+          GITHUB_TOKEN: ${{ secrets.SYNCED_GITHUB_TOKEN }}
+          TARGET_REPOS: |-
+           ^upendraddev/azuredev2
