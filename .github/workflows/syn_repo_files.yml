@@ -27,7 +27,9 @@ jobs:
 
       - name: Copy the updated file
         run: |
-          cp samplefile.txt target-repo/
+          ls -la
+          pwd
+          cp testfolder/samplefile.txt target-repo/
           cd target-repo
           git add samplefile.txt
           git commit -m "Sync file update from source repo"
