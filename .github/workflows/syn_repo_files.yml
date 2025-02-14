@@ -1,44 +1,45 @@
-name: Sync
-'on':
+name: Sync File to Other Repo
+
+on:
   push:
     branches:
       - main
+    paths:
+      - 'testfolder/samplefile.txt'  # Change this to the file you want to sync
+
 jobs:
-  secrets:
-    name: Secrets
+  sync-file:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: jpoehnelt/secrets-sync-action@v1.7.2
-        with:
-          SECRETS: |
-            ^SYNCED_
-          REPOSITORIES: |-
-            ^upendraddev\/azuredev$
-          GITHUB_TOKEN: ${{ secrets.SYNCED_GITHUB_TOKEN }}
+      - name: Checkout source repo
+        uses: actions/checkout@v4
+
+      - name: Clone target repository
         env:
-          SYNCED_GITHUB_TOKEN: ${{ secrets.SYNCED_GITHUB_TOKEN }}
-          SYNCED_TODO_ACTIONS_MONGO_URL: ${{ secrets.SYNCED_TODO_ACTIONS_MONGO_URL }}
-  github-automation:
-    name: GitHub Automation
-    runs-on: ubuntu-latest
-    needs: secrets
-    steps:
-      - uses: adrianjost/files-sync-action@master
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git clone https://github.com/upendraddev/azuredev2.git target-repo
+          cd target-repo
+          git checkout -b sync-file-update
+
+      - name: Copy the updated file
+        run: |
+          cp samplefile.txt target-repo/
+          cd target-repo
+          git add samplefile.txt
+          git commit -m "Sync file update from source repo"
+          git push origin sync-file-update
+
+      - name: Create a Pull Request
+        uses: peter-evans/create-pull-request@v6
         with:
-          COMMIT_MESSAGE: Update Synced GitHub Automation Workflows
-          GITHUB_TOKEN: ${{ secrets.SYNCED_GITHUB_TOKEN }}
-          SRC_ROOT: /testfolder/samplefile.txt
-          TARGET_REPOS: |-
-            ^upendraddev/azuredev2
-          TARGET_ROOT: /test/samplefile.txt
-  mergify:
-    name: Mergify
-    runs-on: ubuntu-latest
-    needs: github-automation
-    steps:
-      - uses: adrianjost/files-sync-action@master
-        with:
-          COMMIT_MESSAGE: Update Synced Mergify Config
-          GITHUB_TOKEN: ${{ secrets.SYNCED_GITHUB_TOKEN }}
-          TARGET_REPOS: |-
-           ^upendraddev/azuredev2
+          token: ${{ secrets.PAT_TOKEN }}
+          repository: upendraddev/azuredev2
+          branch: sync-file-update
+          base: main
+          title: "Sync file update from source repo"
+          body: "Automated PR to sync file updates from the source repository."
+          commit-message: "Sync file update from source repo"
